@@ -1,0 +1,45 @@
+{% doc %}
+  Inlines the @font-face rules and the theme's design tokens. Rendered in
+  the <head> of both layouts.
+{% enddoc %}
+
+{% liquid
+  assign heading_font = settings.type_heading_font
+  assign body_font = settings.type_body_font
+  assign logo_font = settings.type_logo_font
+  assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+%}
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ logo_font | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-heading--family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading--style: {{ heading_font.style }};
+    --font-heading--weight: {{ heading_font.weight }};
+    --font-body--family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body--style: {{ body_font.style }};
+    --font-body--weight: {{ body_font.weight }};
+    --font-body--weight-bold: {{ body_font_bold.weight | default: 700 }};
+    --font-logo--family: {{ logo_font.family }}, {{ logo_font.fallback_families }};
+    --font-logo--weight: {{ logo_font.weight }};
+
+    --page-width: {{ settings.max_page_width }};
+    --page-margin: {{ settings.min_page_margin }}px;
+
+    --color-background: {{ settings.background_color }};
+    --color-foreground: {{ settings.foreground_color }};
+    --color-muted: {{ settings.muted_color }};
+    --color-accent: {{ settings.accent_color }};
+    --color-accent-text: {{ settings.accent_text_color }};
+    --color-dark: {{ settings.dark_color }};
+    --color-dark-text: {{ settings.dark_text_color }};
+    --color-card: {{ settings.card_color }};
+
+    --style-border-radius-buttons: {{ settings.button_radius }}px;
+    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+  }
+{% endstyle %}

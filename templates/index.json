@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": "large",
+        "mobile_layout": "stacked",
+        "heading_accent": "Bronze Glow",
+        "heading": "Instant skin perfecting\nbronzing mist",
+        "text_color": "#1F2328",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "rating_strip": {
+      "type": "rating-strip",
+      "settings": {
+        "rating_label": "Loved Worldwide",
+        "rating_text": "4.9 Average Rating",
+        "quote": "It should be called confidence in a can!",
+        "author": "Liam Neeson"
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "blocks": {
+        "product_1": { "type": "product", "settings": { "badge": "Value set" } },
+        "product_2": { "type": "product", "settings": { "badge": "New arrival" } },
+        "product_3": { "type": "product", "settings": { "badge": "Best seller" } }
+      },
+      "block_order": ["product_1", "product_2", "product_3"],
+      "settings": {
+        "eyebrow": "Featured",
+        "heading": "Explore favorites",
+        "text": "<p>Bestsellers, new arrivals, and value sets loved by makeup artists worldwide.</p>",
+        "columns": 3
+      }
+    }
+  },
+  "order": ["hero", "rating_strip", "featured_products"]
+}

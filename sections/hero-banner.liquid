@@ -1,0 +1,174 @@
+{% comment %}
+  Full-width hero: background image (optional separate phone image), a
+  two-part heading (accent line + main lines) and one button. Styles live
+  in critical.css because the hero is the LCP element.
+{% endcomment %}
+
+{%- liquid
+  assign image = section.settings.image
+  assign mobile_image = section.settings.mobile_image
+  if section.index == 1 and request.page_type == 'index'
+    assign heading_tag = 'h1'
+  else
+    assign heading_tag = 'h2'
+  endif
+  if section.index <= 2
+    assign loading = 'eager'
+    assign fetch_priority = 'high'
+  else
+    assign loading = 'lazy'
+    assign fetch_priority = 'auto'
+  endif
+  if mobile_image != blank
+    assign mobile_ratio = mobile_image.aspect_ratio
+  elsif image != blank
+    assign mobile_ratio = image.aspect_ratio
+  else
+    assign mobile_ratio = 0.8
+  endif
+-%}
+
+<section
+  class="hero hero--{{ section.settings.height }}{% if section.settings.mobile_layout == 'overlay' %} hero--mobile-overlay{% endif %}"
+  style="--hero-text: {{ section.settings.text_color }}; --mobile-ratio: {{ mobile_ratio }};"
+  aria-labelledby="HeroHeading-{{ section.id }}"
+>
+  <div class="hero__media hero__media--desktop{% if mobile_image != blank %} hero__media--has-mobile{% endif %}">
+    {%- if image != blank -%}
+      {%- liquid
+        if image.presentation.focal_point
+          assign focal = image.presentation.focal_point
+        else
+          assign focal = '50% 50%'
+        endif
+        assign focal_style = '--focal: ' | append: focal | append: ';'
+      -%}
+      {{
+        image
+        | image_url: width: 3000
+        | image_tag:
+          widths: '750, 1100, 1500, 1800, 2200, 2600, 3000',
+          sizes: '100vw',
+          loading: loading,
+          fetchpriority: fetch_priority,
+          style: focal_style,
+          alt: image.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+
+  {%- if mobile_image != blank -%}
+    <div class="hero__media hero__media--mobile">
+      {{
+        mobile_image
+        | image_url: width: 1500
+        | image_tag:
+          widths: '500, 750, 1000, 1500',
+          sizes: '100vw',
+          loading: loading,
+          alt: mobile_image.alt
+      }}
+    </div>
+  {%- endif -%}
+
+  <div class="hero__content">
+    <{{ heading_tag }} class="hero__heading" id="HeroHeading-{{ section.id }}">
+      {%- if section.settings.heading_accent != blank -%}
+        <span class="hero__heading-accent">{{ section.settings.heading_accent | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <span class="hero__heading-main">{{ section.settings.heading | escape | newline_to_br }}</span>
+      {%- endif -%}
+    </{{ heading_tag }}>
+
+    {%- if section.settings.button_label != blank -%}
+      <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "div",
+  "class": "hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Landscape, at least 3000 px wide. Keep the left side calm for the text. Set a focal point in Files to control cropping."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Phone image",
+      "info": "Optional portrait crop for phones."
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Phone layout",
+      "options": [
+        { "value": "stacked", "label": "Text below the image" },
+        { "value": "overlay", "label": "Text on the image (top)" }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading, accent line",
+      "default": "Bronze Glow"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Press Enter for a line break.",
+      "default": "Instant skin perfecting\nbronzing mist"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color on image",
+      "default": "#1F2328"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

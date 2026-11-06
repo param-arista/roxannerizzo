@@ -1,0 +1,88 @@
+{% comment %}
+  Dark social-proof strip under the hero: rating summary, a divider, and
+  one short quote with the author's photo and name.
+{% endcomment %}
+
+{{ 'section-rating-strip.css' | asset_url | stylesheet_tag }}
+
+<section class="rating-strip" aria-label="{{ 'sections.rating_strip.label' | t }}">
+  <div class="rating-strip__inner page-width">
+    {%- if section.settings.rating_label != blank or section.settings.rating_text != blank -%}
+      <p class="rating-strip__rating">
+        {%- if section.settings.rating_label != blank -%}
+          <span>{{ section.settings.rating_label | escape }}</span>
+        {%- endif -%}
+        {%- render 'icon', name: 'star', class: 'rating-strip__star' -%}
+        {%- if section.settings.rating_text != blank -%}
+          <span>{{ section.settings.rating_text | escape }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.quote != blank -%}
+      <figure class="rating-strip__quote">
+        <blockquote>
+          <p>&ldquo;{{ section.settings.quote | escape }}&rdquo;</p>
+        </blockquote>
+        {%- if section.settings.author != blank -%}
+          <figcaption class="rating-strip__author">
+            <span class="rating-strip__dash" aria-hidden="true">&mdash;</span>
+            {%- if section.settings.author_image != blank -%}
+              {{
+                section.settings.author_image
+                | image_url: width: 120, height: 120, crop: 'center'
+                | image_tag: class: 'rating-strip__avatar', loading: 'lazy', alt: '', width: 40, height: 40
+              }}
+            {%- endif -%}
+            <cite>{{ section.settings.author | escape }}</cite>
+          </figcaption>
+        {%- endif -%}
+      </figure>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rating strip",
+  "tag": "div",
+  "class": "rating-strip-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating label",
+      "default": "Loved Worldwide"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9 Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "quote",
+      "label": "Quote",
+      "default": "Add a short customer quote here."
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Quote author",
+      "default": "Customer name"
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image",
+      "label": "Author photo",
+      "info": "Square, at least 120 × 120 px."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rating strip"
+    }
+  ]
+}
+{% endschema %}

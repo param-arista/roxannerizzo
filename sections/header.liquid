@@ -1,0 +1,186 @@
+{% comment %}
+  Site header: logo (image, or star + text wordmark), centred main menu,
+  and search / account / wishlist / cart icons. Below 990px the menu moves
+  into a details/summary drawer (no JavaScript).
+{% endcomment %}
+
+{%- liquid
+  assign menu = section.settings.menu
+  assign logo = section.settings.logo
+  assign logo_width_2x = section.settings.logo_width | times: 2
+  assign logo_widths = section.settings.logo_width | append: ',' | append: logo_width_2x
+-%}
+
+<header class="header" style="--logo-width: {{ section.settings.logo_width }}px;">
+  <div class="header__inner">
+    {%- if menu != blank -%}
+      <details class="header__drawer" scroll-lock>
+        <summary class="header__icon" aria-label="{{ 'sections.header.menu' | t }}">
+          {%- render 'icon', name: 'menu' -%}
+          {%- render 'icon', name: 'close' -%}
+        </summary>
+        <nav class="header__drawer-panel" style="--drawer-top: calc(var(--header-height) + 2.25rem);" aria-label="{{ 'sections.header.menu' | t }}">
+          <ul class="header__drawer-menu">
+            {%- for link in menu.links -%}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  {% if link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+            {%- if shop.customer_accounts_enabled -%}
+              <li>
+                <a href="{{ routes.account_url }}">{{ 'sections.header.account' | t }}</a>
+              </li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      </details>
+    {%- endif -%}
+
+    <a class="header__logo" href="{{ routes.root_url }}">
+        {%- if logo != blank -%}
+          {{
+            logo
+            | image_url: width: logo_width_2x
+            | image_tag:
+              alt: shop.name,
+              widths: logo_widths,
+              loading: 'eager',
+              fetchpriority: 'high'
+          }}
+        {%- else -%}
+          {%- if section.settings.show_star -%}
+            <svg class="header__logo-star" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m12 1.5 2.6 7.6h8l-6.5 4.8 2.5 7.6L12 16.8l-6.6 4.7 2.5-7.6-6.5-4.8h8L12 1.5Z"/></svg>
+          {%- endif -%}
+          <span class="header__logo-name">{{ section.settings.logo_text | default: shop.name | escape }}</span>
+          {%- if section.settings.logo_tagline != blank -%}
+            <span class="header__logo-tagline">{{ section.settings.logo_tagline | escape }}</span>
+          {%- endif -%}
+        {%- endif -%}
+    </a>
+
+    {%- if menu != blank -%}
+      <nav class="header__nav" aria-label="{{ 'sections.header.main_navigation' | t }}">
+        <ul class="header__menu">
+          {%- for link in menu.links -%}
+            <li>
+              <a
+                class="header__menu-link"
+                href="{{ link.url }}"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{- link.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="header__icons">
+      <a class="header__icon" href="{{ routes.search_url }}">
+        {%- render 'icon', name: 'search' -%}
+        <span class="visually-hidden">{{ 'sections.header.search' | t }}</span>
+      </a>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="header__icon header__icon--desktop" href="{{ routes.account_url }}">
+          {%- render 'icon', name: 'account' -%}
+          <span class="visually-hidden">{{ 'sections.header.account' | t }}</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.wishlist_url != blank -%}
+        <a class="header__icon header__icon--desktop" href="{{ section.settings.wishlist_url }}">
+          {%- render 'icon', name: 'heart' -%}
+          <span class="visually-hidden">{{ 'sections.header.wishlist' | t }}</span>
+        </a>
+      {%- endif -%}
+
+      <a class="header__icon" href="{{ routes.cart_url }}">
+        {%- render 'icon', name: 'bag' -%}
+        <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        {%- if cart.item_count > 0 -%}
+          <span class="header__cart-count" aria-hidden="true">
+            {%- if cart.item_count < 100 -%}{{ cart.item_count }}{%- else -%}99+{%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "class": "header-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Leave empty to use the star + text wordmark below."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo image width",
+      "default": 220
+    },
+    {
+      "type": "checkbox",
+      "id": "show_star",
+      "label": "Show star before text logo",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Text logo",
+      "info": "Defaults to the store name."
+    },
+    {
+      "type": "text",
+      "id": "logo_tagline",
+      "label": "Text logo tagline",
+      "default": "New York"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist link",
+      "info": "The heart icon shows only when this is set (e.g. your wishlist app's page)."
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

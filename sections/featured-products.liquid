@@ -1,0 +1,121 @@
+{% comment %}
+  "Explore favorites": eyebrow, heading, intro and a row of hand-picked
+  products, each with its own badge. Swipeable row on phones (CSS scroll
+  snap, no JavaScript).
+{% endcomment %}
+
+{{ 'section-featured-products.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="featured-products"
+  style="--columns: {{ section.settings.columns }};"
+  aria-labelledby="FeaturedHeading-{{ section.id }}"
+>
+  <div class="page-width">
+    <header class="featured-products__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="featured-products__heading" id="FeaturedHeading-{{ section.id }}">
+        {{- section.settings.heading | escape -}}
+      </h2>
+      {%- if section.settings.text != blank -%}
+        <div class="featured-products__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </header>
+
+    <ul class="featured-products__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="featured-products__item" {{ block.shopify_attributes }}>
+          {%- render 'product-card', product: block.settings.product, badge: block.settings.badge -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="featured-products__footer">
+        <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "div",
+  "class": "featured-products-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore favorites"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Bestsellers, new arrivals, and value sets loved by makeup artists worldwide.</p>"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Products per row on desktop",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave empty to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "info": "E.g. Best seller, New arrival, Value set. Leave empty for none."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "blocks": [
+        { "type": "product", "settings": { "badge": "Value set" } },
+        { "type": "product", "settings": { "badge": "New arrival" } },
+        { "type": "product", "settings": { "badge": "Best seller" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

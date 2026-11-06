@@ -1,0 +1,67 @@
+.rating-strip {
+  background-color: var(--color-dark);
+  color: var(--color-dark-text);
+}
+
+.rating-strip__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.75rem;
+  padding-block: 0.875rem;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.rating-strip__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.rating-strip__star {
+  width: 1.05em;
+  height: 1.05em;
+  color: var(--color-accent);
+}
+
+.rating-strip__quote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+}
+
+/* Bronze divider between rating and quote, only when both are on one line */
+@media (min-width: 990px) {
+  .rating-strip__rating + .rating-strip__quote {
+    border-inline-start: 1px solid var(--color-accent);
+    padding-inline-start: 1.75rem;
+    min-height: 2.75rem;
+  }
+}
+
+.rating-strip__author {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rating-strip__dash {
+  opacity: 0.85;
+}
+
+.rating-strip__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.rating-strip__author cite {
+  font-style: normal;
+}

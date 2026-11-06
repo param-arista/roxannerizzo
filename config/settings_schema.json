@@ -1,0 +1,146 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Roxanne Rizzo",
+    "theme_version": "0.1.0",
+    "theme_author": "Arista Systems",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Headings",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_logo_font",
+        "label": "Text logo",
+        "info": "Used only when no logo image is set in the header.",
+        "default": "cormorant_n4"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "foreground_color",
+        "label": "Text",
+        "default": "#1F2328"
+      },
+      {
+        "type": "color",
+        "id": "muted_color",
+        "label": "Secondary text",
+        "default": "#4A4D52"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent (bronze)",
+        "info": "Eyebrows, highlighted heading lines and buttons.",
+        "default": "#A6764F"
+      },
+      {
+        "type": "color",
+        "id": "accent_text_color",
+        "label": "Text on accent",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "dark_color",
+        "label": "Dark band",
+        "info": "Announcement bar and rating strip.",
+        "default": "#1F2329"
+      },
+      {
+        "type": "color",
+        "id": "dark_text_color",
+        "label": "Text on dark band",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "card_color",
+        "label": "Product card background",
+        "default": "#ECECEE"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "max_page_width",
+        "label": "Page width",
+        "options": [
+          { "value": "75rem", "label": "Narrow" },
+          { "value": "90rem", "label": "Wide" }
+        ],
+        "default": "90rem"
+      },
+      {
+        "type": "range",
+        "id": "min_page_margin",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Page margin",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "button_radius",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Button corner radius",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "input_corner_radius",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "Input corner radius",
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "header_overlay_home",
+        "label": "Transparent header over the home page hero",
+        "info": "Applies when the first home page section is the hero banner.",
+        "default": true
+      }
+    ]
+  }
+]

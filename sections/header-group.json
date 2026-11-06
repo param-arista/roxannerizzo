@@ -1,0 +1,26 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement_bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message_1": { "type": "message", "settings": { "text": "International shipping", "link": "" } },
+        "message_2": { "type": "message", "settings": { "text": "Vegan & cruelty free", "link": "" } },
+        "message_3": { "type": "message", "settings": { "text": "Made in New York", "link": "" } }
+      },
+      "block_order": ["message_1", "message_2", "message_3"],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_text": "Roxanne Rizzo",
+        "logo_tagline": "New York",
+        "show_star": true,
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": ["announcement_bar", "header"]
+}

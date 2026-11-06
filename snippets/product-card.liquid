@@ -1,0 +1,69 @@
+{% doc %}
+  Product card: image on the card background, optional badge pill, title
+  and price. Renders an onboarding placeholder when no product is given.
+
+  @param {product} [product] - The product
+  @param {string} [badge] - Badge text shown top-right (e.g. "Best seller")
+  @param {string} [sizes] - The image sizes attribute
+
+  @example
+  {% render 'product-card', product: block.settings.product, badge: block.settings.badge %}
+{% enddoc %}
+
+{%- liquid
+  assign sizes = sizes | default: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 80vw'
+  if product != blank
+    assign image_alt = product.featured_media.alt | default: product.title
+    assign price_min = product.price_min | money
+  endif
+-%}
+
+<article class="product-card">
+  {%- if product != blank -%}
+    <a class="product-card__link" href="{{ product.url }}">
+      <div class="product-card__media">
+        {%- if product.featured_media -%}
+          {{
+            product.featured_media
+            | image_url: width: 1200
+            | image_tag:
+              widths: '360, 540, 720, 900, 1200',
+              sizes: sizes,
+              loading: 'lazy',
+              alt: image_alt
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+        {%- endif -%}
+      </div>
+      <h3 class="product-card__title">{{ product.title | escape }}</h3>
+    </a>
+
+    <p class="product-card__price">
+      {%- if product.price_varies -%}
+        {{ 'products.price_from' | t: price: price_min }}
+      {%- else -%}
+        {{ product.price | money }}
+      {%- endif -%}
+      {%- if product.compare_at_price > product.price -%}
+        <s class="product-card__compare">
+          <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
+          {{- product.compare_at_price | money -}}
+        </s>
+      {%- endif -%}
+      {%- unless product.available -%}
+        <span class="product-card__soldout">{{ 'products.sold_out' | t }}</span>
+      {%- endunless -%}
+    </p>
+  {%- else -%}
+    <div class="product-card__media">
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+    </div>
+    <h3 class="product-card__title">{{ 'products.placeholder_title' | t }}</h3>
+    <p class="product-card__price">{{ 4900 | money }}</p>
+  {%- endif -%}
+
+  {%- if badge != blank -%}
+    <span class="product-card__badge">{{ badge | escape }}</span>
+  {%- endif -%}
+</article>
