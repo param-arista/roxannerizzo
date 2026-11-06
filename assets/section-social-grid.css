@@ -1,0 +1,114 @@
+.social-grid__layout {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 990px) {
+  .social-grid__layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 2fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.social-grid__content {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+
+.social-grid__heading {
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  line-height: 1.25;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: color-mix(in srgb, var(--color-foreground) 88%, transparent);
+}
+
+.social-grid__text {
+  max-width: 18rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.social-grid__stat {
+  display: grid;
+  gap: 0.25rem;
+  margin-block-start: 1.25rem;
+}
+
+.social-grid__stat-number {
+  font-size: clamp(2rem, 2.8vw, 2.5rem);
+  line-height: 1.1;
+  color: var(--color-accent);
+}
+
+.social-grid__stat-label {
+  font-size: 0.9375rem;
+  color: var(--color-foreground);
+}
+
+.social-grid__button {
+  gap: 0.5rem;
+  min-height: 3.75rem;
+  margin-block-start: 1.75rem;
+  padding: 0.75rem 2rem;
+}
+
+.social-grid__button .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.social-grid__posts {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.social-grid__post {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--color-card);
+}
+
+.social-grid__post-link {
+  display: block;
+  height: 100%;
+}
+
+.social-grid__post img,
+.social-grid__post svg:not(.icon) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.social-grid__post svg:not(.icon) {
+  fill: rgb(0 0 0 / 0.12);
+}
+
+.social-grid__post-link:hover img {
+  transform: scale(1.04);
+}
+
+.social-grid__play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  pointer-events: none;
+}
+
+.social-grid__play .icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.25));
+}

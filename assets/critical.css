@@ -293,7 +293,7 @@ a {
   gap: 1rem;
   min-height: var(--header-height);
   max-width: none;
-  padding-inline: clamp(var(--page-margin), 3.5vw, 3.5rem);
+  padding-inline: var(--page-margin);
 }
 
 .header__logo {
@@ -536,7 +536,7 @@ a {
   gap: clamp(2rem, 5vw, 4.5rem);
   min-height: var(--hero-min-height);
   padding-block: clamp(2.5rem, 6vw, 5rem);
-  padding-inline: clamp(var(--page-margin), 3.5vw, 3.5rem);
+  padding-inline: var(--page-margin);
   color: var(--hero-text, var(--color-foreground));
 }
 

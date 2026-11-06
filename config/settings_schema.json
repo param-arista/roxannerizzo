@@ -14,13 +14,13 @@
         "type": "font_picker",
         "id": "type_heading_font",
         "label": "Headings",
-        "default": "inter_n4"
+        "default": "manrope_n4"
       },
       {
         "type": "font_picker",
         "id": "type_body_font",
         "label": "Body",
-        "default": "inter_n4"
+        "default": "manrope_n4"
       },
       {
         "type": "font_picker",
@@ -80,9 +80,22 @@
       },
       {
         "type": "color",
+        "id": "section_alt_color",
+        "label": "Light section background",
+        "info": "Grey bands such as Reviews and the Instagram section.",
+        "default": "#F4F4F4"
+      },
+      {
+        "type": "color",
         "id": "card_color",
         "label": "Product card background",
-        "default": "#ECECEE"
+        "default": "#F4F4F4"
+      },
+      {
+        "type": "color",
+        "id": "rating_color",
+        "label": "Rating stars",
+        "default": "#D49A2A"
       }
     ]
   },
@@ -94,8 +107,14 @@
         "id": "max_page_width",
         "label": "Page width",
         "options": [
-          { "value": "75rem", "label": "Narrow" },
-          { "value": "90rem", "label": "Wide" }
+          {
+            "value": "75rem",
+            "label": "Narrow"
+          },
+          {
+            "value": "90rem",
+            "label": "Wide"
+          }
         ],
         "default": "90rem"
       },
@@ -106,8 +125,9 @@
         "max": 100,
         "step": 1,
         "unit": "px",
-        "label": "Page margin",
-        "default": 20
+        "label": "Page margin (desktop)",
+        "default": 50,
+        "info": "Scales down to 16 px on phones."
       },
       {
         "type": "range",
@@ -140,6 +160,43 @@
         "label": "Transparent header over the home page hero",
         "info": "Applies when the first home page section is the hero banner.",
         "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https://instagram.com/…"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https://facebook.com/…"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@…"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest"
       }
     ]
   }

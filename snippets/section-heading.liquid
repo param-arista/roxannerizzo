@@ -1,0 +1,26 @@
+{% doc %}
+  Centred eyebrow + heading + optional intro used at the top of most
+  home page sections. Renders nothing when all three are blank.
+
+  @param {string} [eyebrow] - Small spaced uppercase line in the accent color
+  @param {string} [heading] - The h2
+  @param {string} [text] - Rich text intro (HTML from a richtext setting)
+  @param {string} [id] - id for the h2, for aria-labelledby
+
+  @example
+  {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id %}
+{% enddoc %}
+
+{%- if eyebrow != blank or heading != blank or text != blank -%}
+  <header class="section-heading">
+    {%- if eyebrow != blank -%}
+      <p class="eyebrow">{{ eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <h2 class="section-heading__title" {% if id %}id="{{ id }}"{% endif %}>{{ heading | escape }}</h2>
+    {%- endif -%}
+    {%- if text != blank -%}
+      <div class="section-heading__text">{{ text }}</div>
+    {%- endif -%}
+  </header>
+{%- endif -%}

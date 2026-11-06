@@ -1,0 +1,41 @@
+{% doc %}
+  Round social icons for the accounts set in Theme settings → Social
+  media. Renders nothing when none are set.
+
+  @param {string} [label] - Small heading above the icons, e.g. "Follow us on"
+
+  @example
+  {% render 'social-icons', label: 'Follow us on' %}
+{% enddoc %}
+
+{%- liquid
+  assign networks = 'instagram,facebook,tiktok,youtube,pinterest' | split: ','
+  assign has_any = false
+  for network in networks
+    assign key = 'social_' | append: network | append: '_link'
+    if settings[key] != blank
+      assign has_any = true
+    endif
+  endfor
+-%}
+
+{%- if has_any -%}
+  <div class="social-icons">
+    {%- if label != blank -%}
+      <p class="social-icons__label">{{ label | escape }}</p>
+    {%- endif -%}
+    <ul class="social-icons__list" role="list">
+      {%- for network in networks -%}
+        {%- assign key = 'social_' | append: network | append: '_link' -%}
+        {%- if settings[key] != blank -%}
+          <li>
+            <a class="social-icons__link" href="{{ settings[key] | escape }}" target="_blank" rel="noopener">
+              {%- render 'icon', name: network -%}
+              <span class="visually-hidden">{{ network | capitalize }} ({{ 'general.opens_in_new_window' | t }})</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

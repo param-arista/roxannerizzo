@@ -1,0 +1,85 @@
+{% comment %}
+  "How it wears / Instant. Flawless. Safe.": heading over a grey panel
+  of text columns separated by thin vertical rules.
+{% endcomment %}
+
+{{ 'section-feature-columns.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'FeatureHeading-' | append: section.id -%}
+
+<section
+  class="section feature-columns"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width">
+    {%- render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id -%}
+
+    <ul class="feature-columns__panel" role="list" style="--columns: {{ section.blocks.size | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        <li class="feature-columns__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="feature-columns__title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="feature-columns__text">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feature columns",
+  "tag": "div",
+  "class": "feature-columns-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How it wears"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Instant. Flawless. Safe."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Instant"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Describe this benefit in a sentence or two.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature columns",
+      "blocks": [
+        { "type": "column", "settings": { "title": "Instant" } },
+        { "type": "column", "settings": { "title": "Flawless" } },
+        { "type": "column", "settings": { "title": "Safe" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

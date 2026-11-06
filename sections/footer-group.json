@@ -4,11 +4,64 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "brand": {
+          "type": "brand",
+          "settings": {
+            "logo_text": "Roxanne Rizzo",
+            "logo_tagline": "New York",
+            "show_newsletter": true,
+            "newsletter_heading": "Down for more? We got you!",
+            "newsletter_text": "<p>All the latest product drops, limited offers, and glow tips — straight to your inbox.</p>",
+            "social_label": "Follow us on"
+          }
+        },
+        "menu_info": {
+          "type": "menu",
+          "settings": {
+            "title": "Info",
+            "menu": "footer"
+          }
+        },
+        "menu_products": {
+          "type": "menu",
+          "settings": {
+            "title": "Products",
+            "menu": "footer-products"
+          }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "title": "Customer service",
+            "hours_label": "Hours",
+            "hours": "Monday - Friday: 9am - 6pm EST.",
+            "phone_label": "Text",
+            "phone": "(305) 807-9330",
+            "email": ""
+          }
+        },
+        "image": {
+          "type": "image",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "brand",
+        "menu_info",
+        "menu_products",
+        "contact",
+        "image"
+      ],
       "settings": {
-        "menu": "footer",
-        "show_payment_icons": true
+        "background": "#3E3333",
+        "text_color": "#FFFFFF",
+        "copyright": "Roxanne Rizzo New York",
+        "credit": "Powered by Arista Systems Pvt.Ltd."
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

@@ -1,0 +1,189 @@
+{% comment %}
+  "Follow the glow / Join the @roxannerizzo": text column (eyebrow,
+  heading, text, follower count, Instagram button) beside a grid of
+  posts. Posts are picked by hand as blocks (image + link, optional play
+  icon for reels); Shopify can't read an Instagram feed by itself, so a
+  live feed would need an app.
+{% endcomment %}
+
+{{ 'section-social-grid.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'SocialHeading-' | append: section.id
+  assign profile_url = section.settings.button_link | default: settings.social_instagram_link
+-%}
+
+<section
+  class="section social-grid{% if section.settings.alt_background %} section--alt{% endif %}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width social-grid__layout">
+    <div class="social-grid__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="social-grid__heading" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="social-grid__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.stat != blank -%}
+        <p class="social-grid__stat">
+          <span class="social-grid__stat-number">{{ section.settings.stat | escape }}</span>
+          <span class="social-grid__stat-label">{{ section.settings.stat_label | escape }}</span>
+        </p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and profile_url != blank -%}
+        <a class="button social-grid__button" href="{{ profile_url }}" target="_blank" rel="noopener">
+          {{- section.settings.button_label | escape }}
+          {% render 'icon', name: 'instagram' -%}
+          <span class="visually-hidden">{{ 'general.opens_in_new_window' | t }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <ul class="social-grid__posts" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign post_url = block.settings.link | default: profile_url
+          assign post_alt = block.settings.image.alt | default: block.settings.caption
+        -%}
+        <li class="social-grid__post" {{ block.shopify_attributes }}>
+          {%- capture post_media -%}
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 800
+                | image_tag:
+                  widths: '300, 450, 600, 800',
+                  sizes: '(min-width: 990px) 20vw, 33vw',
+                  loading: 'lazy',
+                  alt: post_alt
+              }}
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {%- endif -%}
+            {%- if block.settings.is_video -%}
+              <span class="social-grid__play" aria-hidden="true">{%- render 'icon', name: 'play' -%}</span>
+            {%- endif -%}
+          {%- endcapture -%}
+          {%- if post_url != blank -%}
+            <a class="social-grid__post-link" href="{{ post_url }}" target="_blank" rel="noopener">
+              {{ post_media }}
+              <span class="visually-hidden">{{ 'general.opens_in_new_window' | t }}</span>
+            </a>
+          {%- else -%}
+            {{ post_media }}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social grid",
+  "tag": "div",
+  "class": "social-grid-section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Follow the glow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join the @roxannerizzo"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Tag us in your post for a chance to be featured.</p>"
+    },
+    {
+      "type": "text",
+      "id": "stat",
+      "label": "Stat number",
+      "info": "E.g. 14.3K +. Update it by hand; leave empty to hide.",
+      "default": "14.3K +"
+    },
+    {
+      "type": "text",
+      "id": "stat_label",
+      "label": "Stat label",
+      "default": "Instagram Followers"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Follow on Instagram"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the Instagram link in Theme settings → Social media."
+    },
+    {
+      "type": "checkbox",
+      "id": "alt_background",
+      "label": "Light grey background",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Short description",
+          "info": "Read out by screen readers when the image has no alt text."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Post link",
+          "info": "Defaults to the profile link."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_video",
+          "label": "Show play icon (reel / video)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social grid",
+      "blocks": [
+        { "type": "post", "settings": { "is_video": true } },
+        { "type": "post" },
+        { "type": "post", "settings": { "is_video": true } },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post", "settings": { "is_video": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

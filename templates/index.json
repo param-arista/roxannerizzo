@@ -24,18 +24,353 @@
     "featured_products": {
       "type": "featured-products",
       "blocks": {
-        "product_1": { "type": "product", "settings": { "badge": "Value set" } },
-        "product_2": { "type": "product", "settings": { "badge": "New arrival" } },
-        "product_3": { "type": "product", "settings": { "badge": "Best seller" } }
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "badge": "Value set"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "badge": "New arrival"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "badge": "Best seller"
+          }
+        }
       },
-      "block_order": ["product_1", "product_2", "product_3"],
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3"
+      ],
       "settings": {
         "eyebrow": "Featured",
         "heading": "Explore favorites",
         "text": "<p>Bestsellers, new arrivals, and value sets loved by makeup artists worldwide.</p>",
-        "columns": 3
+        "columns": 3,
+        "width": "contained",
+        "image_ratio": "wide",
+        "show_rating": true,
+        "card_button_label": "",
+        "card_background": ""
+      }
+    },
+    "founder_quote": {
+      "type": "founder-quote",
+      "settings": {
+        "eyebrow": "Why Bronze Glow",
+        "quote": "A clean and simple way to look and feel healthy, regardless of age, gender or skin tone",
+        "author": "Roxanne Rizzo, Founder",
+        "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
+        "alt_background": true
+      }
+    },
+    "our_story": {
+      "type": "image-with-text",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "Our vision",
+            "text": "Bringing simplicity back to beauty."
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "Our values",
+            "text": "Beauty for everyone no color matching ever needed."
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ],
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "Our story",
+        "heading": "Once an industry secret, now available to everyone",
+        "text": "<p>Roxanne Rizzo New York was founded in 2009 by celebrity makeup artist Roxanne Rizzo, born from years of working behind the scenes in film and television. As high-definition cameras changed the industry, makeup had to change with it. Every uneven tone, shadow and patch of redness became more visible on camera. <strong>Bronze Glow was created in 2009 and perfected on set under HD cameras and professional film lighting.</strong></p><p>The result was a buildable, universal mist that gives skin an instant, warm, healthy-looking complexion. No color matching or tools needed. What started in Roxanne's own makeup kit became a go-to final step on film and television sets around the world. Now, it's becoming a household name for everyday use.</p>",
+        "button_label": "",
+        "alt_background": false
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Lucy Liu",
+            "role": "Actress, Artist & Advocate",
+            "quote": "Bronze Glow is the best!"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Bill Corso",
+            "role": "Oscar & Emmy-winning MUA",
+            "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens. If I ever get more than one bottle, my wife steals one for her everyday."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Liam Neeson",
+            "role": "Award-Winning Irish Actor",
+            "quote": "It should be called confidence in a can!"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Ashlee Glazer",
+            "role": "Celebrity Makeup Artist",
+            "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
+      "settings": {
+        "eyebrow": "Loved by",
+        "heading": "Reviews",
+        "grayscale": true,
+        "alt_background": true
+      }
+    },
+    "press": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "Us Weekly"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "InStyle"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "People"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "name": "Allure"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "name": "Cosmopolitan"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "name": "Vogue"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
+      ],
+      "settings": {
+        "heading": "",
+        "logo_height": 56,
+        "grayscale": true
+      }
+    },
+    "shop_the_glow": {
+      "type": "promo-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Bronze Glow",
+            "button_label": "Shop Now",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Mulberry Street",
+            "button_label": "Notify Me",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2"
+      ],
+      "settings": {
+        "eyebrow": "Our bestsellers",
+        "heading": "Shop the glow",
+        "columns": 2
+      }
+    },
+    "how_it_wears": {
+      "type": "feature-columns",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "Instant",
+            "text": "<p>An easy-to-use 360° nozzle lets you instantly glow from head to toe. A light, buildable mist you can layer over makeup or wear alone.</p>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "Flawless",
+            "text": "<p>Enhances your natural beauty and evens skin tone by reducing the look of dark under-eye circles, spots, cellulite, scars, rosacea, and acne for a healthy, lit-from-within glow.</p>"
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "title": "Safe",
+            "text": "<p>Formulated with the cleanest ingredients: paraben, sulfate, and phthalate free. Low in DHA, non-comedogenic, 100% vegan, and never tested on animals.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3"
+      ],
+      "settings": {
+        "eyebrow": "How it wears",
+        "heading": "Instant. Flawless. Safe."
+      }
+    },
+    "travel_collection": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "The accessories",
+        "heading": "The travel collection",
+        "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
+        "products_limit": 4,
+        "columns": 4,
+        "width": "full",
+        "image_ratio": "standard",
+        "show_rating": false,
+        "card_button_label": "Shop Now",
+        "card_background": "#EAEAEB"
+      }
+    },
+    "conversation": {
+      "type": "contact-feature",
+      "settings": {
+        "side_label": "The personal beauty experience",
+        "eyebrow": "Let's connect",
+        "heading": "A conversation with Roxanne",
+        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
+        "phone_placeholder": "(405) 807-9330",
+        "button_label": "Book an Appointment",
+        "subject": "Appointment request"
+      }
+    },
+    "follow_the_glow": {
+      "type": "social-grid",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "is_video": true
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "is_video": false
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "is_video": true
+          }
+        },
+        "post_4": {
+          "type": "post",
+          "settings": {
+            "is_video": false
+          }
+        },
+        "post_5": {
+          "type": "post",
+          "settings": {
+            "is_video": false
+          }
+        },
+        "post_6": {
+          "type": "post",
+          "settings": {
+            "is_video": true
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "post_5",
+        "post_6"
+      ],
+      "settings": {
+        "eyebrow": "Follow the glow",
+        "heading": "Join the @roxannerizzo",
+        "text": "<p>Tag us in your post for a chance to be featured.</p>",
+        "stat": "14.3K +",
+        "stat_label": "Instagram Followers",
+        "button_label": "Follow on Instagram",
+        "alt_background": true
       }
     }
   },
-  "order": ["hero", "rating_strip", "featured_products"]
+  "order": [
+    "hero",
+    "rating_strip",
+    "featured_products",
+    "founder_quote",
+    "our_story",
+    "reviews",
+    "press",
+    "shop_the_glow",
+    "how_it_wears",
+    "travel_collection",
+    "conversation",
+    "follow_the_glow"
+  ]
 }

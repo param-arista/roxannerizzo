@@ -1,0 +1,53 @@
+.logo-list__heading {
+  margin-block-end: 1.5rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.25em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.logo-list__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+}
+
+@media (max-width: 749px) {
+  .logo-list__list {
+    justify-content: center;
+    gap: 1.25rem 2rem;
+    --logo-height: 32px;
+  }
+}
+
+.logo-list__image {
+  width: auto;
+  height: var(--logo-height, 56px);
+  max-width: 13rem;
+  object-fit: contain;
+}
+
+.logo-list__list--grayscale .logo-list__image {
+  filter: grayscale(1) brightness(0.2);
+}
+
+.logo-list__text {
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.logo-list__link {
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.logo-list__link:hover {
+  opacity: 0.7;
+}

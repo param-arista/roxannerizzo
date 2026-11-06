@@ -1,0 +1,159 @@
+{% comment %}
+  "Loved by / Reviews": carousel of review cards (stars, round photo,
+  name, role, quote). Swipe or scroll on every screen; prev/next arrows
+  appear once assets/carousel.js has loaded.
+{% endcomment %}
+
+{{ 'section-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carousel.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign heading_id = 'ReviewsHeading-' | append: section.id
+  assign track_label = section.settings.heading
+  if track_label == blank
+    assign track_label = 'sections.reviews.label' | t
+  endif
+-%}
+
+<section
+  class="section reviews{% if section.settings.alt_background %} section--alt{% endif %}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width">
+    {%- render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id -%}
+
+    <scroll-carousel class="reviews__carousel">
+      <button type="button" class="reviews__arrow reviews__arrow--prev" data-carousel-prev hidden>
+        {%- render 'icon', name: 'chevron-left' -%}
+        <span class="visually-hidden">{{ 'sections.reviews.previous' | t }}</span>
+      </button>
+
+      <ul class="reviews__track" role="list" data-carousel-track tabindex="0" aria-label="{{ track_label | escape }}">
+        {%- for block in section.blocks -%}
+          <li class="reviews__item" {{ block.shopify_attributes }}>
+            <figure class="review-card">
+              {%- if block.settings.stars > 0 -%}
+                {%- render 'rating-stars', rating: block.settings.stars -%}
+              {%- endif -%}
+              <div class="review-card__avatar{% if section.settings.grayscale %} review-card__avatar--grayscale{% endif %}">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 240, height: 240, crop: 'center'
+                    | image_tag: loading: 'lazy', alt: '', width: 80, height: 80
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+              </div>
+              <figcaption class="review-card__author">
+                <cite class="review-card__name">{{ block.settings.name | escape }}</cite>
+                {%- if block.settings.role != blank -%}
+                  <span class="review-card__role">{{ block.settings.role | escape }}</span>
+                {%- endif -%}
+              </figcaption>
+              <blockquote class="review-card__quote">
+                <p>&ldquo;{{ block.settings.quote | escape }}&rdquo;</p>
+              </blockquote>
+            </figure>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <button type="button" class="reviews__arrow reviews__arrow--next" data-carousel-next hidden>
+        {%- render 'icon', name: 'chevron-right' -%}
+        <span class="visually-hidden">{{ 'sections.reviews.next' | t }}</span>
+      </button>
+    </scroll-carousel>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": "div",
+  "class": "reviews-section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Loved by"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Black and white photos",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "alt_background",
+      "label": "Light grey background",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Stars",
+          "info": "0 hides the stars.",
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Square, at least 240 × 240 px."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Verified buyer"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Share what this customer said about the product."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

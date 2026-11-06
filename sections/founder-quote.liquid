@@ -1,0 +1,72 @@
+{% comment %}
+  "Why Bronze Glow": eyebrow, a large quote framed by two bronze corner
+  brackets, a short rule, the author, then a supporting paragraph.
+{% endcomment %}
+
+{{ 'section-founder-quote.css' | asset_url | stylesheet_tag }}
+
+<section class="section founder-quote{% if section.settings.alt_background %} section--alt{% endif %}">
+  <div class="page-width founder-quote__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    <figure class="founder-quote__figure">
+      <blockquote class="founder-quote__quote">
+        <p>&ldquo;{{ section.settings.quote | escape }}&rdquo;</p>
+      </blockquote>
+      {%- if section.settings.author != blank -%}
+        <figcaption class="founder-quote__author">{{ section.settings.author | escape }}</figcaption>
+      {%- endif -%}
+    </figure>
+
+    {%- if section.settings.text != blank -%}
+      <div class="founder-quote__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founder quote",
+  "tag": "div",
+  "class": "founder-quote-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why Bronze Glow"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "A clean and simple way to look and feel healthy, regardless of age, gender or skin tone"
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Author",
+      "default": "Roxanne Rizzo, Founder"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text below",
+      "default": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "alt_background",
+      "label": "Light grey background",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder quote"
+    }
+  ]
+}
+{% endschema %}

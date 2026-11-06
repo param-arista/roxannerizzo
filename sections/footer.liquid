@@ -1,34 +1,155 @@
 {% comment %}
-  Basic footer: one menu, copyright and payment icons. Placeholder until
-  the footer design is supplied.
+  Footer on a dark brown band, built from blocks laid out in a row:
+  - brand: logo, newsletter signup, social icons
+  - menu: a title and a menu (Info, Products)
+  - contact: customer service hours and a text/phone number
+  - image: a photo
+  Bottom bar: copyright and a credit line.
 {% endcomment %}
 
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
 
-<footer class="footer">
-  <div class="footer__inner page-width">
-    {%- if section.settings.menu != blank -%}
-      <nav aria-label="{{ 'sections.footer.navigation' | t }}">
-        <ul class="footer__links">
-          {%- for link in section.settings.menu.links -%}
-            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </nav>
-    {%- endif -%}
+<footer
+  class="footer"
+  style="--footer-bg: {{ section.settings.background }}; --footer-text: {{ section.settings.text_color }};"
+>
+  <div class="page-width footer__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'brand' -%}
+          <div class="footer__block footer__block--brand" {{ block.shopify_attributes }}>
+            <a class="footer__logo" href="{{ routes.root_url }}">
+              {%- if block.settings.logo != blank -%}
+                {%- liquid
+                  assign logo_w2x = block.settings.logo_width | times: 2
+                  assign logo_widths = block.settings.logo_width | append: ',' | append: logo_w2x
+                  assign logo_style = 'width: ' | append: block.settings.logo_width | append: 'px'
+                -%}
+                {{
+                  block.settings.logo
+                  | image_url: width: logo_w2x
+                  | image_tag: widths: logo_widths, loading: 'lazy', alt: shop.name, style: logo_style
+                }}
+              {%- else -%}
+                <svg class="footer__logo-star" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m12 1.5 2.6 7.6h8l-6.5 4.8 2.5 7.6L12 16.8l-6.6 4.7 2.5-7.6-6.5-4.8h8L12 1.5Z"/></svg>
+                <span class="footer__logo-name">{{ block.settings.logo_text | default: shop.name | escape }}</span>
+                {%- if block.settings.logo_tagline != blank -%}
+                  <span class="footer__logo-tagline">{{ block.settings.logo_tagline | escape }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </a>
 
-    <p class="footer__copyright">
-      &copy; {{ 'now' | date: '%Y' }}
-      {{ shop.name | link_to: routes.root_url }}
-    </p>
+            {%- if block.settings.show_newsletter -%}
+              {%- assign newsletter_id = 'FooterNewsletter-' | append: block.id -%}
+              <div class="footer__newsletter">
+                {%- if block.settings.newsletter_heading != blank -%}
+                  <h2 class="footer__newsletter-heading">{{ block.settings.newsletter_heading | escape }}</h2>
+                {%- endif -%}
+                {%- if block.settings.newsletter_text != blank -%}
+                  <div class="footer__newsletter-text">{{ block.settings.newsletter_text }}</div>
+                {%- endif -%}
+                {%- form 'customer', id: newsletter_id, class: 'footer__newsletter-form' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <label class="visually-hidden" for="{{ newsletter_id }}-email">{{ 'sections.footer.email' | t }}</label>
+                  <input
+                    class="footer__newsletter-input"
+                    type="email"
+                    id="{{ newsletter_id }}-email"
+                    name="contact[email]"
+                    autocomplete="email"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    required
+                    placeholder="{{ 'sections.footer.email' | t }}"
+                    value="{{ form.email }}"
+                    {% if form.errors %}
+                      aria-invalid="true" aria-describedby="{{ newsletter_id }}-status"
+                    {% elsif form.posted_successfully? %}
+                      aria-describedby="{{ newsletter_id }}-status"
+                    {% endif %}
+                  >
+                  <button type="submit" class="footer__newsletter-submit">
+                    {%- render 'icon', name: 'arrow-right' -%}
+                    <span class="visually-hidden">{{ 'sections.footer.subscribe' | t }}</span>
+                  </button>
+                  {%- if form.posted_successfully? -%}
+                    <p class="footer__newsletter-status" id="{{ newsletter_id }}-status" role="status">{{ 'sections.footer.subscribed' | t }}</p>
+                  {%- elsif form.errors -%}
+                    <div class="footer__newsletter-status" id="{{ newsletter_id }}-status" role="alert">{{ form.errors | default_errors }}</div>
+                  {%- endif -%}
+                {%- endform -%}
+              </div>
+            {%- endif -%}
 
-    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
-      <ul class="footer__payment" role="list" aria-label="{{ 'sections.footer.payment_methods' | t }}">
-        {%- for type in shop.enabled_payment_types -%}
-          <li>{{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}</li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+            {%- render 'social-icons', label: block.settings.social_label -%}
+          </div>
+
+        {%- when 'menu' -%}
+          {%- liquid
+            assign menu_label = block.settings.title
+            if menu_label == blank
+              assign menu_label = 'sections.footer.navigation' | t
+            endif
+          -%}
+          <nav class="footer__block footer__block--menu" {{ block.shopify_attributes }} aria-label="{{ menu_label | escape }}">
+            {%- if block.settings.title != blank -%}
+              <h2 class="footer__title">{{ block.settings.title | escape }}</h2>
+            {%- endif -%}
+            <ul class="footer__links" role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+
+        {%- when 'contact' -%}
+          <div class="footer__block footer__block--contact" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h2 class="footer__title">{{ block.settings.title | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.hours != blank -%}
+              <h3 class="footer__subtitle">{{ block.settings.hours_label | escape }}</h3>
+              <p>{{ block.settings.hours | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.phone != blank -%}
+              {%- assign phone_digits = block.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | remove: '.' -%}
+              <h3 class="footer__subtitle">{{ block.settings.phone_label | escape }}</h3>
+              <p>
+                <a class="footer__phone" href="sms:{{ phone_digits }}">
+                  {%- render 'icon', name: 'chat' -%}
+                  <span>{{ block.settings.phone | escape }}</span>
+                </a>
+              </p>
+            {%- endif -%}
+            {%- if block.settings.email != blank -%}
+              <h3 class="footer__subtitle">{{ 'sections.footer.email_us' | t }}</h3>
+              <p><a class="footer__phone" href="mailto:{{ block.settings.email }}">{{ block.settings.email | escape }}</a></p>
+            {%- endif -%}
+          </div>
+
+        {%- when 'image' -%}
+          <div class="footer__block footer__block--image" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 700
+                | image_tag: widths: '350, 500, 700', sizes: '(min-width: 990px) 16vw, 50vw', loading: 'lazy', alt: block.settings.image.alt
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="footer__bottom">
+    <div class="page-width footer__bottom-inner">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright | default: shop.name | escape }}</p>
+      {%- if section.settings.credit != blank -%}
+        <div class="footer__credit">{{ section.settings.credit }}</div>
+      {%- endif -%}
+    </div>
   </div>
 </footer>
 
@@ -37,18 +158,168 @@
   "name": "Footer",
   "tag": "div",
   "class": "footer-section",
+  "max_blocks": 6,
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Menu",
-      "default": "footer"
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#3E3333"
     },
     {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "Show payment icons",
-      "default": true
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright name",
+      "info": "Shown after © and the year. Defaults to the store name.",
+      "default": "Roxanne Rizzo New York"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "credit",
+      "label": "Credit line",
+      "default": "Powered by Arista Systems Pvt.Ltd."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Logo and newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image",
+          "info": "A light version for the dark footer. Leave empty for the star + text wordmark."
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "min": 100,
+          "max": 400,
+          "step": 10,
+          "unit": "px",
+          "label": "Logo image width",
+          "default": 300
+        },
+        {
+          "type": "text",
+          "id": "logo_text",
+          "label": "Text logo",
+          "info": "Defaults to the store name."
+        },
+        {
+          "type": "text",
+          "id": "logo_tagline",
+          "label": "Text logo tagline",
+          "default": "New York"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "label": "Show newsletter signup",
+          "info": "Subscribers are added as customers who accept marketing.",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "newsletter_heading",
+          "label": "Newsletter heading",
+          "default": "Down for more? We got you!"
+        },
+        {
+          "type": "richtext",
+          "id": "newsletter_text",
+          "label": "Newsletter text",
+          "default": "<p>All the latest product drops, limited offers, and glow tips — straight to your inbox.</p>"
+        },
+        {
+          "type": "text",
+          "id": "social_label",
+          "label": "Social icons heading",
+          "info": "Icons come from Theme settings → Social media.",
+          "default": "Follow us on"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Info"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Customer service",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Customer service"
+        },
+        {
+          "type": "text",
+          "id": "hours_label",
+          "label": "Hours label",
+          "default": "Hours"
+        },
+        {
+          "type": "text",
+          "id": "hours",
+          "label": "Hours",
+          "default": "Monday - Friday: 9am - 6pm EST."
+        },
+        {
+          "type": "text",
+          "id": "phone_label",
+          "label": "Phone label",
+          "default": "Text"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone number",
+          "info": "Opens a text message on phones."
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "info": "Optional."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
     }
   ],
   "enabled_on": {

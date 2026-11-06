@@ -67,3 +67,75 @@
 .template-gift-card main img {
   display: unset;
 }
+
+/** Home page sections: shared spacing and heading */
+.section {
+  padding-block: var(--section-padding, clamp(3.5rem, 7vw, 5.5rem));
+}
+
+.section--alt {
+  background-color: var(--color-section-alt);
+}
+
+.section-heading {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  margin-block-end: clamp(1.5rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.section-heading__title {
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+  opacity: 0.88;
+}
+
+.section-heading__text {
+  max-width: 52rem;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+}
+
+/** Rating stars (snippets/rating-stars.liquid) */
+.rating-stars {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.rating-stars__track {
+  display: block;
+  letter-spacing: 0.15em;
+  background: linear-gradient(
+    90deg,
+    var(--color-rating) var(--rating-fill, 100%),
+    color-mix(in srgb, var(--color-rating) 25%, transparent) var(--rating-fill, 100%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/** Shared text input style */
+.field__input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgb(0 0 0 / 0.12);
+  border-block-end-color: var(--color-accent);
+  border-radius: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 0.875rem;
+}
+
+.field__input::placeholder {
+  color: color-mix(in srgb, var(--color-foreground) 45%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

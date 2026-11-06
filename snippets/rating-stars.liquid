@@ -1,0 +1,19 @@
+{% doc %}
+  Five stars filled to the given rating (partial stars supported), with
+  the rating announced as text for screen readers.
+
+  @param {number} rating - The rating, e.g. 4.9
+  @param {number} [max] - Scale maximum, default 5
+
+  @example
+  {% render 'rating-stars', rating: 4.9 %}
+{% enddoc %}
+
+{%- liquid
+  assign max = max | default: 5
+  assign percent = rating | times: 100.0 | divided_by: max | at_most: 100 | at_least: 0
+-%}
+<span class="rating-stars" style="--rating-fill: {{ percent }}%;">
+  <span class="rating-stars__track" aria-hidden="true">★★★★★</span>
+  <span class="visually-hidden">{{ 'products.rating_out_of' | t: rating: rating, max: max }}</span>
+</span>

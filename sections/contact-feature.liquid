@@ -1,0 +1,199 @@
+{% comment %}
+  "Let's connect / A conversation with Roxanne": bronze rules above and
+  below, a vertical side label, an image, and Shopify's contact form
+  (name, email, phone, message). Submissions arrive at the store's
+  sender email like any contact form.
+{% endcomment %}
+
+{{ 'section-contact-feature.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'ContactHeading-' | append: section.id
+  assign form_id = 'ContactForm-' | append: section.id
+-%}
+
+<section
+  class="section contact-feature"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width">
+    <div class="contact-feature__frame">
+      {%- if section.settings.side_label != blank -%}
+        <p class="contact-feature__side-label" aria-hidden="true">{{ section.settings.side_label | escape }}</p>
+      {%- endif -%}
+
+      <div class="contact-feature__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '480, 720, 960, 1200',
+              sizes: '(min-width: 990px) 36vw, 100vw',
+              loading: 'lazy',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+
+      <div class="contact-feature__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="contact-feature__heading" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="contact-feature__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- form 'contact', id: form_id, class: 'contact-feature__form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="contact-feature__status contact-feature__status--success" role="status" tabindex="-1" autofocus>
+              {{ 'sections.contact.success' | t }}
+            </p>
+          {%- elsif form.errors -%}
+            <div class="contact-feature__status contact-feature__status--error" role="alert" tabindex="-1" autofocus>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.subject != blank -%}
+            <input type="hidden" name="contact[subject]" value="{{ section.settings.subject | escape }}">
+          {%- endif -%}
+
+          <div class="contact-feature__field">
+            <label class="contact-feature__label" for="{{ form_id }}-name">{{ 'sections.contact.name' | t }}*</label>
+            <input
+              class="field__input"
+              type="text"
+              id="{{ form_id }}-name"
+              name="contact[name]"
+              autocomplete="name"
+              required
+              placeholder="{{ 'sections.contact.name_placeholder' | t }}"
+              value="{{ form.name }}"
+            >
+          </div>
+
+          <div class="contact-feature__field">
+            <label class="contact-feature__label" for="{{ form_id }}-email">{{ 'sections.contact.email' | t }}*</label>
+            <input
+              class="field__input"
+              type="email"
+              id="{{ form_id }}-email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              required
+              placeholder="{{ 'sections.contact.email_placeholder' | t }}"
+              value="{{ form.email }}"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+              {% endif %}
+            >
+          </div>
+
+          <div class="contact-feature__field">
+            <label class="contact-feature__label" for="{{ form_id }}-phone">{{ 'sections.contact.phone' | t }}</label>
+            <input
+              class="field__input"
+              type="tel"
+              id="{{ form_id }}-phone"
+              name="contact[phone]"
+              autocomplete="tel"
+              placeholder="{{ section.settings.phone_placeholder | escape }}"
+              value="{{ form.phone }}"
+            >
+          </div>
+
+          <div class="contact-feature__field">
+            <label class="contact-feature__label" for="{{ form_id }}-message">{{ 'sections.contact.message' | t }}</label>
+            <textarea
+              class="field__input contact-feature__message"
+              id="{{ form_id }}-message"
+              name="contact[body]"
+              rows="1"
+              placeholder="{{ 'sections.contact.message_placeholder' | t }}"
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+
+          <button type="submit" class="button contact-feature__submit">
+            {{- section.settings.button_label | escape }}
+            {% render 'icon', name: 'arrow-right' -%}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form with image",
+  "tag": "div",
+  "class": "contact-feature-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "side_label",
+      "label": "Vertical side label",
+      "default": "The personal beauty experience"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Let's connect"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A conversation with Roxanne"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "(000) 000-0000"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Book an Appointment"
+    },
+    {
+      "type": "text",
+      "id": "subject",
+      "label": "Email subject",
+      "info": "Added to the email you receive, so these requests are easy to filter.",
+      "default": "Appointment request"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form with image"
+    }
+  ]
+}
+{% endschema %}

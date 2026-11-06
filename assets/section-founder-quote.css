@@ -1,0 +1,69 @@
+.founder-quote__inner {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.founder-quote__figure {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+}
+
+/* Bronze corner brackets: top-left and bottom-right of the quote */
+.founder-quote__quote {
+  position: relative;
+  max-width: 58rem;
+  padding: 0.75rem clamp(1.5rem, 5vw, 4.5rem);
+  font-size: clamp(1.5rem, 2.9vw, 2.5rem);
+  line-height: 1.3;
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+}
+
+.founder-quote__quote::before,
+.founder-quote__quote::after {
+  content: '';
+  position: absolute;
+  width: clamp(2rem, 4vw, 3.6rem);
+  height: clamp(1.75rem, 3.4vw, 3rem);
+  border: 0 solid var(--color-accent);
+}
+
+.founder-quote__quote::before {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-block-start-width: 3px;
+  border-inline-start-width: 3px;
+}
+
+.founder-quote__quote::after {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-block-end-width: 3px;
+  border-inline-end-width: 3px;
+}
+
+.founder-quote__author {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: var(--font-body--weight-bold);
+  color: var(--color-muted);
+}
+
+/* Short bronze rule above the author */
+.founder-quote__author::before {
+  content: '';
+  width: 2.75rem;
+  height: 3px;
+  background-color: var(--color-accent);
+}
+
+.founder-quote__text {
+  max-width: 72rem;
+  margin-block-start: clamp(1rem, 3vw, 2.25rem);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  color: var(--color-muted);
+}

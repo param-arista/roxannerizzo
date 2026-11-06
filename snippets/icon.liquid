@@ -2,7 +2,9 @@
   Renders an inline SVG icon. Decorative by default (aria-hidden); give the
   surrounding link or button an accessible name.
 
-  @param {string} name - search | account | heart | bag | star | menu | close
+  @param {string} name - search | account | heart | bag | star | menu | close |
+    arrow-right | chevron-left | chevron-right | play | chat | instagram |
+    facebook | tiktok | youtube | pinterest
   @param {string} [class] - Extra classes
 
   @example
@@ -24,4 +26,24 @@
     <svg class="icon icon-menu {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 7h17M3.5 12h17M3.5 17h17"/></svg>
   {%- when 'close' -%}
     <svg class="icon icon-close {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/></svg>
+  {%- when 'arrow-right' -%}
+    <svg class="icon icon-arrow-right {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg>
+  {%- when 'chevron-left' -%}
+    <svg class="icon icon-chevron-left {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="m15 3.5-8.5 8.5 8.5 8.5"/></svg>
+  {%- when 'chevron-right' -%}
+    <svg class="icon icon-chevron-right {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="m9 3.5 8.5 8.5L9 20.5"/></svg>
+  {%- when 'play' -%}
+    <svg class="icon icon-play {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12.5-7.5L7 4.5Z"/></svg>
+  {%- when 'chat' -%}
+    <svg class="icon icon-chat {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12.5h5" stroke-linecap="round"/></svg>
+  {%- when 'instagram' -%}
+    <svg class="icon icon-instagram {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+  {%- when 'facebook' -%}
+    <svg class="icon icon-facebook {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21h2.9Z"/></svg>
+  {%- when 'tiktok' -%}
+    <svg class="icon icon-tiktok {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3h-3v12.2a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.5a5.8 5.8 0 1 0 4.9 5.7V9.1a7.4 7.4 0 0 0 4.4 1.4V7.5a4.4 4.4 0 0 1-4.4-4.5Z"/></svg>
+  {%- when 'youtube' -%}
+    <svg class="icon icon-youtube {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.3 5 12 5 12 5s-6.3 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.7 19 12 19 12 19s6.3 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></svg>
+  {%- when 'pinterest' -%}
+    <svg class="icon icon-pinterest {{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-3.5 18.3c-.1-.8-.2-2 0-2.8l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.7 1.3 1.4 0 .9-.6 2.2-.8 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.6-1.8-4.4-4.5-4.4-3 0-4.8 2.3-4.8 4.6 0 .9.4 1.9.8 2.4l.1.4-.3 1.2c0 .2-.2.3-.4.2-1.4-.6-2.2-2.6-2.2-4.2 0-3.4 2.5-6.6 7.2-6.6 3.8 0 6.7 2.7 6.7 6.3 0 3.7-2.4 6.8-5.6 6.8-1.1 0-2.2-.6-2.5-1.3l-.7 2.6c-.2.9-.9 2.1-1.4 2.8A9.5 9.5 0 1 0 12 2.5Z"/></svg>
 {%- endcase -%}

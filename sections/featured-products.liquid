@@ -1,35 +1,83 @@
 {% comment %}
-  "Explore favorites": eyebrow, heading, intro and a row of hand-picked
-  products, each with its own badge. Swipeable row on phones (CSS scroll
-  snap, no JavaScript).
+  Product grid with a centred heading. Used twice on the home page:
+  "Explore favorites" (3 boxed cards with badge + rating) and "The travel
+  collection" (4 full-width cards with a Shop Now button). Products come
+  from blocks (each with its own badge); with no blocks, from a collection.
+  Swipeable row on phones (CSS scroll snap, no JavaScript).
 {% endcomment %}
 
 {{ 'section-featured-products.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign heading_id = 'FeaturedHeading-' | append: section.id
+  case section.settings.image_ratio
+    when 'square'
+      assign ratio = '1 / 1'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'wide'
+      assign ratio = '10 / 7'
+    else
+      assign ratio = '5 / 4'
+  endcase
+  assign columns = section.settings.columns
+  if section.settings.width == 'full'
+    assign sizes = '(min-width: 990px) calc(100vw / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
+  else
+    assign sizes = '(min-width: 990px) calc(1180px / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
+  endif
+-%}
+
 <section
-  class="featured-products"
-  style="--columns: {{ section.settings.columns }};"
-  aria-labelledby="FeaturedHeading-{{ section.id }}"
+  class="section featured-products featured-products--{{ section.settings.width }}"
+  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
 >
   <div class="page-width">
-    <header class="featured-products__header">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      <h2 class="featured-products__heading" id="FeaturedHeading-{{ section.id }}">
-        {{- section.settings.heading | escape -}}
-      </h2>
-      {%- if section.settings.text != blank -%}
-        <div class="featured-products__text">{{ section.settings.text }}</div>
-      {%- endif -%}
-    </header>
+    {%- render 'section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.text,
+      id: heading_id
+    -%}
 
     <ul class="featured-products__grid" role="list">
-      {%- for block in section.blocks -%}
-        <li class="featured-products__item" {{ block.shopify_attributes }}>
-          {%- render 'product-card', product: block.settings.product, badge: block.settings.badge -%}
-        </li>
-      {%- endfor -%}
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <li class="featured-products__item" {{ block.shopify_attributes }}>
+            {%- render 'product-card',
+              card_id: block.id,
+              product: block.settings.product,
+              badge: block.settings.badge,
+              show_rating: section.settings.show_rating,
+              button_label: section.settings.card_button_label,
+              sizes: sizes
+            -%}
+          </li>
+        {%- endfor -%}
+      {%- elsif section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_limit -%}
+          <li class="featured-products__item">
+            {%- assign card_id = section.id | append: '-' | append: product.id -%}
+            {%- render 'product-card',
+              card_id: card_id,
+              product: product,
+              show_rating: section.settings.show_rating,
+              button_label: section.settings.card_button_label,
+              sizes: sizes
+            -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..columns) -%}
+          <li class="featured-products__item">
+            {%- assign card_id = section.id | append: '-placeholder-' | append: i -%}
+            {%- render 'product-card', card_id: card_id, button_label: section.settings.card_button_label -%}
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
     </ul>
 
     {%- if section.settings.button_label != blank -%}
@@ -68,6 +116,32 @@
       "default": "<p>Bestsellers, new arrivals, and value sets loved by makeup artists worldwide.</p>"
     },
     {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add Product blocks to pick products and give each a badge. With no blocks, products come from the collection below."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products from collection",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
       "type": "range",
       "id": "columns",
       "min": 2,
@@ -77,15 +151,60 @@
       "default": 3
     },
     {
+      "type": "select",
+      "id": "width",
+      "label": "Grid width",
+      "options": [
+        { "value": "contained", "label": "Contained, wide gaps" },
+        { "value": "full", "label": "Full page width, tight gaps" }
+      ],
+      "default": "contained"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "options": [
+        { "value": "wide", "label": "Landscape (10:7)" },
+        { "value": "standard", "label": "Slightly landscape (5:4)" },
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait (4:5)" }
+      ],
+      "default": "wide"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "info": "Leave empty to use the theme's product card color."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "info": "From your reviews app (product metafields reviews.rating and reviews.rating_count).",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "Card button label",
+      "info": "E.g. Shop Now. Leave empty for no button on cards."
+    },
+    {
+      "type": "header",
+      "content": "Button below the grid"
+    },
+    {
       "type": "text",
       "id": "button_label",
-      "label": "Button label",
-      "info": "Leave empty to hide the button."
+      "label": "Label",
+      "info": "Leave empty to hide."
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Link"
     }
   ],
   "blocks": [
@@ -115,6 +234,20 @@
         { "type": "product", "settings": { "badge": "New arrival" } },
         { "type": "product", "settings": { "badge": "Best seller" } }
       ]
+    },
+    {
+      "name": "Product row with buttons",
+      "settings": {
+        "eyebrow": "The accessories",
+        "heading": "The travel collection",
+        "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
+        "columns": 4,
+        "width": "full",
+        "image_ratio": "standard",
+        "show_rating": false,
+        "card_button_label": "Shop Now",
+        "card_background": "#EAEAEB"
+      }
     }
   ]
 }

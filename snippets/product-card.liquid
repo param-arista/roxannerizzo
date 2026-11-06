@@ -1,69 +1,102 @@
 {% doc %}
-  Product card: image on the card background, optional badge pill, title
-  and price. Renders an onboarding placeholder when no product is given.
+  Product card: image, optional badge pill, title + price on one row,
+  optional star rating (from the standard reviews.rating /
+  reviews.rating_count metafields that review apps write) and an optional
+  full-width button. Renders an onboarding placeholder with no product.
 
+  @param {string} card_id - Unique id within the page (e.g. block.id), used for the heading id
   @param {product} [product] - The product
   @param {string} [badge] - Badge text shown top-right (e.g. "Best seller")
+  @param {boolean} [show_rating] - Show the star rating when the product has one
+  @param {string} [button_label] - Full-width button text; blank hides it
   @param {string} [sizes] - The image sizes attribute
 
   @example
-  {% render 'product-card', product: block.settings.product, badge: block.settings.badge %}
+  {% render 'product-card', card_id: block.id, product: block.settings.product, badge: block.settings.badge, show_rating: true %}
 {% enddoc %}
 
 {%- liquid
   assign sizes = sizes | default: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 80vw'
   if product != blank
+    assign title = product.title
+    assign url = product.url
     assign image_alt = product.featured_media.alt | default: product.title
     assign price_min = product.price_min | money
+    assign rating = product.metafields.reviews.rating.value
+    assign rating_count = product.metafields.reviews.rating_count.value
+  else
+    assign title = 'products.placeholder_title' | t
+    assign url = null
   endif
+  assign heading_id = 'CardTitle-' | append: card_id
 -%}
 
-<article class="product-card">
-  {%- if product != blank -%}
-    <a class="product-card__link" href="{{ product.url }}">
-      <div class="product-card__media">
-        {%- if product.featured_media -%}
-          {{
-            product.featured_media
-            | image_url: width: 1200
-            | image_tag:
-              widths: '360, 540, 720, 900, 1200',
-              sizes: sizes,
-              loading: 'lazy',
-              alt: image_alt
-          }}
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
-        {%- endif -%}
-      </div>
-      <h3 class="product-card__title">{{ product.title | escape }}</h3>
-    </a>
-
-    <p class="product-card__price">
-      {%- if product.price_varies -%}
-        {{ 'products.price_from' | t: price: price_min }}
-      {%- else -%}
-        {{ product.price | money }}
-      {%- endif -%}
-      {%- if product.compare_at_price > product.price -%}
-        <s class="product-card__compare">
-          <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
-          {{- product.compare_at_price | money -}}
-        </s>
-      {%- endif -%}
-      {%- unless product.available -%}
-        <span class="product-card__soldout">{{ 'products.sold_out' | t }}</span>
-      {%- endunless -%}
-    </p>
-  {%- else -%}
-    <div class="product-card__media">
+<article class="product-card" aria-labelledby="{{ heading_id }}">
+  <div class="product-card__media">
+    {%- if product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 1200
+        | image_tag:
+          widths: '360, 540, 720, 900, 1200',
+          sizes: sizes,
+          loading: 'lazy',
+          alt: image_alt
+      }}
+    {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
-    </div>
-    <h3 class="product-card__title">{{ 'products.placeholder_title' | t }}</h3>
-    <p class="product-card__price">{{ 4900 | money }}</p>
-  {%- endif -%}
+    {%- endif -%}
+    {%- if badge != blank -%}
+      <span class="product-card__badge">{{ badge | escape }}</span>
+    {%- endif -%}
+  </div>
 
-  {%- if badge != blank -%}
-    <span class="product-card__badge">{{ badge | escape }}</span>
-  {%- endif -%}
+  <div class="product-card__body">
+    <div class="product-card__row">
+      <h3 class="product-card__title" id="{{ heading_id }}">
+        {%- if url -%}
+          <a class="product-card__link" href="{{ url }}">{{ title | escape }}</a>
+        {%- else -%}
+          {{ title | escape }}
+        {%- endif -%}
+      </h3>
+      <p class="product-card__price">
+        {%- if product == blank -%}
+          {{ 2300 | money_without_trailing_zeros }}
+        {%- elsif product.price_varies -%}
+          {{ 'products.price_from' | t: price: price_min }}
+        {%- else -%}
+          {{ product.price | money_without_trailing_zeros }}
+        {%- endif -%}
+        {%- if product.compare_at_price > product.price -%}
+          <s class="product-card__compare">
+            <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
+            {{- product.compare_at_price | money_without_trailing_zeros -}}
+          </s>
+        {%- endif -%}
+      </p>
+    </div>
+
+    {%- if show_rating and rating != blank -%}
+      <p class="product-card__rating">
+        {%- render 'rating-stars', rating: rating.rating, max: rating.scale_max -%}
+        <span aria-hidden="true">{{ rating.rating | round: 1 }}{% if rating_count %} ({{ rating_count | default: 0 }}){% endif %}</span>
+        {%- if rating_count -%}
+          <span class="visually-hidden">{{ 'products.review_count' | t: count: rating_count }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if product != blank and product.available == false -%}
+      <p class="product-card__soldout">{{ 'products.sold_out' | t }}</p>
+    {%- endif -%}
+
+    {%- if button_label != blank -%}
+      {%- if url -%}
+        <a class="button product-card__button" href="{{ url }}" tabindex="-1" aria-hidden="true">{{ button_label | escape }}</a>
+      {%- else -%}
+        <span class="button product-card__button" aria-hidden="true">{{ button_label | escape }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
 </article>
