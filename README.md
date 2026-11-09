@@ -46,12 +46,50 @@ column expects a menu with the handle `footer-products`.
 - `assets/critical.css` holds only above-the-fold CSS (reset, tokens,
   buttons, announcement bar, header, hero). Every other section loads its
   own `assets/section-*.css` from inside the section.
-- No CSS/JS frameworks. The only script is `assets/carousel.js` (deferred, Reviews arrows); everything else works without JavaScript. Animations use `transform` /
-  `opacity` and respect `prefers-reduced-motion`.
+- No CSS/JS frameworks. Scripts are small deferred custom elements:
+  `carousel.js` (Reviews arrows), `theme.js` (every page: mini cart, cart
+  quantity updates, Add to bag, search dialog + predictive search),
+  `product.js` (gallery, variant switching, recommendations) and
+  `facets.js` (collection/search filters). Every page still works without
+  JavaScript: plain forms, links and a `<noscript>` variant select.
+  Animations use `transform` / `opacity` and respect
+  `prefers-reduced-motion`.
+- Hidden-until-opened UI (mini cart, search dialog) loads its CSS without
+  blocking render (`media="print" onload`).
 - On the home page the header is transparent and the first hero slides
   under it (Theme settings → Header). The header height lives in
   `--header-height` on `:root`.
 - All storefront strings go through `locales/en.default.json`.
+
+## Shop pages
+
+Built on the home page's tokens and pieces: the same `product-card`
+snippet (`component-product-card.css`), the centred eyebrow + uppercase
+heading (`page-header` snippet = h1 version of `section-heading`), grey
+cards and the bronze accent.
+
+- **Product** (`templates/product.json`): `main-product` (gallery with
+  thumbnails; blocks for eyebrow, title, rating, price, variant picker,
+  quantity, buy buttons, highlights, description, collapsible tabs, apps),
+  then the home page's Feature columns and Reviews, then
+  `product-recommendations`. Variant changes re-render through the Section
+  Rendering API (`?option_values=…&section_id=…`); an option combination
+  with no variant shows Unavailable.
+- **Collection** (`templates/collection.json`): `main-collection` with
+  Search & Discovery filters (sidebar on desktop, panel on phones), sort,
+  active-filter pills, pagination.
+- **Search** (`templates/search.json`): `main-search` — product grid with
+  the same filters, pages/articles list, "Popular right now" row from a
+  chosen collection. The header search icon opens a dialog with predictive
+  results (`sections/predictive-search.liquid`).
+- **Cart** (`templates/cart.json`) and **mini cart**
+  (`sections/cart-drawer.liquid`, rendered in the layout): shared
+  `cart-line` snippet; quantity / remove update both in place. Theme
+  settings → Cart picks drawer vs. cart page after Add to bag, the
+  empty-cart collection, order note and accelerated checkout buttons.
+
+Product card ratings read the `reviews.rating` / `reviews.rating_count`
+metafields that review apps write.
 
 ## Develop
 

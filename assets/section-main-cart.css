@@ -1,0 +1,150 @@
+/**
+ * Cart page (sections/main-cart.liquid): lines + a grey order-summary card,
+ * matching the home page's alt-background panels.
+ */
+.main-cart__layout {
+  display: grid;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+@media (min-width: 990px) {
+  .main-cart__layout {
+    grid-template-columns: minmax(0, 1fr) 24rem;
+    align-items: start;
+  }
+}
+
+.main-cart__head {
+  display: flex;
+  justify-content: space-between;
+  padding-block-end: 0.75rem;
+  border-block-end: 1px solid rgb(0 0 0 / 0.12);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.main-cart__update {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-start: 1.5rem;
+}
+
+.main-cart__update .button[hidden] {
+  display: none;
+}
+
+.main-cart__continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
+.main-cart__continue .icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.main-cart__continue:hover .icon {
+  transform: translateX(0.25rem);
+}
+
+/* Order summary card */
+.cart-summary {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 4px;
+  background-color: var(--color-section-alt);
+}
+
+@media (min-width: 990px) {
+  .cart-summary {
+    position: sticky;
+    inset-block-start: 1.5rem;
+  }
+}
+
+.cart-summary__title {
+  font-family: var(--font-body--family);
+  font-weight: var(--font-body--weight);
+  font-size: 0.875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9375rem;
+}
+
+.cart-summary__total {
+  padding-block-start: 1rem;
+  border-block-start: 1px solid rgb(0 0 0 / 0.12);
+  font-size: 1.25rem;
+}
+
+.cart-summary__note {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.cart-summary__note-field summary {
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.cart-summary__textarea {
+  margin-block-start: 0.75rem;
+  resize: vertical;
+  text-transform: none;
+}
+
+.cart-summary .button {
+  min-height: 3.375rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.9375rem;
+}
+
+.cart-summary__accelerated .shopify-cleanslate ul,
+.cart-summary__accelerated [data-shopify-buttoncontainer] {
+  justify-content: stretch;
+}
+
+/* Empty */
+.main-cart__empty {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding-block: clamp(2rem, 6vw, 4rem);
+  text-align: center;
+}
+
+.main-cart__empty-title {
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  text-transform: uppercase;
+}
+
+.main-cart__empty-text {
+  color: var(--color-muted);
+  margin-block-end: 0.5rem;
+}

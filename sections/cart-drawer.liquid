@@ -1,0 +1,87 @@
+{% comment %}
+  Mini cart: a slide-out <dialog> opened from the header bag icon and after
+  Add to bag. Rendered once in the layout and re-rendered through the
+  Section Rendering API (id "cart-drawer") whenever the cart changes.
+  Without JavaScript the bag icon simply goes to the cart page.
+{% endcomment %}
+
+{%- liquid
+  assign empty_url = settings.cart_empty_collection.url | default: routes.all_products_collection_url
+-%}
+
+<cart-drawer
+  class="cart-drawer"
+  data-cart-count="{{ cart.item_count }}"
+  data-cart-count-label="{{ 'sections.header.cart_count' | t: count: cart.item_count }}"
+>
+  <link rel="stylesheet" href="{{ 'component-cart-line.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+  <dialog class="cart-drawer__dialog" aria-labelledby="CartDrawerHeading" scroll-lock data-cart-dialog>
+    <div class="cart-drawer__panel">
+      <header class="cart-drawer__header">
+        <h2 class="cart-drawer__heading" id="CartDrawerHeading">
+          {{ 'cart.title' | t }}
+          {%- if cart.item_count > 0 -%}
+            <span class="cart-drawer__count">({{ cart.item_count }})</span>
+          {%- endif -%}
+        </h2>
+        <button type="button" class="cart-drawer__close" data-cart-close>
+          {%- render 'icon', name: 'close' -%}
+          <span class="visually-hidden">{{ 'general.close' | t }}</span>
+        </button>
+      </header>
+
+      {%- if cart.item_count == 0 -%}
+        <div class="cart-drawer__empty">
+          {%- render 'icon', name: 'bag', class: 'cart-drawer__empty-icon' -%}
+          <p class="cart-drawer__empty-title">{{ 'cart.empty' | t }}</p>
+          <p class="cart-drawer__empty-text">{{ 'cart.empty_text' | t }}</p>
+          <a class="button" href="{{ empty_url }}">{{ 'cart.shop_now' | t }}</a>
+        </div>
+      {%- else -%}
+        <form class="cart-drawer__form" action="{{ routes.cart_url }}" method="post" id="CartDrawerForm">
+          <cart-items class="cart-drawer__items" data-sections="cart-drawer">
+            <div class="cart-items__error" role="alert" data-cart-error hidden></div>
+            <ul class="cart-lines" role="list">
+              {%- for item in cart.items -%}
+                {%- render 'cart-line', item: item, index: forloop.index, context: 'drawer' -%}
+              {%- endfor -%}
+            </ul>
+          </cart-items>
+
+          <footer class="cart-drawer__footer">
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="cart-summary__discounts" role="list" aria-label="{{ 'cart.discounts' | t }}">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li>
+                    <span>{{ discount.title | escape }}</span>
+                    <span>−{{ discount.total_allocated_amount | money }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+            <p class="cart-drawer__subtotal">
+              <span>{{ 'cart.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money_with_currency }}</span>
+            </p>
+            <p class="cart-drawer__note">
+              {%- if cart.taxes_included -%}{{ 'cart.taxes_included' | t }}{%- else -%}{{ 'cart.taxes_and_shipping' | t }}{%- endif -%}
+            </p>
+            <button type="submit" name="checkout" class="button button--full" {% if cart.item_count == 0 %}disabled{% endif %}>
+              {{- 'cart.checkout' | t -}}
+            </button>
+            <a class="button button--secondary button--full" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+          </footer>
+        </form>
+      {%- endif -%}
+    </div>
+  </dialog>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Mini cart",
+  "tag": "div",
+  "class": "cart-drawer-section"
+}
+{% endschema %}

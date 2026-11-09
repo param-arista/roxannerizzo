@@ -1,0 +1,46 @@
+{% doc %}
+  Numbered pagination styled to the theme. Renders nothing for one page.
+
+  @param {object} paginate - The paginate object
+
+  @example
+  {% render 'pagination', paginate: paginate %}
+{% enddoc %}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}">
+    <ul class="pagination__list" role="list">
+      {%- if paginate.previous -%}
+        <li>
+          <a class="pagination__item pagination__item--arrow" href="{{ paginate.previous.url }}">
+            {%- render 'icon', name: 'chevron-left' -%}
+            <span class="visually-hidden">{{ 'general.pagination.previous' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a class="pagination__item" href="{{ part.url }}">
+              <span class="visually-hidden">{{ 'general.pagination.page' | t: number: '' }}</span>{{ part.title }}
+            </a>
+          {%- elsif part.title == paginate.current_page -%}
+            <span class="pagination__item pagination__item--current" aria-current="page">
+              <span class="visually-hidden">{{ 'general.pagination.page' | t: number: '' }}</span>{{ part.title }}
+            </span>
+          {%- else -%}
+            <span class="pagination__item pagination__item--gap">{{ part.title }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+      {%- if paginate.next -%}
+        <li>
+          <a class="pagination__item pagination__item--arrow" href="{{ paginate.next.url }}">
+            {%- render 'icon', name: 'chevron-right' -%}
+            <span class="visually-hidden">{{ 'general.pagination.next' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

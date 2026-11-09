@@ -1,0 +1,228 @@
+/**
+ * Header search dialog + predictive results (snippets/search-modal.liquid,
+ * sections/predictive-search.liquid). Loaded without blocking render.
+ */
+.search-modal__dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.search-modal__dialog::backdrop {
+  background-color: rgb(31 35 40 / 0.45);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.search-modal__dialog.is-open::backdrop {
+  opacity: 1;
+}
+
+.search-modal__panel {
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transform: translateY(-1.5rem);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.search-modal__dialog.is-open .search-modal__panel {
+  transform: none;
+  opacity: 1;
+}
+
+.search-modal__inner {
+  display: block;
+  max-width: calc(var(--page-width) + var(--page-margin) * 2);
+  margin-inline: auto;
+  padding: 1.25rem var(--page-margin) 1.75rem;
+}
+
+.search-modal__form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-block-end: 1px solid var(--color-accent);
+}
+
+.search-modal__icon {
+  color: var(--color-accent);
+}
+
+.search-modal__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 3.5rem;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+.search-modal__input:focus-visible {
+  outline: none;
+}
+
+.search-modal__form:focus-within {
+  box-shadow: 0 1px 0 0 var(--color-accent);
+}
+
+.search-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.search-modal__results:empty {
+  display: none;
+}
+
+.search-modal__inner[aria-busy='true'] .search-modal__results {
+  opacity: 0.55;
+}
+
+/* Predictive results */
+.predictive {
+  padding-block-start: 1.5rem;
+}
+
+.predictive__grid {
+  display: grid;
+  gap: 1.5rem 3rem;
+}
+
+@media (min-width: 750px) {
+  .predictive__grid {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+
+  .predictive__grid:not(:has(.predictive__side)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.predictive__label {
+  font-size: 0.6875rem;
+  margin-block-end: 0.75rem;
+}
+
+.predictive__label:not(:first-child) {
+  margin-block-start: 1.5rem;
+}
+
+.predictive__links {
+  display: grid;
+  gap: 0.15rem;
+  list-style: none;
+  padding: 0;
+}
+
+.predictive__links a {
+  display: block;
+  padding-block: 0.4rem;
+  text-decoration: none;
+}
+
+.predictive__links mark {
+  background: none;
+  color: var(--color-accent);
+  font-weight: var(--font-body--weight-bold);
+}
+
+.predictive__products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+@media (max-width: 749px) {
+  .predictive__products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.predictive__product {
+  display: grid;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.predictive__thumb {
+  display: block;
+  aspect-ratio: 10 / 7;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--color-card);
+}
+
+.predictive__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.predictive__product:hover img {
+  transform: scale(1.03);
+}
+
+.predictive__product-title {
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.predictive__product-price {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+[role='option'][aria-selected='true'] > a {
+  color: var(--color-accent);
+}
+
+[role='option'][aria-selected='true'] .predictive__thumb {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.predictive__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-start: 1.5rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.predictive__all .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.predictive__empty {
+  padding-block-start: 1.5rem;
+  color: var(--color-muted);
+}

@@ -1,0 +1,43 @@
+{% doc %}
+  Header search: a <dialog> with the search field and live suggestions
+  (predictive-search section). The header icon still links to /search, so
+  search works without JavaScript; theme.js opens this dialog instead.
+
+  @example
+  {% render 'search-modal' %}
+{% enddoc %}
+
+<search-modal class="search-modal">
+  <link rel="stylesheet" href="{{ 'component-search-modal.css' | asset_url }}" media="print" onload="this.media='all'">
+  <dialog class="search-modal__dialog" aria-label="{{ 'search.label' | t }}" scroll-lock data-search-dialog>
+    <div class="search-modal__panel">
+      <predictive-search class="search-modal__inner" data-url="{{ routes.predictive_search_url }}">
+        <form class="search-modal__form" action="{{ routes.search_url }}" method="get" role="search">
+          {%- render 'icon', name: 'search', class: 'search-modal__icon' -%}
+          <label class="visually-hidden" for="SearchModalInput">{{ 'search.label' | t }}</label>
+          <input
+            class="search-modal__input"
+            id="SearchModalInput"
+            type="search"
+            name="q"
+            placeholder="{{ 'search.placeholder' | t }}"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="PredictiveResultsWrap"
+            aria-autocomplete="list"
+          >
+          <input type="hidden" name="options[prefix]" value="last">
+          <button type="button" class="search-modal__close" data-search-close>
+            {%- render 'icon', name: 'close' -%}
+            <span class="visually-hidden">{{ 'search.close' | t }}</span>
+          </button>
+        </form>
+        <div id="PredictiveResultsWrap" class="search-modal__results" data-predictive-results aria-live="polite"></div>
+        <p class="visually-hidden" role="status" data-predictive-status></p>
+      </predictive-search>
+    </div>
+  </dialog>
+</search-modal>

@@ -86,7 +86,7 @@
     {%- endif -%}
 
     <div class="header__icons">
-      <a class="header__icon" href="{{ routes.search_url }}">
+      <a class="header__icon" href="{{ routes.search_url }}" data-search-open aria-haspopup="dialog">
         {%- render 'icon', name: 'search' -%}
         <span class="visually-hidden">{{ 'sections.header.search' | t }}</span>
       </a>
@@ -105,18 +105,25 @@
         </a>
       {%- endif -%}
 
-      <a class="header__icon" href="{{ routes.cart_url }}">
+      <a
+        class="header__icon"
+        href="{{ routes.cart_url }}"
+        id="HeaderCartIcon"
+        {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+          data-cart-open aria-haspopup="dialog"
+        {% endif %}
+      >
         {%- render 'icon', name: 'bag' -%}
-        <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-        {%- if cart.item_count > 0 -%}
-          <span class="header__cart-count" aria-hidden="true">
-            {%- if cart.item_count < 100 -%}{{ cart.item_count }}{%- else -%}99+{%- endif -%}
-          </span>
-        {%- endif -%}
+        <span class="visually-hidden" data-cart-label>{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        <span class="header__cart-count" aria-hidden="true" data-cart-bubble {% if cart.item_count == 0 %}hidden{% endif %}>
+          {%- if cart.item_count < 100 -%}{{ cart.item_count }}{%- else -%}99+{%- endif -%}
+        </span>
       </a>
     </div>
   </div>
 </header>
+
+{%- render 'search-modal' -%}
 
 {% schema %}
 {

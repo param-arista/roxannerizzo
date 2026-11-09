@@ -1,0 +1,147 @@
+/**
+ * Search results (sections/main-search.liquid). Grid, filters and toolbar
+ * come from section-main-collection.css; this adds the search field, the
+ * pages & articles list and the "Popular right now" row.
+ */
+.search-form {
+  position: relative;
+  display: flex;
+  max-width: 44rem;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.search-form__input {
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.75rem 3.75rem 0.75rem 1.25rem;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-block-end-color: var(--color-accent);
+  border-radius: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 1.0625rem;
+}
+
+.search-form__input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.search-form__submit {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  padding: 0;
+  border: 0;
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+  cursor: pointer;
+}
+
+.search-summary {
+  margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+}
+
+.search-hint {
+  margin-block: -1rem 2.5rem;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.search-group__title {
+  margin-block-end: 1rem;
+  font-family: var(--font-body--family);
+  font-weight: var(--font-body--weight);
+  font-size: 0.875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.product-grid + .search-group__title {
+  margin-block-start: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.search-list {
+  display: grid;
+  list-style: none;
+  padding: 0;
+  border-block-start: 1px solid rgb(0 0 0 / 0.1);
+}
+
+.search-list__item {
+  border-block-end: 1px solid rgb(0 0 0 / 0.1);
+}
+
+.search-list__link {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-block: 1.25rem;
+  text-decoration: none;
+}
+
+.search-list__image {
+  flex: none;
+  width: 6rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: var(--color-card);
+}
+
+.search-list__body {
+  display: grid;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.search-list__type {
+  font-size: 0.6875rem;
+}
+
+.search-list__title {
+  font-size: 1.125rem;
+}
+
+.search-list__excerpt {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.search-list__arrow {
+  color: var(--color-accent);
+  transition: transform 0.2s ease;
+}
+
+.search-list__link:hover .search-list__title {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.search-list__link:hover .search-list__arrow {
+  transform: translateX(0.25rem);
+}
+
+.search-popular {
+  margin-block-start: clamp(1rem, 3vw, 2rem);
+}
+
+.search-popular__title {
+  text-align: center;
+  margin-block-end: 1.5rem;
+}
+
+@media (min-width: 990px) {
+  .product-grid--full {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

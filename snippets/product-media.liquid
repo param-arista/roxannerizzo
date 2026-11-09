@@ -1,0 +1,62 @@
+{% doc %}
+  One slide of the product gallery: image, hosted video, external video
+  or a 3D model's preview image.
+
+  @param {object} media - The media object
+  @param {string} section_id - section.id
+  @param {number} index - Position (1-based)
+  @param {number} count - Total media
+  @param {boolean} [eager] - Load eagerly (first slide)
+  @param {boolean} [active] - The slide shown first
+  @param {string} [product_title] - Alt text when the media has none
+
+  @example
+  {% render 'product-media', media: media, section_id: section.id, index: 1, count: 4, eager: true, active: true %}
+{% enddoc %}
+
+{%- liquid
+  if eager
+    assign loading = 'eager'
+  else
+    assign loading = 'lazy'
+  endif
+  assign alt = media.alt | default: product_title
+-%}
+
+<li
+  class="product__slide product__slide--{{ media.media_type }}{% if active %} is-active{% endif %}"
+  id="Slide-{{ section_id }}-{{ media.id }}"
+  data-media-id="{{ media.id }}"
+  aria-label="{{ 'products.media' | t: index: index, count: count }}"
+>
+  {%- case media.media_type -%}
+    {%- when 'video' -%}
+      {{ media | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1200x' }}
+    {%- when 'external_video' -%}
+      {{ media | external_video_tag: loading: 'lazy' }}
+    {%- else -%}
+      {%- assign image = media.preview_image -%}
+      {%- if eager -%}
+        {{
+          image
+          | image_url: width: 1800
+          | image_tag:
+            widths: '550, 750, 1000, 1300, 1800',
+            sizes: '(min-width: 990px) 55vw, 100vw',
+            loading: loading,
+            fetchpriority: 'high',
+            alt: alt
+        }}
+      {%- else -%}
+        {{
+          image
+          | image_url: width: 1800
+          | image_tag:
+            widths: '550, 750, 1000, 1300, 1800',
+            sizes: '(min-width: 990px) 55vw, 100vw',
+            loading: loading,
+            alt: alt
+        }}
+      {%- endif -%}
+  {%- endcase -%}
+</li>

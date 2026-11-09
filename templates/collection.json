@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "eyebrow": "Shop",
+        "show_description": true,
+        "show_image": false,
+        "show_breadcrumbs": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "products_per_page": 12,
+        "columns": 3,
+        "image_ratio": "wide",
+        "show_rating": true,
+        "show_sale_badge": true,
+        "card_button_label": ""
+      }
+    },
+    "how_it_wears": {
+      "type": "feature-columns",
+      "blocks": {
+        "column_1": { "type": "column", "settings": { "title": "Instant", "text": "<p>A light, buildable mist with a 360° nozzle — glow from head to toe in seconds.</p>" } },
+        "column_2": { "type": "column", "settings": { "title": "Flawless", "text": "<p>Evens skin tone and softens the look of spots, scars and redness for a healthy glow.</p>" } },
+        "column_3": { "type": "column", "settings": { "title": "Safe", "text": "<p>Paraben, sulfate and phthalate free. 100% vegan and never tested on animals.</p>" } }
+      },
+      "block_order": ["column_1", "column_2", "column_3"],
+      "settings": { "eyebrow": "Why Bronze Glow", "heading": "Instant. Flawless. Safe." }
+    }
+  },
+  "order": ["main", "how_it_wears"]
+}

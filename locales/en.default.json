@@ -17,13 +17,64 @@
     "comment_form_title": "Add a comment"
   },
   "cart": {
+    "title": "Your bag",
+    "eyebrow": "Shopping bag",
     "checkout": "Checkout",
-    "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "remove_item": "Remove {{ title }}",
+    "view_cart": "View bag",
+    "continue_shopping": "Continue shopping",
+    "empty": "Your bag is empty",
+    "empty_text": "Find something you'll glow in.",
+    "shop_now": "Shop now",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "summary": "Order summary",
+    "discounts": "Discounts",
+    "taxes_and_shipping": "Taxes and shipping calculated at checkout.",
+    "taxes_included": "Taxes included. Shipping calculated at checkout.",
+    "note": "Add a note to your order",
+    "item_count": {
+      "one": "{{ count }} item",
+      "other": "{{ count }} items"
+    },
+    "quantity": "Quantity",
+    "quantity_for": "Quantity for {{ title }}",
+    "increase": "Increase quantity for {{ title }}",
+    "decrease": "Decrease quantity for {{ title }}",
+    "price": "Price",
+    "line_total": "Total",
+    "updated": "Bag updated.",
+    "error": "Something went wrong. Please try again.",
+    "added": "Added to your bag.",
+    "product": "Product",
+    "each": "{{ price }} each",
+    "drawer_label": "Shopping bag"
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "eyebrow": "Shop",
+    "empty": "No products here yet",
+    "empty_filtered": "No products match these filters.",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "filter": "Filter",
+    "filters": "Filters",
+    "sort_by": "Sort by",
+    "apply": "Apply",
+    "clear_all": "Clear all",
+    "clear": "Clear",
+    "remove_filter": "Remove filter: {{ label }}",
+    "from": "From",
+    "to": "To",
+    "price_range": "Price",
+    "show_results": "Show results",
+    "active_filters": "Active filters",
+    "results_updated": "Product list updated.",
+    "view_all": "View all"
   },
   "customers": {
     "login": {
@@ -34,7 +85,17 @@
     }
   },
   "general": {
-    "opens_in_new_window": "opens in a new window"
+    "opens_in_new_window": "opens in a new window",
+    "breadcrumbs": "Breadcrumbs",
+    "home": "Home",
+    "close": "Close",
+    "loading": "Loading…",
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {{ number }}"
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -57,14 +118,59 @@
     "review_count": {
       "one": "{{ count }} review",
       "other": "{{ count }} reviews"
-    }
+    },
+    "add_to_cart": "Add to bag",
+    "unavailable": "Unavailable",
+    "choose_options": "Choose options",
+    "sale": "Sale",
+    "sku": "SKU: {{ sku }}",
+    "quantity": "Quantity",
+    "in_stock": "In stock",
+    "low_stock": {
+      "one": "Only {{ count }} left",
+      "other": "Only {{ count }} left"
+    },
+    "gallery": "Product images",
+    "media": "Media {{ index }} of {{ count }}",
+    "show_media": "Show image {{ index }}",
+    "previous_media": "Previous image",
+    "next_media": "Next image",
+    "recommendations": "You may also like",
+    "taxes_included": "Taxes included.",
+    "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+    "sale_price": "Sale price",
+    "unit_price": "Unit price",
+    "unit_price_separator": "per",
+    "view_details": "View details",
+    "option_unavailable": "{{ value }}, sold out",
+    "variant": "Variant"
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search articles, pages, or products",
+    "eyebrow": "Find your glow",
+    "placeholder": "Search products, pages and articles",
     "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "label": "Search the store",
+    "clear": "Clear search",
+    "close": "Close search",
+    "no_results": "No results for “{{ terms }}”",
+    "no_results_text": "Check the spelling or try a broader word.",
+    "results_for": {
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
+    },
+    "products": "Products",
+    "pages": "Pages & articles",
+    "collections": "Collections",
+    "suggestions": "Suggestions",
+    "view_all": "View all results for “{{ terms }}”",
+    "popular": "Popular right now",
+    "article": "Article",
+    "page": "Page",
+    "results_count": {
+      "one": "{{ count }} result",
+      "other": "{{ count }} results"
+    }
   },
   "sections": {
     "announcement_bar": {

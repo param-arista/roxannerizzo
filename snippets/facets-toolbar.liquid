@@ -1,0 +1,91 @@
+{% doc %}
+  Result count, sort select and active-filter pills above a product grid.
+  The sort select belongs to the facets form via its form attribute.
+
+  @param {object} results - The collection or search object
+  @param {string} section_id - section.id
+  @param {number} count - Number of results to announce
+  @param {string} [terms] - Search terms (search page)
+  @param {boolean} [enable_sorting] - Show the sort select
+
+  @example
+  {% render 'facets-toolbar', results: collection, section_id: section.id, count: collection.products_count, enable_sorting: true %}
+{% enddoc %}
+
+{%- liquid
+  assign form_id = 'FacetForm-' | append: section_id
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  if terms
+    assign encoded_terms = terms | url_encode
+    assign clear_url = routes.search_url | append: '?q=' | append: encoded_terms
+  else
+    assign clear_url = results.url
+  endif
+  assign has_active = false
+  for filter in results.filters
+    if filter.active_values.size > 0
+      assign has_active = true
+    elsif filter.type == 'price_range'
+      if filter.min_value.value != null or filter.max_value.value != null
+        assign has_active = true
+      endif
+    endif
+  endfor
+-%}
+
+<div class="facets-toolbar">
+  <p class="facets-toolbar__count" role="status">
+    {{- 'collections.product_count' | t: count: count -}}
+  </p>
+
+  {%- if enable_sorting and results.sort_options.size > 0 -%}
+    <div class="facets-toolbar__sort">
+      <label for="SortBy-{{ section_id }}">{{ 'collections.sort_by' | t }}</label>
+      <div class="select">
+        <select id="SortBy-{{ section_id }}" name="sort_by" form="{{ form_id }}" data-facet-input>
+          {%- for option in results.sort_options -%}
+            <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected{% endif %}>
+              {{- option.name | escape -}}
+            </option>
+          {%- endfor -%}
+        </select>
+        {%- render 'icon', name: 'chevron-right', class: 'select__chevron' -%}
+      </div>
+      <noscript><button type="submit" class="facets-toolbar__go" form="{{ form_id }}">{{ 'collections.apply' | t }}</button></noscript>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if has_active -%}
+  <ul class="active-facets" role="list" aria-label="{{ 'collections.active_filters' | t }}">
+    {%- for filter in results.filters -%}
+      {%- for value in filter.active_values -%}
+        {%- assign pill_label = filter.label | append: ': ' | append: value.label -%}
+        <li>
+          <a class="active-facets__pill" href="{{ value.url_to_remove }}" data-facet-link>
+            {{- value.label | escape -}}
+            {%- render 'icon', name: 'close' -%}
+            <span class="visually-hidden">{{ 'collections.remove_filter' | t: label: pill_label }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+          {%- capture price_label -%}
+            {{- filter.min_value.value | default: 0 | money -}}–{%- if filter.max_value.value != null -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
+          {%- endcapture -%}
+          <li>
+            <a class="active-facets__pill" href="{{ filter.url_to_remove }}" data-facet-link>
+              {{- price_label -}}
+              {%- render 'icon', name: 'close' -%}
+              <span class="visually-hidden">{{ 'collections.remove_filter' | t: label: filter.label }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    <li>
+      <a class="active-facets__clear" href="{{ clear_url }}" data-facet-link>{{ 'collections.clear_all' | t }}</a>
+    </li>
+  </ul>
+{%- endif -%}

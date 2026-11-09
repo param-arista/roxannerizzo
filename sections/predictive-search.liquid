@@ -1,0 +1,93 @@
+{% comment %}
+  Results for the header search modal, fetched from
+  /search/suggest?section_id=predictive-search as the customer types.
+  Not added in the editor: it's only ever rendered through that endpoint.
+{% endcomment %}
+
+{%- liquid
+  assign terms = predictive_search.terms
+  assign resources = predictive_search.resources
+  assign has_results = false
+  if resources.products.size > 0 or resources.collections.size > 0 or resources.queries.size > 0 or resources.pages.size > 0 or resources.articles.size > 0
+    assign has_results = true
+  endif
+  assign encoded_terms = terms | url_encode
+-%}
+
+<div class="predictive" id="PredictiveResults" data-results-count="{{ resources.products.size | plus: resources.collections.size | plus: resources.pages.size | plus: resources.articles.size | plus: resources.queries.size }}">
+  {%- if predictive_search.performed and has_results -%}
+    <div class="predictive__grid">
+      {%- if resources.queries.size > 0 or resources.collections.size > 0 -%}
+        <div class="predictive__side">
+          {%- if resources.queries.size > 0 -%}
+            <h3 class="predictive__label eyebrow" id="PredictiveQueries">{{ 'search.suggestions' | t }}</h3>
+            <ul class="predictive__links" role="listbox" aria-labelledby="PredictiveQueries">
+              {%- for query in resources.queries -%}
+                <li role="option" id="PredictiveOption-query-{{ forloop.index }}" aria-selected="false">
+                  <a href="{{ query.url }}" tabindex="-1">{{ query.styled_text }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          {%- if resources.collections.size > 0 -%}
+            <h3 class="predictive__label eyebrow" id="PredictiveCollections">{{ 'search.collections' | t }}</h3>
+            <ul class="predictive__links" role="listbox" aria-labelledby="PredictiveCollections">
+              {%- for collection in resources.collections -%}
+                <li role="option" id="PredictiveOption-collection-{{ forloop.index }}" aria-selected="false">
+                  <a href="{{ collection.url }}" tabindex="-1">{{ collection.title | escape }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="predictive__main">
+        {%- if resources.products.size > 0 -%}
+          <h3 class="predictive__label eyebrow" id="PredictiveProducts">{{ 'search.products' | t }}</h3>
+          <ul class="predictive__products" role="listbox" aria-labelledby="PredictiveProducts">
+            {%- for product in resources.products -%}
+              <li role="option" id="PredictiveOption-product-{{ forloop.index }}" aria-selected="false">
+                <a class="predictive__product" href="{{ product.url }}" tabindex="-1">
+                  <span class="predictive__thumb">
+                    {%- if product.featured_media -%}
+                      {{ product.featured_media | image_url: width: 240 | image_tag: widths: '120, 240', sizes: '120px', alt: '', loading: 'lazy' }}
+                    {%- endif -%}
+                  </span>
+                  <span class="predictive__product-title">{{ product.title | escape }}</span>
+                  <span class="predictive__product-price">
+                    {%- if product.price_varies -%}
+                      {%- assign price_min = product.price_min | money -%}
+                      {{ 'products.price_from' | t: price: price_min }}
+                    {%- else -%}
+                      {{ product.price | money }}
+                    {%- endif -%}
+                  </span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if resources.pages.size > 0 or resources.articles.size > 0 -%}
+          <h3 class="predictive__label eyebrow" id="PredictivePages">{{ 'search.pages' | t }}</h3>
+          <ul class="predictive__links" role="listbox" aria-labelledby="PredictivePages">
+            {%- for page in resources.pages -%}
+              <li role="option" id="PredictiveOption-page-{{ forloop.index }}" aria-selected="false"><a href="{{ page.url }}" tabindex="-1">{{ page.title | escape }}</a></li>
+            {%- endfor -%}
+            {%- for article in resources.articles -%}
+              <li role="option" id="PredictiveOption-article-{{ forloop.index }}" aria-selected="false"><a href="{{ article.url }}" tabindex="-1">{{ article.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <a class="predictive__all" href="{{ routes.search_url }}?q={{ encoded_terms }}&options%5Bprefix%5D=last">
+      {{- 'search.view_all' | t: terms: terms -}}
+      {%- render 'icon', name: 'arrow-right' -%}
+    </a>
+  {%- elsif predictive_search.performed -%}
+    <p class="predictive__empty">{{ 'search.no_results' | t: terms: terms }}</p>
+  {%- endif -%}
+</div>

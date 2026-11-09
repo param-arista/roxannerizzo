@@ -1,0 +1,239 @@
+{% comment %}
+  Collection page (PLP): optional banner with the collection image, the
+  home page's centred eyebrow + uppercase heading, filters + sort, and a
+  grid of the same product cards the home page uses.
+{% endcomment %}
+
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'facets.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign heading_id = 'CollectionHeading-' | append: section.id
+  case section.settings.image_ratio
+    when 'square'
+      assign ratio = '1 / 1'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'wide'
+      assign ratio = '10 / 7'
+    else
+      assign ratio = '5 / 4'
+  endcase
+  assign columns = section.settings.columns
+  assign sizes = '(min-width: 990px) calc((100vw - 22rem) / ' | append: columns | append: '), (min-width: 750px) 33vw, 50vw'
+  assign show_banner = false
+  if section.settings.show_image and collection.image
+    assign show_banner = true
+  endif
+-%}
+
+<section class="main-collection" aria-labelledby="{{ heading_id }}">
+  {%- if show_banner -%}
+    <div class="collection-banner">
+      {{
+        collection.image
+        | image_url: width: 2400
+        | image_tag:
+          widths: '750, 1100, 1500, 1800, 2400',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: '',
+          class: 'collection-banner__image'
+      }}
+    </div>
+  {%- endif -%}
+
+  <div class="page-width main-collection__inner">
+    {%- if section.settings.show_breadcrumbs -%}
+      {%- render 'breadcrumbs', current: collection.title -%}
+    {%- endif -%}
+
+    {%- liquid
+      assign description = blank
+      if section.settings.show_description
+        assign description = collection.description
+      endif
+    -%}
+    {%- render 'page-header',
+      eyebrow: section.settings.eyebrow,
+      heading: collection.title,
+      text: description,
+      id: heading_id
+    -%}
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      <facet-filters class="collection-layout{% if section.settings.enable_filtering == false or collection.filters.size == 0 %} collection-layout--no-filters{% endif %}" data-section-id="{{ section.id }}">
+        {%- render 'facets',
+          results: collection,
+          section_id: section.id,
+          enable_filtering: section.settings.enable_filtering
+        -%}
+
+        <div class="collection-layout__results" id="FacetResults-{{ section.id }}" data-facets-results>
+          {%- render 'facets-toolbar',
+            results: collection,
+            section_id: section.id,
+            count: collection.products_count,
+            enable_sorting: section.settings.enable_sorting
+          -%}
+
+          {%- if collection.products.size == 0 -%}
+            <div class="collection-empty">
+              {%- if collection.filters.size > 0 and collection.all_products_count > 0 -%}
+                <p class="collection-empty__title">{{ 'collections.empty_filtered' | t }}</p>
+                <a class="button button--secondary" href="{{ collection.url }}">{{ 'collections.clear_all' | t }}</a>
+              {%- else -%}
+                <p class="collection-empty__title">{{ 'collections.empty' | t }}</p>
+                <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'collections.view_all' | t }}</a>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <ul
+              class="product-grid"
+              role="list"
+              style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+            >
+              {%- for product in collection.products -%}
+                <li class="product-grid__item">
+                  {%- liquid
+                    assign card_id = section.id | append: '-' | append: product.id
+                    assign badge = blank
+                    if section.settings.show_sale_badge and product.compare_at_price > product.price
+                      assign badge = 'products.sale' | t
+                    endif
+                  -%}
+                  {%- render 'product-card',
+                    card_id: card_id,
+                    product: product,
+                    badge: badge,
+                    show_rating: section.settings.show_rating,
+                    button_label: section.settings.card_button_label,
+                    sizes: sizes
+                  -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- render 'pagination', paginate: paginate -%}
+        </div>
+      </facet-filters>
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "tag": "div",
+  "class": "main-collection-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show collection image as a banner",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Filtering and sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "info": "Customize filters in the Search & Discovery app.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product grid"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Products per page",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Products per row on desktop",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "options": [
+        { "value": "wide", "label": "Landscape (10:7)" },
+        { "value": "standard", "label": "Slightly landscape (5:4)" },
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait (4:5)" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "info": "Leave empty to use the theme's product card color."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "info": "From your reviews app (product metafields reviews.rating and reviews.rating_count).",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show a Sale badge on discounted products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "Card button label",
+      "info": "E.g. Shop Now. Leave empty for no button on cards."
+    }
+  ]
+}
+{% endschema %}

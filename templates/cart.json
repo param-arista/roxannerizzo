@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": { "eyebrow": "Shopping bag", "heading": "Your bag" }
+    },
+    "travel_collection": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "The accessories",
+        "heading": "Add a travel bag",
+        "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
+        "products_limit": 4,
+        "columns": 4,
+        "width": "full",
+        "image_ratio": "standard",
+        "show_rating": false,
+        "card_button_label": "Shop Now",
+        "card_background": "#EAEAEB"
+      }
+    }
+  },
+  "order": ["main", "travel_collection"]
+}

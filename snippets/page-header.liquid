@@ -1,0 +1,22 @@
+{% doc %}
+  Page-level heading in the home page's section-heading style: accent
+  eyebrow, uppercase h1, optional intro. Used by collection, search and cart.
+
+  @param {string} heading - The h1 text
+  @param {string} [eyebrow] - Small spaced uppercase line in the accent color
+  @param {string} [text] - Rich text intro (HTML)
+  @param {string} [id] - id for the h1
+
+  @example
+  {% render 'page-header', eyebrow: 'Shop', heading: collection.title, text: collection.description %}
+{% enddoc %}
+
+<header class="section-heading page-header">
+  {%- if eyebrow != blank -%}
+    <p class="eyebrow">{{ eyebrow | escape }}</p>
+  {%- endif -%}
+  <h1 class="section-heading__title page-header__title" {% if id %}id="{{ id }}"{% endif %}>{{ heading | escape }}</h1>
+  {%- if text != blank -%}
+    <div class="section-heading__text page-header__text">{{ text }}</div>
+  {%- endif -%}
+</header>

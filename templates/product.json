@@ -1,0 +1,87 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "eyebrow": { "type": "text", "settings": { "text": "Bronze Glow", "style": "eyebrow" } },
+        "title": { "type": "title" },
+        "rating": { "type": "rating", "settings": { "reviews_anchor": "" } },
+        "price": { "type": "price" },
+        "variant_picker": { "type": "variant_picker" },
+        "quantity": { "type": "quantity" },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": { "show_dynamic_checkout": true, "show_inventory": true, "low_stock_threshold": 5, "show_sku": false }
+        },
+        "highlights": {
+          "type": "highlights",
+          "settings": { "item_1": "Vegan & cruelty free", "item_2": "No color matching needed", "item_3": "Made in New York" }
+        },
+        "description": { "type": "description" },
+        "how_to_use": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "How to use",
+            "open": false,
+            "content": "<p>Shake well. Hold 8–10 inches from skin and mist evenly with the 360° nozzle. Build in light layers to your preferred depth of bronze. Wear alone, over makeup, or as a setting spray.</p>"
+          }
+        },
+        "ingredients": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Ingredients",
+            "open": false,
+            "content": "<p>Paraben, sulfate and phthalate free. Low in DHA, non-comedogenic, 100% vegan and never tested on animals.</p>"
+          }
+        },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping & returns",
+            "open": false,
+            "content": "<p>We ship internationally. Shipping is calculated at checkout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow", "title", "rating", "price", "variant_picker", "quantity",
+        "buy_buttons", "highlights", "description", "how_to_use", "ingredients", "shipping"
+      ],
+      "settings": { "show_breadcrumbs": true, "media_ratio": "square" }
+    },
+    "how_it_wears": {
+      "type": "feature-columns",
+      "blocks": {
+        "column_1": { "type": "column", "settings": { "title": "Instant", "text": "<p>An easy-to-use 360° nozzle lets you instantly glow from head to toe. A light, buildable mist you can layer over makeup or wear alone.</p>" } },
+        "column_2": { "type": "column", "settings": { "title": "Flawless", "text": "<p>Enhances your natural beauty and evens skin tone by reducing the look of dark under-eye circles, spots, cellulite, scars, rosacea, and acne for a healthy, lit-from-within glow.</p>" } },
+        "column_3": { "type": "column", "settings": { "title": "Safe", "text": "<p>Formulated with the cleanest ingredients: paraben, sulfate, and phthalate free. Low in DHA, non-comedogenic, 100% vegan, and never tested on animals.</p>" } }
+      },
+      "block_order": ["column_1", "column_2", "column_3"],
+      "settings": { "eyebrow": "How it wears", "heading": "Instant. Flawless. Safe." }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review_1": { "type": "review", "settings": { "stars": 5, "name": "Lucy Liu", "role": "Actress, Artist & Advocate", "quote": "Bronze Glow is the best!" } },
+        "review_2": { "type": "review", "settings": { "stars": 5, "name": "Bill Corso", "role": "Oscar & Emmy-winning MUA", "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens." } },
+        "review_3": { "type": "review", "settings": { "stars": 5, "name": "Liam Neeson", "role": "Award-Winning Irish Actor", "quote": "It should be called confidence in a can!" } },
+        "review_4": { "type": "review", "settings": { "stars": 5, "name": "Ashlee Glazer", "role": "Celebrity Makeup Artist", "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth." } }
+      },
+      "block_order": ["review_1", "review_2", "review_3", "review_4"],
+      "settings": { "eyebrow": "Loved by", "heading": "Reviews", "grayscale": true, "alt_background": true }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Complete the glow",
+        "heading": "You may also like",
+        "columns": 3,
+        "image_ratio": "wide",
+        "show_rating": true,
+        "card_button_label": "",
+        "alt_background": false
+      }
+    }
+  },
+  "order": ["main", "how_it_wears", "reviews", "recommendations"]
+}

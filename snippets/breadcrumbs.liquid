@@ -1,0 +1,19 @@
+{% doc %}
+  Home › (collection ›) current page. On a product reached from a
+  collection, the collection is the middle crumb.
+
+  @param {string} current - Text of the current page
+
+  @example
+  {% render 'breadcrumbs', current: product.title %}
+{% enddoc %}
+
+<nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs' | t }}">
+  <ol class="breadcrumbs__list" role="list">
+    <li><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a></li>
+    {%- if template.name == 'product' and collection -%}
+      <li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+    {%- endif -%}
+    <li><span aria-current="page">{{ current | escape }}</span></li>
+  </ol>
+</nav>

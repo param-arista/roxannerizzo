@@ -1,0 +1,56 @@
+{% doc %}
+  Quantity stepper: − / number input / +. The buttons only work with
+  JavaScript (theme.js); the number input works on its own.
+
+  @param {string} id - Input id
+  @param {string} name - Input name (quantity, updates[])
+  @param {number} value - Current quantity
+  @param {string} label - Accessible label for the input
+  @param {string} [title] - Item title, for the button labels
+  @param {number} [min] - Minimum, default 1
+  @param {number} [max] - Maximum
+  @param {number} [step] - Step, default 1
+  @param {string} [key] - Cart line key (cart items only)
+  @param {string} [form] - id of the form the input belongs to, when outside it
+  @param {boolean} [small] - Compact size for the mini cart
+
+  @example
+  {% render 'quantity-input', id: 'Quantity-1', name: 'quantity', value: 1, label: 'Quantity' %}
+{% enddoc %}
+
+{%- liquid
+  assign min = min | default: 1
+  assign step = step | default: 1
+  assign title = title | default: ''
+-%}
+
+<quantity-input class="quantity{% if small %} quantity--small{% endif %}">
+  <button class="quantity__button" type="button" name="minus" data-quantity-step="-1" hidden>
+    <span class="visually-hidden">{{ 'cart.decrease' | t: title: title }}</span>
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 12h12"/></svg>
+  </button>
+  <label class="visually-hidden" for="{{ id }}">{{ label }}</label>
+  <input
+    class="quantity__input"
+    type="number"
+    inputmode="numeric"
+    id="{{ id }}"
+    name="{{ name }}"
+    value="{{ value }}"
+    min="{{ min }}"
+    step="{{ step }}"
+    {% if max %}
+      max="{{ max }}"
+    {% endif %}
+    {% if form %}
+      form="{{ form }}"
+    {% endif %}
+    {% if key %}
+      data-key="{{ key }}"
+    {% endif %}
+  >
+  <button class="quantity__button" type="button" name="plus" data-quantity-step="1" hidden>
+    <span class="visually-hidden">{{ 'cart.increase' | t: title: title }}</span>
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 12h12M12 6v12"/></svg>
+  </button>
+</quantity-input>

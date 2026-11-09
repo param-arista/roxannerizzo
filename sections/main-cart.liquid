@@ -1,0 +1,116 @@
+{% comment %}
+  Cart page: line items on the left, order summary card on the right
+  (subtotal, discounts, note, checkout and accelerated checkout buttons).
+  A plain form without JavaScript (Update + remove links); theme.js updates
+  quantities in place and keeps the mini cart in step.
+{% endcomment %}
+
+{{ 'component-cart-line.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-cart.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'CartHeading-' | append: section.id
+  assign empty_url = settings.cart_empty_collection.url | default: routes.all_products_collection_url
+-%}
+
+<section class="section main-cart" aria-labelledby="{{ heading_id }}" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- render 'page-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id -%}
+
+    <div
+      class="main-cart__body"
+      data-cart-root
+      data-cart-count="{{ cart.item_count }}"
+      data-cart-count-label="{{ 'sections.header.cart_count' | t: count: cart.item_count }}"
+    >
+      {%- if cart.item_count == 0 -%}
+        <div class="main-cart__empty">
+          <p class="main-cart__empty-title">{{ 'cart.empty' | t }}</p>
+          <p class="main-cart__empty-text">{{ 'cart.empty_text' | t }}</p>
+          <a class="button" href="{{ empty_url }}">{{ 'cart.shop_now' | t }}</a>
+        </div>
+      {%- else -%}
+        <form class="main-cart__layout" action="{{ routes.cart_url }}" method="post" id="CartForm-{{ section.id }}">
+          <cart-items class="main-cart__items" data-sections="{{ section.id }}">
+            <div class="main-cart__head" aria-hidden="true">
+              <span>{{ 'cart.product' | t }}</span>
+              <span>{{ 'cart.line_total' | t }}</span>
+            </div>
+            <div class="cart-items__error" role="alert" data-cart-error hidden></div>
+            <ul class="cart-lines" role="list">
+              {%- for item in cart.items -%}
+                {%- render 'cart-line', item: item, index: forloop.index, context: 'page' -%}
+              {%- endfor -%}
+            </ul>
+            <div class="main-cart__update">
+              <button type="submit" name="update" class="button button--secondary" data-no-js-update>{{ 'cart.update' | t }}</button>
+              <a class="main-cart__continue" href="{{ empty_url }}">
+                {{- 'cart.continue_shopping' | t -}}
+                {%- render 'icon', name: 'arrow-right' -%}
+              </a>
+            </div>
+          </cart-items>
+
+          <aside class="cart-summary" aria-labelledby="CartSummary-{{ section.id }}">
+            <h2 class="cart-summary__title" id="CartSummary-{{ section.id }}">{{ 'cart.summary' | t }}</h2>
+
+            <p class="cart-summary__row">
+              <span>{{ 'cart.subtotal' | t }} · {{ 'cart.item_count' | t: count: cart.item_count }}</span>
+              <span>{{ cart.items_subtotal_price | money }}</span>
+            </p>
+
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="cart-summary__discounts" role="list" aria-label="{{ 'cart.discounts' | t }}">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li>
+                    <span>{{ discount.title | escape }}</span>
+                    <span>−{{ discount.total_allocated_amount | money }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            <p class="cart-summary__row cart-summary__total">
+              <span>{{ 'cart.total' | t }}</span>
+              <span>{{ cart.total_price | money_with_currency }}</span>
+            </p>
+            <p class="cart-summary__note">
+              {%- if cart.taxes_included -%}{{ 'cart.taxes_included' | t }}{%- else -%}{{ 'cart.taxes_and_shipping' | t }}{%- endif -%}
+            </p>
+
+            {%- if settings.cart_show_note -%}
+              <details class="cart-summary__note-field" {% if cart.note != blank %}open{% endif %}>
+                <summary>{{ 'cart.note' | t }}</summary>
+                <label class="visually-hidden" for="CartNote-{{ section.id }}">{{ 'cart.note' | t }}</label>
+                <textarea class="field__input cart-summary__textarea" id="CartNote-{{ section.id }}" name="note" rows="3" data-cart-note>{{ cart.note }}</textarea>
+              </details>
+            {%- endif -%}
+
+            <button type="submit" name="checkout" class="button button--full">{{ 'cart.checkout' | t }}</button>
+
+            {%- if settings.cart_show_dynamic_checkout and additional_checkout_buttons -%}
+              <div class="cart-summary__accelerated">{{ content_for_additional_checkout_buttons }}</div>
+            {%- endif -%}
+          </aside>
+        </form>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "tag": "div",
+  "class": "main-cart-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shopping bag" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your bag" },
+    {
+      "type": "paragraph",
+      "content": "Order note, accelerated checkout and the empty-cart link are in Theme settings → Cart."
+    }
+  ],
+  "enabled_on": { "templates": ["cart"] }
+}
+{% endschema %}

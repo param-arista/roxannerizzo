@@ -1,0 +1,53 @@
+{% doc %}
+  Price with the compare-at price struck through when the item is on sale,
+  and the unit price when the variant has one.
+
+  @param {variant} [variant] - The variant to price (product page, cart)
+  @param {product} [product] - Used when no variant is given (lowest price)
+  @param {string} [class] - Extra classes
+
+  @example
+  {% render 'price', variant: product.selected_or_first_available_variant %}
+{% enddoc %}
+
+{%- liquid
+  if variant
+    assign price = variant.price
+    assign compare = variant.compare_at_price
+    assign unit_price = variant.unit_price
+    assign unit_measurement = variant.unit_price_measurement
+  else
+    assign price = product.price
+    assign compare = product.compare_at_price
+  endif
+  assign on_sale = false
+  if compare > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="price{% if on_sale %} price--sale{% endif %} {{ class }}">
+  {%- if on_sale -%}
+    <span class="visually-hidden">{{ 'products.sale_price' | t }}</span>
+  {%- endif -%}
+  <span class="price__current">{{ price | money }}</span>
+  {%- if on_sale -%}
+    <s class="price__compare">
+      <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
+      {{- compare | money -}}
+    </s>
+    <span class="price__badge" aria-hidden="true">{{ 'products.sale' | t }}</span>
+  {%- endif -%}
+  {%- if unit_price -%}
+    <span class="price__unit">
+      <span class="visually-hidden">{{ 'products.unit_price' | t }}</span>
+      {{- unit_price | money -}}
+      <span aria-hidden="true">/</span>
+      <span class="visually-hidden">{{ 'products.unit_price_separator' | t }}</span>
+      {%- if unit_measurement.reference_value != 1 -%}
+        {{- unit_measurement.reference_value -}}
+      {%- endif -%}
+      {{- unit_measurement.reference_unit -}}
+    </span>
+  {%- endif -%}
+</div>

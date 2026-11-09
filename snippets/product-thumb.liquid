@@ -1,0 +1,30 @@
+{% doc %}
+  Thumbnail button for the product gallery; product.js scrolls its slide
+  into view.
+
+  @param {object} media - The media object
+  @param {string} section_id - section.id
+  @param {number} index - Position (1-based)
+  @param {boolean} [active] - The thumbnail of the slide shown first
+
+  @example
+  {% render 'product-thumb', media: media, section_id: section.id, index: 1, active: true %}
+{% enddoc %}
+
+<li class="product__thumb-item">
+  <button
+    type="button"
+    class="product__thumb"
+    data-media-id="{{ media.id }}"
+    aria-controls="Slide-{{ section_id }}-{{ media.id }}"
+    {% if active %}
+      aria-current="true"
+    {% endif %}
+  >
+    {{ media.preview_image | image_url: width: 200 | image_tag: widths: '100, 200', sizes: '96px', loading: 'lazy', alt: '' }}
+    {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+      <span class="product__thumb-play" aria-hidden="true">{%- render 'icon', name: 'play' -%}</span>
+    {%- endif -%}
+    <span class="visually-hidden">{{ 'products.show_media' | t: index: index }}</span>
+  </button>
+</li>

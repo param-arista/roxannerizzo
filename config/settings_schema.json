@@ -164,6 +164,46 @@
     ]
   },
   {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Add to cart opens",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Mini cart (slide-out drawer)"
+          },
+          {
+            "value": "page",
+            "label": "Cart page"
+          }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "collection",
+        "id": "cart_empty_collection",
+        "label": "Empty cart: link to collection",
+        "info": "Where the Shop Now button in an empty cart goes. Defaults to all products."
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "Order note on the cart page",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_dynamic_checkout",
+        "label": "Show accelerated checkout buttons on the cart page",
+        "info": "Shop Pay, Apple Pay and others you've enabled.",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
