@@ -1,12 +1,19 @@
 name: CI
-on: [push]
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
 jobs:
   theme-check:
     name: Theme Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Theme Check
-        uses: shopify/theme-check-action@v2
+      - uses: actions/setup-node@v4
         with:
-          token: ${{ github.token }}
+          node-version: 22
+      # Runs the CLI directly: shopify/theme-check-action@v2 installs the latest
+      # CLI and crashes reading its output ("e.filter is not a function").
+      - name: Theme Check
+        run: npx --yes @shopify/cli@4.3.0 theme check --path . --fail-level error
