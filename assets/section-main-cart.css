@@ -2,6 +2,9 @@
  * Cart page (sections/main-cart.liquid): lines + a grey order-summary card,
  * matching the home page's alt-background panels.
  */
+.main-cart {
+  padding-block-start: 0;
+}
 .main-cart__layout {
   display: grid;
   gap: clamp(2rem, 4vw, 4rem);

@@ -411,6 +411,11 @@
   font-size: 0.9375rem;
 }
 
+/* Sold out / unavailable: no "Buy it now" either */
+.product__add:disabled ~ .shopify-payment-button {
+  display: none;
+}
+
 .product__form .shopify-payment-button__more-options {
   color: var(--color-muted);
   font-size: 0.8125rem;

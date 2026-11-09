@@ -70,6 +70,12 @@
   font-size: clamp(1.125rem, 2vw, 1.5rem);
 }
 
+.search-modal__input::-webkit-search-cancel-button,
+.search-modal__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .search-modal__input:focus-visible {
   outline: none;
 }

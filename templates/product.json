@@ -3,7 +3,7 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "eyebrow": { "type": "text", "settings": { "text": "Bronze Glow", "style": "eyebrow" } },
+        "eyebrow": { "type": "text", "settings": { "source": "type", "text": "Roxanne Rizzo", "style": "eyebrow" } },
         "title": { "type": "title" },
         "rating": { "type": "rating", "settings": { "reviews_anchor": "" } },
         "price": { "type": "price" },

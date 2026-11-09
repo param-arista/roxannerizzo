@@ -107,7 +107,8 @@
 
         async onChange(input) {
           const sectionId = this.dataset.sectionId;
-          const section = this.closest('[data-section-id]');
+          // .product, not [data-section-id]: this element carries that attribute too.
+          const section = this.closest('.product');
           const optionValues = [...this.querySelectorAll('.option__input:checked')].map((el) => el.dataset.valueId);
           const focusedId = input.id;
 

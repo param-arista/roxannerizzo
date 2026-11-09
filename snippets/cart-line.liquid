@@ -22,6 +22,8 @@
     assign max = item.variant.inventory_quantity
   endif
   assign qty_label = 'cart.quantity_for' | t: title: title
+  assign vendor_key = item.vendor | handle | remove: '-'
+  assign shop_key = shop.name | handle | remove: '-'
   if item.variant.quantity_rule.max
     assign max = item.variant.quantity_rule.max
   endif
@@ -41,7 +43,7 @@
   </a>
 
   <div class="cart-line__info">
-    {%- if item.vendor != blank and item.vendor != shop.name and compact == false -%}
+    {%- if item.vendor != blank and vendor_key != shop_key and compact == false -%}
       <p class="cart-line__vendor">{{ item.vendor | escape }}</p>
     {%- endif -%}
     <h3 class="cart-line__title">
