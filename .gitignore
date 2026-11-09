@@ -18,3 +18,7 @@ release
 
 ## Local listings
 listings/
+
+## Local secrets (Theme Access password, storefront password)
+.env
+.env.*
