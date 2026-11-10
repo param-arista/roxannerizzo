@@ -8,5 +8,15 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "cart_empty_collection": "bestseller",
+    "free_shipping_threshold": 99,
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  }
 }
