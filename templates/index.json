@@ -12,11 +12,12 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/roxannerizzo-banner-desk.webp",
         "height": "large",
         "mobile_layout": "stacked",
         "heading_accent": "Bronze Glow",
         "heading": "Instant skin perfecting\nbronzing mist",
-        "text_color": "#1F2328",
+        "text_color": "#1f2328",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all"
       }
@@ -36,22 +37,22 @@
         "product_1": {
           "type": "product",
           "settings": {
-            "badge": "Value set",
-            "product": "bronze-glow"
+            "product": "bronze-glow",
+            "badge": "Value set"
           }
         },
         "product_2": {
           "type": "product",
           "settings": {
-            "badge": "New arrival",
-            "product": "bronze-glow-duo"
+            "product": "bronze-glow-duo",
+            "badge": "New arrival"
           }
         },
         "product_3": {
           "type": "product",
           "settings": {
-            "badge": "Best seller",
-            "product": "glow-go-set"
+            "product": "glow-go-set",
+            "badge": "Best seller"
           }
         }
       },
@@ -64,12 +65,16 @@
         "eyebrow": "Featured",
         "heading": "Explore favorites",
         "text": "<p>Bestsellers, new arrivals, and value sets loved by makeup artists worldwide.</p>",
+        "collection": "",
+        "products_limit": 4,
         "columns": 3,
         "width": "contained",
         "image_ratio": "wide",
+        "card_background": "",
         "show_rating": true,
         "card_button_label": "",
-        "card_background": ""
+        "button_label": "",
+        "button_link": ""
       }
     },
     "founder_quote": {
@@ -110,6 +115,7 @@
         "heading": "Once an industry secret, now available to everyone",
         "text": "<p>Roxanne Rizzo New York was founded in 2009 by celebrity makeup artist Roxanne Rizzo, born from years of working behind the scenes in film and television. As high-definition cameras changed the industry, makeup had to change with it. Every uneven tone, shadow and patch of redness became more visible on camera. <strong>Bronze Glow was created in 2009 and perfected on set under HD cameras and professional film lighting.</strong></p><p>The result was a buildable, universal mist that gives skin an instant, warm, healthy-looking complexion. No color matching or tools needed. What started in Roxanne's own makeup kit became a go-to final step on film and television sets around the world. Now, it's becoming a household name for everyday use.</p>",
         "button_label": "",
+        "button_link": "",
         "alt_background": false
       }
     },
@@ -172,37 +178,43 @@
         "logo_1": {
           "type": "logo",
           "settings": {
-            "name": "Us Weekly"
+            "name": "Us Weekly",
+            "link": ""
           }
         },
         "logo_2": {
           "type": "logo",
           "settings": {
-            "name": "InStyle"
+            "name": "InStyle",
+            "link": ""
           }
         },
         "logo_3": {
           "type": "logo",
           "settings": {
-            "name": "People"
+            "name": "People",
+            "link": ""
           }
         },
         "logo_4": {
           "type": "logo",
           "settings": {
-            "name": "Allure"
+            "name": "Allure",
+            "link": ""
           }
         },
         "logo_5": {
           "type": "logo",
           "settings": {
-            "name": "Cosmopolitan"
+            "name": "Cosmopolitan",
+            "link": ""
           }
         },
         "logo_6": {
           "type": "logo",
           "settings": {
-            "name": "Vogue"
+            "name": "Vogue",
+            "link": ""
           }
         }
       },
@@ -291,13 +303,16 @@
         "eyebrow": "The accessories",
         "heading": "The travel collection",
         "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
+        "collection": "",
         "products_limit": 4,
         "columns": 4,
         "width": "full",
         "image_ratio": "standard",
+        "card_background": "#eaeaeb",
         "show_rating": false,
         "card_button_label": "Shop Now",
-        "card_background": "#EAEAEB"
+        "button_label": "",
+        "button_link": ""
       }
     },
     "follow_the_glow": {
@@ -306,36 +321,48 @@
         "post_1": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": true
           }
         },
         "post_2": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": false
           }
         },
         "post_3": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": true
           }
         },
         "post_4": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": false
           }
         },
         "post_5": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": false
           }
         },
         "post_6": {
           "type": "post",
           "settings": {
+            "caption": "",
+            "link": "",
             "is_video": true
           }
         }
@@ -355,6 +382,7 @@
         "stat": "14.3K +",
         "stat_label": "Instagram Followers",
         "button_label": "Follow on Instagram",
+        "button_link": "",
         "alt_background": true
       }
     }
