@@ -2,23 +2,64 @@
   "sections": {
     "main": {
       "type": "main-cart",
-      "settings": { "eyebrow": "Shopping bag", "heading": "Your bag" }
+      "settings": {
+        "eyebrow": "Shopping bag",
+        "heading": "Your bag"
+      }
     },
     "travel_collection": {
       "type": "featured-products",
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "product": "mulberry-street",
+            "badge": "Best seller"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "product": "bronze-glow-duo",
+            "badge": "Value set"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "product": "summer-skin-set",
+            "badge": ""
+          }
+        },
+        "product_4": {
+          "type": "product",
+          "settings": {
+            "product": "glow-go-set",
+            "badge": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3",
+        "product_4"
+      ],
       "settings": {
-        "eyebrow": "The accessories",
-        "heading": "Add a travel bag",
-        "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
-        "products_limit": 4,
+        "eyebrow": "Complete the glow",
+        "heading": "You may also like",
+        "text": "",
         "columns": 4,
-        "width": "full",
-        "image_ratio": "standard",
-        "show_rating": false,
-        "card_button_label": "Shop Now",
-        "card_background": "#EAEAEB"
+        "width": "contained",
+        "image_ratio": "wide",
+        "show_rating": true,
+        "card_button_label": "",
+        "card_background": ""
       }
     }
   },
-  "order": ["main", "travel_collection"]
+  "order": [
+    "main",
+    "travel_collection"
+  ]
 }

@@ -27,19 +27,22 @@
         "product_1": {
           "type": "product",
           "settings": {
-            "badge": "Value set"
+            "badge": "Value set",
+            "product": "bronze-glow"
           }
         },
         "product_2": {
           "type": "product",
           "settings": {
-            "badge": "New arrival"
+            "badge": "New arrival",
+            "product": "bronze-glow-duo"
           }
         },
         "product_3": {
           "type": "product",
           "settings": {
-            "badge": "Best seller"
+            "badge": "Best seller",
+            "product": "glow-go-set"
           }
         }
       },
