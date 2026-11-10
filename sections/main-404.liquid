@@ -1,0 +1,56 @@
+{% comment %}
+  Page not found: home page style heading, a search field and a link back
+  to the shop. Followed in the template by a product row.
+{% endcomment %}
+
+{{ 'section-main-search.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'NotFoundHeading-' | append: section.id -%}
+
+<section class="section main-404" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    {%- render 'page-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.text,
+      id: heading_id
+    -%}
+
+    <form class="search-form" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="visually-hidden" for="NotFoundSearch-{{ section.id }}">{{ '404.search' | t }}</label>
+      <input
+        class="search-form__input"
+        id="NotFoundSearch-{{ section.id }}"
+        type="search"
+        name="q"
+        placeholder="{{ 'search.placeholder' | t }}"
+        autocomplete="off"
+      >
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="search-form__submit" type="submit">
+        {%- render 'icon', name: 'search' -%}
+        <span class="visually-hidden">{{ 'search.submit' | t }}</span>
+      </button>
+    </form>
+
+    <p class="main-404__actions">
+      <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }}</a>
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page not found",
+  "tag": "div",
+  "class": "main-404-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Error 404" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This page has slipped away" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>The page you're looking for doesn't exist or has moved. Try a search, or head back to the shop.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Back to shopping" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "enabled_on": { "templates": ["404"] }
+}
+{% endschema %}

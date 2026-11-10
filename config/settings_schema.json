@@ -200,6 +200,16 @@
         "label": "Show accelerated checkout buttons on the cart page",
         "info": "Shop Pay, Apple Pay and others you've enabled.",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Free shipping progress bar"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping from (in your store currency)",
+        "info": "E.g. 50. Leave empty to hide the bar. Shown in the mini cart and on the cart page, and only to shoppers paying in your store currency, so the amount is never wrong after currency conversion. Set up the matching free shipping rate in Settings → Shipping."
       }
     ]
   },

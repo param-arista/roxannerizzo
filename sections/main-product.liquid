@@ -345,6 +345,54 @@
       </div>
     </div>
   </div>
+
+  {%- liquid
+    assign has_buy_buttons = false
+    for block in section.blocks
+      if block.type == 'buy_buttons'
+        assign has_buy_buttons = true
+      endif
+    endfor
+  -%}
+  {%- if section.settings.show_sticky_bar and has_buy_buttons -%}
+    {%- comment -%} Phones only: appears once the main Add to bag button scrolls away {%- endcomment -%}
+    <sticky-buy-bar class="sticky-buy" data-section-id="{{ section.id }}" hidden>
+      <div class="sticky-buy__product">
+        {%- if featured_media -%}
+          {{ featured_media.preview_image | image_url: width: 120 | image_tag: widths: '60, 120', sizes: '60px', loading: 'lazy', alt: '', class: 'sticky-buy__image' }}
+        {%- endif -%}
+        <div class="sticky-buy__text">
+          <p class="sticky-buy__title">{{ product.title | escape }}</p>
+          <p class="sticky-buy__price" id="StickyPrice-{{ section.id }}" data-swap>
+            {%- unless product.has_only_default_variant or combination_missing -%}
+              <span class="sticky-buy__variant">{{ current_variant.title | escape }} · </span>
+            {%- endunless -%}
+            {{ current_variant.price | money }}
+          </p>
+        </div>
+      </div>
+      {%- assign sticky_label = 'products.sticky_label' | t: title: product.title -%}
+      <button
+        type="submit"
+        form="{{ form_id }}"
+        class="button sticky-buy__button"
+        id="StickyAdd-{{ section.id }}"
+        data-swap
+        aria-label="{{ sticky_label | escape }}"
+        {% unless can_buy %}
+          disabled
+        {% endunless %}
+      >
+        {%- if combination_missing or current_variant == null -%}
+          {{ 'products.unavailable' | t }}
+        {%- elsif current_variant.available -%}
+          {{ 'products.add_to_cart' | t }}
+        {%- else -%}
+          {{ 'products.sold_out' | t }}
+        {%- endif -%}
+      </button>
+    </sticky-buy-bar>
+  {%- endif -%}
 </section>
 
 <script type="application/ld+json">
@@ -374,6 +422,13 @@
         { "value": "landscape", "label": "Landscape (5:4)" }
       ],
       "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_bar",
+      "label": "Sticky Add to bag bar on phones",
+      "info": "Slides up from the bottom once the main button scrolls out of view.",
+      "default": true
     }
   ],
   "blocks": [

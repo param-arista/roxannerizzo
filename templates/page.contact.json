@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "eyebrow": "Let's connect",
+        "width": "narrow"
+      }
+    },
+    "contact": {
+      "type": "contact-feature",
+      "settings": {
+        "side_label": "The personal beauty experience",
+        "eyebrow": "Let's connect",
+        "heading": "A conversation with Roxanne",
+        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
+        "phone_placeholder": "(405) 807-9330",
+        "button_label": "Book an Appointment",
+        "subject": "Appointment request"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact"
+  ]
+}

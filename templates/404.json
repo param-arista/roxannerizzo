@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "eyebrow": "Error 404",
+        "heading": "This page has slipped away",
+        "button_label": "Back to shopping"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-products",
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "product": "bronze-glow",
+            "badge": "Best seller"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "product": "bronze-glow-duo",
+            "badge": "Value set"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "product": "glow-go-set",
+            "badge": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3"
+      ],
+      "settings": {
+        "eyebrow": "Our bestsellers",
+        "heading": "Shop the glow",
+        "text": "",
+        "columns": 3,
+        "width": "contained",
+        "image_ratio": "wide",
+        "show_rating": true,
+        "card_button_label": "",
+        "card_background": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bestsellers"
+  ]
+}

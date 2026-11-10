@@ -1,0 +1,39 @@
+{% comment %}
+  Content page (Shipping, Returns, FAQ, Terms…): the home page's centred
+  eyebrow + uppercase title over the page's rich text in a readable column.
+{% endcomment %}
+
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'PageHeading-' | append: section.id -%}
+
+<section class="section main-page main-page--{{ section.settings.width }}" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    {%- render 'page-header', eyebrow: section.settings.eyebrow, heading: page.title, id: heading_id -%}
+    {%- if page.content != blank -%}
+      <div class="main-page__content rte">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "tag": "div",
+  "class": "main-page-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Roxanne Rizzo" },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Text width",
+      "options": [
+        { "value": "narrow", "label": "Narrow (best for reading)" },
+        { "value": "wide", "label": "Wide" }
+      ],
+      "default": "narrow"
+    }
+  ],
+  "enabled_on": { "templates": ["page"] }
+}
+{% endschema %}

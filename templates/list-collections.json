@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "eyebrow": "Shop by",
+        "heading": "Collections",
+        "button_label": "Shop Now",
+        "sort": "default",
+        "columns": 3,
+        "show_empty": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

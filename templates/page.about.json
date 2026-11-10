@@ -1,0 +1,202 @@
+{
+  "sections": {
+    "story": {
+      "type": "image-with-text",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "Our vision",
+            "text": "Bringing simplicity back to beauty."
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "Our values",
+            "text": "Beauty for everyone no color matching ever needed."
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ],
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "Our story",
+        "heading": "Once an industry secret, now available to everyone",
+        "text": "<p>Roxanne Rizzo New York was founded in 2009 by celebrity makeup artist Roxanne Rizzo, born from years of working behind the scenes in film and television. As high-definition cameras changed the industry, makeup had to change with it. Every uneven tone, shadow and patch of redness became more visible on camera. <strong>Bronze Glow was created in 2009 and perfected on set under HD cameras and professional film lighting.</strong></p><p>The result was a buildable, universal mist that gives skin an instant, warm, healthy-looking complexion. No color matching or tools needed. What started in Roxanne's own makeup kit became a go-to final step on film and television sets around the world. Now, it's becoming a household name for everyday use.</p>",
+        "button_label": "",
+        "alt_background": false
+      }
+    },
+    "founder_quote": {
+      "type": "founder-quote",
+      "settings": {
+        "eyebrow": "Why Bronze Glow",
+        "quote": "A clean and simple way to look and feel healthy, regardless of age, gender or skin tone",
+        "author": "Roxanne Rizzo, Founder",
+        "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
+        "alt_background": true
+      }
+    },
+    "how_it_wears": {
+      "type": "feature-columns",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "Instant",
+            "text": "<p>An easy-to-use 360° nozzle lets you instantly glow from head to toe. A light, buildable mist you can layer over makeup or wear alone.</p>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "Flawless",
+            "text": "<p>Enhances your natural beauty and evens skin tone by reducing the look of dark under-eye circles, spots, cellulite, scars, rosacea, and acne for a healthy, lit-from-within glow.</p>"
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "title": "Safe",
+            "text": "<p>Formulated with the cleanest ingredients: paraben, sulfate, and phthalate free. Low in DHA, non-comedogenic, 100% vegan, and never tested on animals.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3"
+      ],
+      "settings": {
+        "eyebrow": "How it wears",
+        "heading": "Instant. Flawless. Safe."
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Lucy Liu",
+            "role": "Actress, Artist & Advocate",
+            "quote": "Bronze Glow is the best!"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Bill Corso",
+            "role": "Oscar & Emmy-winning MUA",
+            "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens. If I ever get more than one bottle, my wife steals one for her everyday."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Liam Neeson",
+            "role": "Award-Winning Irish Actor",
+            "quote": "It should be called confidence in a can!"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "name": "Ashlee Glazer",
+            "role": "Celebrity Makeup Artist",
+            "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
+      "settings": {
+        "eyebrow": "Loved by",
+        "heading": "Reviews",
+        "grayscale": true,
+        "alt_background": true
+      }
+    },
+    "press": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "Us Weekly"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "InStyle"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "People"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "name": "Allure"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "name": "Cosmopolitan"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "name": "Vogue"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
+      ],
+      "settings": {
+        "heading": "",
+        "logo_height": 56,
+        "grayscale": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "eyebrow": "About us",
+        "width": "narrow"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story",
+    "founder_quote",
+    "how_it_wears",
+    "reviews",
+    "press"
+  ]
+}

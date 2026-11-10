@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "eyebrow": "The journal",
+        "show_tags": true,
+        "feature_first": true,
+        "show_excerpt": true,
+        "articles_per_page": 9
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

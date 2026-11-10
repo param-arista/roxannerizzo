@@ -1,0 +1,63 @@
+/**
+ * Content pages (sections/main-page.liquid) and the article body: the
+ * home page heading over long-form rich text in a readable column.
+ */
+.main-page {
+  padding-block-start: 0;
+}
+
+.main-page__content {
+  max-width: 46rem;
+  margin-inline: auto;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+}
+
+.main-page--wide .main-page__content {
+  max-width: 64rem;
+}
+
+.main-page__content h2,
+.main-page__content h3,
+.main-page__content h4 {
+  margin-block-start: 2em;
+  color: var(--color-foreground);
+  line-height: 1.25;
+}
+
+.main-page__content h2 {
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  text-transform: uppercase;
+}
+
+.main-page__content h3 {
+  font-size: 1.25rem;
+}
+
+.main-page__content h4 {
+  font-family: var(--font-body--family);
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.main-page__content blockquote {
+  margin-inline: 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-inline-start: 2px solid var(--color-accent);
+  font-family: var(--font-heading--family);
+  font-size: 1.25rem;
+  color: var(--color-foreground);
+}
+
+.main-page__content img {
+  border-radius: 4px;
+}
+
+.main-page__content hr {
+  border: 0;
+  border-block-start: 1px solid rgb(0 0 0 / 0.1);
+  margin-block: 2.5rem;
+}

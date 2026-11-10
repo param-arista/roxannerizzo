@@ -150,29 +150,6 @@ a {
   padding-inline: var(--page-margin);
 }
 
-/* Skeleton's container block, still used by the non-home templates */
-.block-container {
-  --content-width: min(
-    calc(var(--page-width) - var(--page-margin) * 2),
-    calc(100% - var(--page-margin) * 2)
-  );
-  --content-margin: minmax(var(--page-margin), 1fr);
-  --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
-  position: relative;
-  display: grid;
-  grid-template-columns: var(--content-grid);
-  text-align: var(--text-align, left);
-  width: 100%;
-}
-
-.block-container > * {
-  grid-column: 2;
-}
-
-.block-container > .full-width {
-  grid-column: 1 / -1;
-}
-
 /* Icons */
 .icon {
   width: 1.375rem;

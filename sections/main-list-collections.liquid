@@ -1,0 +1,106 @@
+{% comment %}
+  All collections (/collections): image cards in the style of the home
+  page's "Shop the glow" promo cards — image, title and a Shop button.
+{% endcomment %}
+
+{{ 'section-main-list-collections.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'CollectionsHeading-' | append: section.id -%}
+
+<section class="section main-list-collections" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    {%- render 'page-header', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id -%}
+
+    {%- liquid
+      case section.settings.sort
+        when 'alphabetical'
+          assign list = collections | sort: 'title'
+        when 'products_high'
+          assign list = collections | sort: 'all_products_count' | reverse
+        else
+          assign list = collections
+      endcase
+    -%}
+
+    {%- liquid
+      assign button_label = section.settings.button_label
+      if button_label == blank
+        assign button_label = 'cart.shop_now' | t
+      endif
+    -%}
+
+    {%- capture cards -%}
+        {%- for collection in list -%}
+          {%- comment -%} "frontpage" is Shopify's built-in Home page collection, not a shop category {%- endcomment -%}
+          {%- liquid
+            assign show_card = false
+            if collection.all_products_count > 0 or section.settings.show_empty
+              assign show_card = true
+            endif
+            if collection.handle == 'frontpage'
+              assign show_card = false
+            endif
+          -%}
+          {%- if show_card -%}
+            <li>
+              <article class="collection-card-item" aria-labelledby="CollectionCard-{{ collection.id }}">
+                <div class="collection-card-item__media">
+                  {%- assign card_image = collection.featured_image -%}
+                  {%- if card_image -%}
+                    {{
+                      card_image
+                      | image_url: width: 1400
+                      | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw', loading: 'lazy', alt: ''
+                    }}
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag: 'collection-card-item__placeholder' }}
+                  {%- endif -%}
+                </div>
+                <div class="collection-card-item__body">
+                  <h2 class="collection-card-item__title" id="CollectionCard-{{ collection.id }}">
+                    <a class="collection-card-item__link" href="{{ collection.url }}">{{ collection.title | escape }}</a>
+                  </h2>
+                  <span class="button collection-card-item__button" aria-hidden="true">{{ button_label | escape }}</span>
+                </div>
+              </article>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if cards contains '<li>' -%}
+      <ul class="collection-cards" role="list" style="--columns: {{ section.settings.columns }};">
+        {{- cards -}}
+      </ul>
+    {%- else -%}
+      <p class="main-blog__empty">{{ 'collections.list_empty' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "div",
+  "class": "main-list-collections-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Collections" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    {
+      "type": "select",
+      "id": "sort",
+      "label": "Order",
+      "options": [
+        { "value": "default", "label": "As in admin" },
+        { "value": "alphabetical", "label": "Alphabetical" },
+        { "value": "products_high", "label": "Most products first" }
+      ],
+      "default": "default"
+    },
+    { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Cards per row on desktop", "default": 3 },
+    { "type": "checkbox", "id": "show_empty", "label": "Show empty collections", "default": false }
+  ],
+  "enabled_on": { "templates": ["list-collections"] }
+}
+{% endschema %}

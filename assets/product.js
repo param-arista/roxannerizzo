@@ -151,6 +151,34 @@
     );
   }
 
+  /* ---------- <sticky-buy-bar> ---------- */
+  // Phones only (CSS hides it from 750px): shows while the main buy buttons
+  // are scrolled above the viewport. Its button submits the main form.
+  if (!customElements.get('sticky-buy-bar')) {
+    customElements.define(
+      'sticky-buy-bar',
+      class extends HTMLElement {
+        connectedCallback() {
+          const section = this.closest('.product');
+          this.target = section?.querySelector('product-form');
+          if (!this.target) return;
+          this.hidden = false;
+          this.observer = new IntersectionObserver(([entry]) => {
+            const passed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+            this.classList.toggle('is-visible', passed);
+            this.inert = !passed;
+          });
+          this.observer.observe(this.target);
+          this.inert = true;
+        }
+
+        disconnectedCallback() {
+          this.observer?.disconnect();
+        }
+      }
+    );
+  }
+
   /* ---------- <product-recommendations> ---------- */
   if (!customElements.get('product-recommendations')) {
     customElements.define(

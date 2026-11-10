@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_author": true,
+        "show_reading_time": true,
+        "show_share": true
+      }
+    },
+    "shop_the_look": {
+      "type": "featured-products",
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "product": "bronze-glow",
+            "badge": "Best seller"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "product": "bronze-glow-duo",
+            "badge": "Value set"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "product": "mulberry-street",
+            "badge": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3"
+      ],
+      "settings": {
+        "eyebrow": "Shop the glow",
+        "heading": "Featured in this story",
+        "text": "",
+        "columns": 3,
+        "width": "contained",
+        "image_ratio": "wide",
+        "show_rating": true,
+        "card_button_label": "",
+        "card_background": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "shop_the_look"
+  ]
+}

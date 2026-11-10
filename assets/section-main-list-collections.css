@@ -1,0 +1,94 @@
+/**
+ * All collections (sections/main-list-collections.liquid): cards in the
+ * style of the home page's "Shop the glow" promo cards.
+ */
+.main-list-collections {
+  padding-block-start: 0;
+}
+
+.collection-cards {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  list-style: none;
+  padding: 0;
+}
+
+@media (max-width: 989px) {
+  .collection-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 749px) {
+  .collection-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.collection-card-item {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+}
+
+.collection-card-item__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--color-card);
+}
+
+.collection-card-item__media img,
+.collection-card-item__placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.collection-card-item__placeholder {
+  fill: rgb(0 0 0 / 0.12);
+}
+
+.collection-card-item:hover .collection-card-item__media img {
+  transform: scale(1.03);
+}
+
+.collection-card-item__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.collection-card-item__title {
+  font-family: var(--font-body--family);
+  font-weight: var(--font-body--weight);
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+}
+
+.collection-card-item__link {
+  text-decoration: none;
+}
+
+.collection-card-item__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.collection-card-item:has(.collection-card-item__link:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.collection-card-item__link:focus-visible {
+  outline: none;
+}
+
+.collection-card-item__button {
+  min-height: 2.25rem;
+  padding: 0.4rem 1.25rem;
+  font-size: 0.8125rem;
+}

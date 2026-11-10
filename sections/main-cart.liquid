@@ -53,6 +53,7 @@
 
           <aside class="cart-summary" aria-labelledby="CartSummary-{{ section.id }}">
             <h2 class="cart-summary__title" id="CartSummary-{{ section.id }}">{{ 'cart.summary' | t }}</h2>
+            {%- render 'free-shipping-bar' -%}
 
             <p class="cart-summary__row">
               <span>{{ 'cart.subtotal' | t }} · {{ 'cart.item_count' | t: count: cart.item_count }}</span>

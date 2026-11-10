@@ -549,3 +549,76 @@
   font-size: 0.9375rem;
   line-height: 1.7;
 }
+
+/* ---------- Sticky Add to bag bar (phones) ---------- */
+.sticky-buy {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem var(--page-margin) calc(0.65rem + env(safe-area-inset-bottom));
+  border-block-start: 1px solid rgb(0 0 0 / 0.08);
+  background-color: var(--color-background);
+  box-shadow: 0 -8px 24px rgb(0 0 0 / 0.06);
+  transform: translateY(110%);
+  transition: transform 0.25s ease;
+}
+
+.sticky-buy[hidden] {
+  display: none;
+}
+
+.sticky-buy.is-visible {
+  transform: none;
+}
+
+@media (min-width: 750px) {
+  .sticky-buy {
+    display: none;
+  }
+}
+
+.sticky-buy__product {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.sticky-buy__image {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: var(--color-card);
+}
+
+.sticky-buy__text {
+  min-width: 0;
+}
+
+.sticky-buy__title {
+  overflow: hidden;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sticky-buy__price {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.sticky-buy__button {
+  flex: none;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

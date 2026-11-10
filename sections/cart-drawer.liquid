@@ -40,6 +40,7 @@
         </div>
       {%- else -%}
         <form class="cart-drawer__form" action="{{ routes.cart_url }}" method="post" id="CartDrawerForm">
+          {%- render 'free-shipping-bar' -%}
           <cart-items class="cart-drawer__items" data-sections="cart-drawer">
             <div class="cart-items__error" role="alert" data-cart-error hidden></div>
             <ul class="cart-lines" role="list">

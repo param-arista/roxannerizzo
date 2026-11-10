@@ -145,3 +145,9 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* 404 page reuses the search field */
+.main-404__actions {
+  display: flex;
+  justify-content: center;
+}

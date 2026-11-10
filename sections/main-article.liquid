@@ -1,0 +1,161 @@
+{% comment %}
+  Journal article: back link, date / author / reading time, uppercase
+  title, wide cover image, the article in a readable column, topics,
+  share links, previous / next article and (when enabled) comments.
+{% endcomment %}
+
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-article.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'ArticleHeading-' | append: section.id
+  assign word_count = article.content | strip_html | split: ' ' | size
+  assign minutes = word_count | divided_by: 200.0 | ceil | at_least: 1
+  assign share_url = request.origin | append: article.url | url_encode
+  assign share_title = article.title | url_encode
+-%}
+
+<article class="section main-article" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    <header class="main-article__header">
+      <a class="main-article__back" href="{{ blog.url }}">
+        {%- render 'icon', name: 'chevron-left' -%}
+        {{- 'blog.back_to_blog' | t: title: blog.title -}}
+      </a>
+      <p class="eyebrow main-article__meta">
+        {{- article.published_at | time_tag: format: 'date' -}}
+        {%- if section.settings.show_author and article.author != blank %} · {{ 'blog.by_author' | t: author: article.author }}{% endif -%}
+        {%- if section.settings.show_reading_time %} · {{ 'blog.reading_time' | t: count: minutes }}{% endif -%}
+      </p>
+      <h1 class="section-heading__title main-article__title" id="{{ heading_id }}">{{ article.title | escape }}</h1>
+    </header>
+
+    {%- if article.image -%}
+      <div class="main-article__image">
+        {{
+          article.image
+          | image_url: width: 2400
+          | image_tag:
+            widths: '750, 1100, 1500, 1800, 2400',
+            sizes: '(min-width: 1200px) 1200px, 100vw',
+            loading: 'eager',
+            fetchpriority: 'high',
+            alt: article.image.alt
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="main-page__content main-article__content rte">{{ article.content }}</div>
+
+    <footer class="main-article__footer">
+      {%- if article.tags.size > 0 -%}
+        <ul class="blog-tags__list main-article__tags" role="list" aria-label="{{ 'blog.tags' | t }}">
+          {%- for tag in article.tags -%}
+            <li><a class="blog-tags__pill" href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.show_share -%}
+        <div class="main-article__share">
+          <span class="main-article__share-label">{{ 'blog.share' | t }}</span>
+          <a class="social-icons__link" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener">
+            {%- render 'icon', name: 'facebook' -%}
+            <span class="visually-hidden">{{ 'blog.share_on' | t: network: 'Facebook' }} ({{ 'general.opens_in_new_window' | t }})</span>
+          </a>
+          <a class="social-icons__link" href="https://pinterest.com/pin/create/button/?url={{ share_url }}&description={{ share_title }}{% if article.image %}&media={{ article.image | image_url: width: 1200 | prepend: 'https:' | url_encode }}{% endif %}" target="_blank" rel="noopener">
+            {%- render 'icon', name: 'pinterest' -%}
+            <span class="visually-hidden">{{ 'blog.share_on' | t: network: 'Pinterest' }} ({{ 'general.opens_in_new_window' | t }})</span>
+          </a>
+          <a class="social-icons__link" href="mailto:?subject={{ share_title }}&body={{ share_url }}">
+            <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg>
+            <span class="visually-hidden">{{ 'blog.share_on' | t: network: 'email' }}</span>
+          </a>
+        </div>
+      {%- endif -%}
+    </footer>
+
+    {%- if blog.previous_article or blog.next_article -%}
+      <nav class="main-article__pager" aria-label="{{ 'general.pagination.label' | t }}">
+        {%- if blog.previous_article -%}
+          <a class="main-article__pager-link" href="{{ blog.previous_article.url }}">
+            <span class="eyebrow">{{ 'blog.previous_article' | t }}</span>
+            <span class="main-article__pager-title">{{ blog.previous_article.title | escape }}</span>
+          </a>
+        {%- endif -%}
+        {%- if blog.next_article -%}
+          <a class="main-article__pager-link main-article__pager-link--next" href="{{ blog.next_article.url }}">
+            <span class="eyebrow">{{ 'blog.next_article' | t }}</span>
+            <span class="main-article__pager-title">{{ blog.next_article.title | escape }}</span>
+          </a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
+    {%- if blog.comments_enabled? -%}
+      <section class="main-article__comments" id="comments" aria-labelledby="CommentsHeading-{{ section.id }}">
+        <h2 class="main-article__comments-title" id="CommentsHeading-{{ section.id }}">{{ 'blog.comments' | t: count: article.comments_count }}</h2>
+
+        {%- paginate article.comments by 10 -%}
+          {%- if article.comments.size > 0 -%}
+            <ul class="comments" role="list">
+              {%- for comment in article.comments -%}
+                <li class="comment">
+                  <p class="comment__author">{{ comment.author | escape }} <span>{{ comment.created_at | time_tag: format: 'date' }}</span></p>
+                  <div class="comment__body rte">{{ comment.content }}</div>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- render 'pagination', paginate: paginate -%}
+          {%- endif -%}
+        {%- endpaginate -%}
+
+        {%- form 'new_comment', article, class: 'comment-form' -%}
+          <h3 class="comment-form__title">{{ 'blog.comment_form_title' | t }}</h3>
+          {%- if form.posted_successfully? -%}
+            <p class="form-message form-message--success" role="status">
+              {%- if blog.moderated? -%}{{ 'blog.comment_pending' | t }}{%- else -%}{{ 'blog.comment_posted' | t }}{%- endif -%}
+            </p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="comment-form__row">
+            <div class="comment-form__field">
+              <label for="CommentAuthor-{{ section.id }}">{{ 'blog.comment_form_name' | t }}</label>
+              <input class="field__input" type="text" name="comment[author]" id="CommentAuthor-{{ section.id }}" value="{{ form.author }}" autocomplete="name" required>
+            </div>
+            <div class="comment-form__field">
+              <label for="CommentEmail-{{ section.id }}">{{ 'blog.comment_form_email' | t }}</label>
+              <input class="field__input" type="email" name="comment[email]" id="CommentEmail-{{ section.id }}" value="{{ form.email }}" autocomplete="email" spellcheck="false" required>
+            </div>
+          </div>
+          <div class="comment-form__field">
+            <label for="CommentBody-{{ section.id }}">{{ 'blog.comment_form_body' | t }}</label>
+            <textarea class="field__input" name="comment[body]" id="CommentBody-{{ section.id }}" rows="5" required>{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="button">{{ 'blog.comment_form_submit' | t }}</button>
+        {%- endform -%}
+      </section>
+    {%- endif -%}
+  </div>
+</article>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "Blog post",
+  "tag": "div",
+  "class": "main-article-section",
+  "settings": [
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": true },
+    { "type": "checkbox", "id": "show_reading_time", "label": "Show reading time", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show share links", "default": true }
+  ],
+  "enabled_on": { "templates": ["article"] }
+}
+{% endschema %}

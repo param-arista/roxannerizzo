@@ -88,6 +88,27 @@ cards and the bronze accent.
   settings → Cart picks drawer vs. cart page after Add to bag, the
   empty-cart collection, order note and accelerated checkout buttons.
 
+- **Extras:** sticky Add to bag bar on phones (Product page section
+  setting) and a free-shipping progress bar in the mini cart and cart
+  summary (Theme settings → Cart → Free shipping from). The bar only shows
+  to shoppers paying in the store currency — Liquid has no conversion rate.
+
+## Content pages
+
+- **Page** (`page.json`): heading + the page's text in a readable column.
+  Alternate templates to assign in admin: `page.about` (home page story,
+  founder quote, how it wears, reviews, press) and `page.contact` (the
+  "Conversation with Roxanne" contact form).
+- **Blog / article** (`blog.json`, `article.json`): journal grid with topic
+  pills (article tags) and a large newest post; article with reading time,
+  share links, previous / next, comments and a "Featured in this story"
+  product row.
+- **Collections list**, **404** (search + bestsellers) and **password**
+  (coming-soon page with email signup). Stores without a paid plan show
+  Shopify's own password screen instead of the theme's.
+- Customer accounts are Shopify's new (hosted) accounts, styled in admin
+  under Settings → Customer accounts, not in the theme.
+
 Product card ratings read the `reviews.rating` / `reviews.rating_count`
 metafields that review apps write.
 

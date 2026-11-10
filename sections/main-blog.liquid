@@ -1,0 +1,73 @@
+{% comment %}
+  Blog (journal) listing: home page style heading, topic pills from the
+  blog's tags, a grid of article cards (the first one large on desktop)
+  and pagination.
+{% endcomment %}
+
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_id = 'BlogHeading-' | append: section.id -%}
+
+<section class="section main-blog" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    {%- liquid
+      assign heading = blog.title
+      if current_tags
+        assign heading = current_tags.first
+      endif
+    -%}
+    {%- render 'page-header', eyebrow: section.settings.eyebrow, heading: heading, id: heading_id -%}
+
+    {%- if section.settings.show_tags and blog.all_tags.size > 0 -%}
+      <nav class="blog-tags" aria-label="{{ 'blog.filter_by_tag' | t }}">
+        <ul class="blog-tags__list" role="list">
+          <li>
+            <a class="blog-tags__pill" href="{{ blog.url }}" {% unless current_tags %}aria-current="page"{% endunless %}>{{ 'blog.all' | t }}</a>
+          </li>
+          {%- for tag in blog.all_tags -%}
+            <li>
+              <a class="blog-tags__pill" href="{{ blog.url }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}aria-current="page"{% endif %}>
+                {{- tag | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      {%- if blog.articles.size == 0 -%}
+        <p class="main-blog__empty">{{ 'blog.empty' | t }}</p>
+      {%- else -%}
+        <ul class="blog-grid{% if section.settings.feature_first and paginate.current_page == 1 %} blog-grid--featured{% endif %}" role="list">
+          {%- for article in blog.articles -%}
+            <li class="blog-grid__item">
+              {%- if forloop.first and section.settings.feature_first and paginate.current_page == 1 -%}
+                {%- render 'article-card', article: article, sizes: '(min-width: 990px) 66vw, 100vw' -%}
+              {%- else -%}
+                {%- render 'article-card', article: article, show_excerpt: section.settings.show_excerpt -%}
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "tag": "div",
+  "class": "main-blog-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The journal" },
+    { "type": "checkbox", "id": "show_tags", "label": "Show topic filter (from article tags)", "default": true },
+    { "type": "checkbox", "id": "feature_first", "label": "Show the newest article large", "default": true },
+    { "type": "checkbox", "id": "show_excerpt", "label": "Show excerpts", "default": true },
+    { "type": "range", "id": "articles_per_page", "min": 3, "max": 24, "step": 3, "label": "Articles per page", "default": 9 }
+  ],
+  "enabled_on": { "templates": ["blog"] }
+}
+{% endschema %}

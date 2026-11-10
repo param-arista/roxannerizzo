@@ -2,7 +2,11 @@
   "404": {
     "title": "404",
     "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "back_to_shopping": "Back to shopping",
+    "eyebrow": "Error 404",
+    "heading": "This page has slipped away",
+    "text": "The page you're looking for doesn't exist or has moved. Try a search, or head back to the shop.",
+    "search": "Search the store"
   },
   "accessibility": {
     "skip_to_content": "Skip to content"
@@ -14,7 +18,32 @@
     "comment_form_email": "Email",
     "comment_form_name": "Name",
     "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_title": "Add a comment",
+    "eyebrow": "The journal",
+    "read_more": "Read more",
+    "read_more_about": "Read more: {{ title }}",
+    "all": "All",
+    "filter_by_tag": "Filter by topic",
+    "back_to_blog": "Back to {{ title }}",
+    "by_author": "By {{ author }}",
+    "comments": {
+      "one": "{{ count }} comment",
+      "other": "{{ count }} comments"
+    },
+    "comment_pending": "Thanks! Your comment will appear once it's approved.",
+    "comment_posted": "Thanks! Your comment is posted.",
+    "share": "Share",
+    "share_on": "Share on {{ network }}",
+    "copy_link": "Copy link",
+    "link_copied": "Link copied",
+    "previous_article": "Previous article",
+    "next_article": "Next article",
+    "empty": "No articles yet — check back soon.",
+    "tags": "Topics",
+    "reading_time": {
+      "one": "{{ count }} min read",
+      "other": "{{ count }} min read"
+    }
   },
   "cart": {
     "title": "Your bag",
@@ -50,7 +79,10 @@
     "added": "Added to your bag.",
     "product": "Product",
     "each": "{{ price }} each",
-    "drawer_label": "Shopping bag"
+    "drawer_label": "Shopping bag",
+    "free_shipping_remaining_html": "You're <strong>{{ amount }}</strong> away from free shipping",
+    "free_shipping_reached": "You've unlocked free shipping!",
+    "free_shipping_label": "Progress towards free shipping"
   },
   "collections": {
     "title": "Collections",
@@ -74,7 +106,11 @@
     "show_results": "Show results",
     "active_filters": "Active filters",
     "results_updated": "Product list updated.",
-    "view_all": "View all"
+    "view_all": "View all",
+    "list_eyebrow": "Shop by",
+    "list_heading": "Collections",
+    "shop_collection": "Shop {{ title }}",
+    "list_empty": "No collections yet."
   },
   "customers": {
     "login": {
@@ -95,6 +131,9 @@
       "previous": "Previous page",
       "next": "Next page",
       "page": "Page {{ number }}"
+    },
+    "page_contact": {
+      "sent": "Thanks for reaching out. We'll get back to you soon."
     }
   },
   "gift_card": {
@@ -105,9 +144,18 @@
     "use_at_checkout": "Use this gift card at checkout"
   },
   "password": {
-    "title": "This shop is private",
+    "title": "Something glowing is on its way",
     "password": "Password",
-    "enter": "Enter"
+    "enter": "Enter",
+    "eyebrow": "Coming soon",
+    "enter_using_password": "Enter using password",
+    "store_owner": "Are you the store owner?",
+    "admin_link": "Log in here",
+    "signup_label": "Email address",
+    "signup_submit": "Notify me",
+    "signup_success": "Thanks! We'll let you know when we open.",
+    "wrong_password": "Wrong password. Please try again.",
+    "powered_by": "Powered by Shopify"
   },
   "products": {
     "price_from": "From {{ price }}",
@@ -143,7 +191,8 @@
     "unit_price_separator": "per",
     "view_details": "View details",
     "option_unavailable": "{{ value }}, sold out",
-    "variant": "Variant"
+    "variant": "Variant",
+    "sticky_label": "Add {{ title }} to bag"
   },
   "search": {
     "title": "Search",
