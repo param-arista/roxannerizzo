@@ -300,18 +300,6 @@
         "card_background": "#EAEAEB"
       }
     },
-    "conversation": {
-      "type": "contact-feature",
-      "settings": {
-        "side_label": "The personal beauty experience",
-        "eyebrow": "Let's connect",
-        "heading": "A conversation with Roxanne",
-        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
-        "phone_placeholder": "(405) 807-9330",
-        "button_label": "Book an Appointment",
-        "subject": "Appointment request"
-      }
-    },
     "follow_the_glow": {
       "type": "social-grid",
       "blocks": {
@@ -382,7 +370,6 @@
     "shop_the_glow",
     "how_it_wears",
     "travel_collection",
-    "conversation",
     "follow_the_glow"
   ]
 }
