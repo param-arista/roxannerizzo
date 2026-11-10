@@ -28,7 +28,8 @@
         "rating_label": "Loved Worldwide",
         "rating_text": "4.9 Average Rating",
         "quote": "It should be called confidence in a can!",
-        "author": "Liam Neeson"
+        "author": "Liam Neeson",
+        "author_image": "shopify://shop_images/Liam_Neeson.webp"
       }
     },
     "featured_products": {
