@@ -111,6 +111,7 @@
         "column_2"
       ],
       "settings": {
+        "image": "shopify://shop_images/industry_secret.webp",
         "image_position": "left",
         "eyebrow": "Our story",
         "heading": "Once an industry secret, now available to everyone",
@@ -239,6 +240,7 @@
         "card_1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Bronze_Glow-shop.webp",
             "title": "Bronze Glow",
             "button_label": "Shop Now",
             "link": "shopify://collections/all"
@@ -247,6 +249,7 @@
         "card_2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Mulberry_Street-shop.webp",
             "title": "Mulberry Street",
             "button_label": "Notify Me",
             "link": ""
