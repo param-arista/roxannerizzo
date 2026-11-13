@@ -163,13 +163,57 @@
             "role": "Celebrity Makeup Artist",
             "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth."
           }
+        },
+        "review_TirpRW": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Scott_Barnes.avif",
+            "name": "Scott Barnes",
+            "role": "Scott Barnes, Celebrity Makeup Artist and Author",
+            "quote": "\"It's not just a bronzer. It's snatch-ural!\""
+          }
+        },
+        "review_6MwKXA": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Laura_Benanti.avif",
+            "name": "Laura Benanti",
+            "role": "Tony Award Winning Actress and Singer",
+            "quote": "\"Love Bronze Glow! It gives this new mom the illusion of rest.\""
+          }
+        },
+        "review_ngPT4j": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Nicki_Lederman.avif",
+            "name": "Nicki Lederman",
+            "role": "Oscar and Emmy Award Winning Celebrity Makeup Artist",
+            "quote": "\"From doing makeup for my daughter's proms or getting celebs ready for the red carpet, to using it as an important finish after tattoo covering, beauty makeup and character makeup designs for my film and tv work, Bronze Glow is one of my most important and essential products in my kit.\""
+          }
+        },
+        "review_ciHNh7": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Leslie_Kritzer_a2f1b9fc-f56b-4273-8209-b6164f5952ef.avif",
+            "name": "Leslie Kritzer",
+            "role": "Broadway Actor and Singer",
+            "quote": "\"The best glow on the market!\""
+          }
         }
       },
       "block_order": [
         "review_1",
         "review_2",
         "review_3",
-        "review_4"
+        "review_4",
+        "review_TirpRW",
+        "review_6MwKXA",
+        "review_ngPT4j",
+        "review_ciHNh7"
       ],
       "settings": {
         "eyebrow": "Loved by",
