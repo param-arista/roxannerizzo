@@ -307,7 +307,7 @@
         "eyebrow": "The accessories",
         "heading": "The travel collection",
         "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
-        "collection": "",
+        "collection": "sets",
         "products_limit": 4,
         "columns": 4,
         "width": "full",
@@ -317,6 +317,18 @@
         "card_button_label": "Shop Now",
         "button_label": "",
         "button_link": ""
+      }
+    },
+    "book_appointment": {
+      "type": "booking-feature",
+      "settings": {
+        "side_label": "The personal beauty experience",
+        "eyebrow": "Let's connect",
+        "heading": "A conversation with Roxanne",
+        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
+        "button_label": "Book an Appointment",
+        "button_link": "",
+        "new_tab": false
       }
     },
     "follow_the_glow": {
@@ -388,17 +400,6 @@
         "button_label": "Follow on Instagram",
         "button_link": "",
         "alt_background": true
-      }
-    },
-    "book_appointment": {
-      "type": "booking-feature",
-      "settings": {
-        "side_label": "The personal beauty experience",
-        "eyebrow": "Let's connect",
-        "heading": "A conversation with Roxanne",
-        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
-        "button_label": "Book an Appointment",
-        "new_tab": false
       }
     }
   },
