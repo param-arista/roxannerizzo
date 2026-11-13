@@ -389,6 +389,17 @@
         "button_link": "",
         "alt_background": true
       }
+    },
+    "book_appointment": {
+      "type": "booking-feature",
+      "settings": {
+        "side_label": "The personal beauty experience",
+        "eyebrow": "Let's connect",
+        "heading": "A conversation with Roxanne",
+        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
+        "button_label": "Book an Appointment",
+        "new_tab": false
+      }
     }
   },
   "order": [
@@ -402,6 +413,7 @@
     "shop_the_glow",
     "how_it_wears",
     "travel_collection",
+    "book_appointment",
     "follow_the_glow"
   ]
 }

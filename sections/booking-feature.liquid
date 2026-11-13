@@ -1,0 +1,151 @@
+{% comment %}
+  "Let's connect / A conversation with Roxanne" with a single "Book an
+  Appointment" button: bronze rules above and below, a vertical side
+  label, an image, and the text. The button links to the booking page
+  (or the booking app's URL). A booking app's own block can be added in
+  the theme editor; it renders under the text.
+{% endcomment %}
+
+{{ 'section-contact-feature.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'BookingHeading-' | append: section.id
+  assign button_link = section.settings.button_link
+  if button_link == blank
+    assign button_link = routes.root_url | append: 'pages/contact'
+    assign button_link = button_link | replace: '//', '/'
+  endif
+-%}
+
+<section
+  class="section contact-feature contact-feature--booking"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width">
+    <div class="contact-feature__frame">
+      {%- if section.settings.side_label != blank -%}
+        <p class="contact-feature__side-label" aria-hidden="true">{{ section.settings.side_label | escape }}</p>
+      {%- endif -%}
+
+      <div class="contact-feature__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              widths: '480, 720, 960, 1200, 1600',
+              sizes: '(min-width: 990px) 48vw, 100vw',
+              loading: 'lazy',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+
+      <div class="contact-feature__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="contact-feature__heading" id="{{ heading_id }}">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="contact-feature__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          <div class="contact-feature__app" {{ block.shopify_attributes }}>
+            {% render block %}
+          </div>
+        {%- endfor -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="button contact-feature__book"
+            href="{{ button_link }}"
+            {% if section.settings.new_tab %}
+              target="_blank" rel="noopener"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape }}
+            {% render 'icon', name: 'arrow-right' -%}
+            {%- if section.settings.new_tab -%}
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Book an appointment",
+  "tag": "div",
+  "class": "contact-feature-section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "side_label",
+      "label": "Vertical side label",
+      "default": "The personal beauty experience"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Let's connect"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A conversation with Roxanne"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave empty to hide the button (for example when a booking app block shows its own).",
+      "default": "Book an Appointment"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "The booking page or the booking app's link. Empty = the Contact page (/pages/contact)."
+    },
+    {
+      "type": "checkbox",
+      "id": "new_tab",
+      "label": "Open the link in a new tab",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Book an appointment"
+    }
+  ]
+}
+{% endschema %}
