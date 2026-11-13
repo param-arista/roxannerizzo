@@ -322,6 +322,7 @@
     "book_appointment": {
       "type": "booking-feature",
       "settings": {
+        "image": "shopify://shop_images/Roxanne_appointment.webp",
         "side_label": "The personal beauty experience",
         "eyebrow": "Let's connect",
         "heading": "A conversation with Roxanne",
