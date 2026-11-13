@@ -7,6 +7,8 @@
  *   <product-form>       Add to bag without leaving the page
  *   <search-modal>       header search dialog
  *   <predictive-search>  live suggestions inside it
+ *   <sticky-header>      sticky / hide-on-scroll header, solid once scrolled
+ *   <announcement-bar>   one-at-a-time message slider (arrows + autoplay)
  */
 (() => {
   const theme = window.theme || { routes: {}, strings: {} };
@@ -418,6 +420,173 @@
               window.location.href = link.href;
             }
           }
+        }
+      }
+    );
+  }
+  if (!customElements.get('announcement-bar')) {
+    customElements.define(
+      'announcement-bar',
+      class AnnouncementBar extends HTMLElement {
+        connectedCallback() {
+          this.items = [...this.querySelectorAll('.announcement-bar__item')];
+          if (this.items.length < 2) return;
+          this.index = Math.max(0, this.items.findIndex((item) => item.classList.contains('is-active')));
+          this.speed = Number(this.dataset.speed) * 1000;
+          this.desktopQuery = window.matchMedia('(min-width: 750px)');
+          this.paused = false;
+
+          this.onPrev = () => this.go(this.index - 1, true);
+          this.onNext = () => this.go(this.index + 1, true);
+          this.onPause = () => {
+            this.paused = true;
+            this.stop();
+          };
+          this.onResume = () => {
+            this.paused = false;
+            this.start();
+          };
+          // Pause only for a real mouse hover or keyboard focus: a tap on a phone
+          // fires enter/focus but never a matching leave, which stalled autoplay.
+          this.onPointerEnter = (event) => {
+            if (event.pointerType === 'mouse') this.onPause();
+          };
+          this.onPointerLeave = (event) => {
+            if (event.pointerType === 'mouse') this.onResume();
+          };
+          this.onFocusIn = (event) => {
+            if (event.target.matches(':focus-visible')) this.onPause();
+          };
+          this.onFocusOut = (event) => {
+            if (!this.contains(event.relatedTarget)) this.onResume();
+          };
+          this.onMediaChange = () => this.start();
+          this.onBlockSelect = (event) => {
+            const i = this.items.indexOf(event.target);
+            if (i > -1) {
+              this.go(i);
+              this.onPause();
+            }
+          };
+
+          this.querySelector('[data-announcement-prev]')?.addEventListener('click', this.onPrev);
+          this.querySelector('[data-announcement-next]')?.addEventListener('click', this.onNext);
+          this.addEventListener('pointerenter', this.onPointerEnter);
+          this.addEventListener('pointerleave', this.onPointerLeave);
+          this.addEventListener('focusin', this.onFocusIn);
+          this.addEventListener('focusout', this.onFocusOut);
+          this.desktopQuery.addEventListener('change', this.onMediaChange);
+          document.addEventListener('shopify:block:select', this.onBlockSelect);
+          document.addEventListener('shopify:block:deselect', this.onResume);
+
+          this.go(this.index);
+          this.start();
+        }
+
+        disconnectedCallback() {
+          this.stop();
+          this.desktopQuery?.removeEventListener('change', this.onMediaChange);
+          document.removeEventListener('shopify:block:select', this.onBlockSelect);
+          document.removeEventListener('shopify:block:deselect', this.onResume);
+        }
+
+        /** Slider layout active at the current screen width? */
+        get isSlider() {
+          return (this.desktopQuery.matches ? this.dataset.desktop : this.dataset.mobile) === 'slider';
+        }
+
+        go(i, fromUser = false) {
+          const count = this.items.length;
+          this.index = ((i % count) + count) % count;
+          this.items.forEach((item, n) => {
+            const active = n === this.index;
+            item.classList.toggle('is-active', active);
+            if (this.isSlider) item.setAttribute('aria-hidden', String(!active));
+            else item.removeAttribute('aria-hidden');
+          });
+          if (fromUser) this.start();
+        }
+
+        start() {
+          this.stop();
+          this.go(this.index);
+          // Autoplay is a merchant setting; with reduced motion the swap is instant
+          // (critical.css drops the fade), so it still runs.
+          if (!this.speed || this.paused || !this.isSlider) return;
+          this.timer = window.setInterval(() => this.go(this.index + 1), this.speed);
+        }
+
+        stop() {
+          window.clearInterval(this.timer);
+        }
+      }
+    );
+  }
+
+  if (!customElements.get('sticky-header')) {
+    customElements.define(
+      'sticky-header',
+      class StickyHeader extends HTMLElement {
+        connectedCallback() {
+          this.section = this.closest('.header-section') || this.parentElement;
+          this.mode = this.dataset.sticky || 'none';
+          this.drawer = this.querySelector('.header__drawer');
+          this.lastY = window.scrollY;
+          this.ticking = false;
+
+          this.onScroll = () => {
+            if (this.ticking) return;
+            this.ticking = true;
+            requestAnimationFrame(() => {
+              this.update();
+              this.ticking = false;
+            });
+          };
+          this.onToggle = () => {
+            if (!this.drawer.open) return;
+            this.section.classList.remove('is-hidden');
+            const panel = this.drawer.querySelector('.header__drawer-panel');
+            const bottom = Math.max(0, this.getBoundingClientRect().bottom);
+            if (panel) panel.style.setProperty('--drawer-top', `${bottom}px`);
+          };
+
+          window.addEventListener('scroll', this.onScroll, { passive: true });
+          this.drawer?.addEventListener('toggle', this.onToggle);
+          this.update();
+        }
+
+        disconnectedCallback() {
+          window.removeEventListener('scroll', this.onScroll);
+          this.drawer?.removeEventListener('toggle', this.onToggle);
+          this.section?.classList.remove('is-scrolled', 'is-hidden');
+        }
+
+        update() {
+          const y = Math.max(0, window.scrollY);
+          if (this.mode === 'none') {
+            this.section.classList.remove('is-scrolled', 'is-hidden');
+            this.lastY = y;
+            return;
+          }
+
+          // Solid background once the header has reached the top of the viewport
+          // (measured from whatever sits above it, e.g. the announcement bar,
+          // because a stuck element's own offsetTop follows the scroll)
+          const above = this.section.previousElementSibling;
+          const stuckAt = above ? Math.max(0, above.getBoundingClientRect().bottom + y) : 0;
+          this.section.classList.toggle('is-scrolled', y > stuckAt);
+
+          if (this.mode !== 'scroll-up') return;
+          const pastHeader = y > stuckAt + this.offsetHeight;
+          if (!pastHeader) {
+            this.section.classList.remove('is-hidden');
+            this.lastY = y;
+            return;
+          }
+          if (Math.abs(y - this.lastY) < 6) return;
+          const menuOpen = this.drawer?.open || document.querySelector('dialog[open]');
+          this.section.classList.toggle('is-hidden', y > this.lastY && !menuOpen);
+          this.lastY = y;
         }
       }
     );

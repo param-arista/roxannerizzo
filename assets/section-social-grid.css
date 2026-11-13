@@ -18,7 +18,7 @@
 }
 
 .social-grid__heading {
-  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-size: clamp(1.56rem, 3.4vw, 3rem);
   line-height: 1.25;
   text-transform: uppercase;
   overflow-wrap: anywhere;
@@ -39,7 +39,7 @@
 }
 
 .social-grid__stat-number {
-  font-size: clamp(2rem, 2.8vw, 2.5rem);
+  font-size: clamp(1.56rem, 2.8vw, 2.5rem);
   line-height: 1.1;
   color: var(--color-accent);
 }

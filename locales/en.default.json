@@ -232,7 +232,9 @@
   },
   "sections": {
     "announcement_bar": {
-      "label": "Announcements"
+      "label": "Announcements",
+      "previous": "Previous announcement",
+      "next": "Next announcement"
     },
     "header": {
       "menu": "Menu",

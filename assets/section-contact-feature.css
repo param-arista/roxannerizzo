@@ -64,7 +64,7 @@
 }
 
 .contact-feature__heading {
-  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-size: clamp(1.56rem, 3.4vw, 3rem);
   line-height: 1.25;
   text-transform: uppercase;
   color: var(--color-accent);

@@ -212,7 +212,7 @@
 }
 
 .product__title {
-  font-size: clamp(1.875rem, 3.2vw, 2.875rem);
+  font-size: clamp(1.594rem, 3.2vw, 2.875rem);
   line-height: 1.2;
   letter-spacing: -0.005em;
   text-transform: uppercase;

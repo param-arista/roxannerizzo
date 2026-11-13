@@ -1,0 +1,35 @@
+{% doc %}
+  Prints a CSS background value for an image overlay (solid colour or a
+  gradient that fades out by 70%). Prints `none` when opacity is 0.
+
+  @param {string} style - solid | gradient-side | gradient-bottom
+  @param {object} color - Color setting
+  @param {number} opacity - 0–100
+  @param {string} [side] - left | right (which side the text sits on, for gradient-side)
+
+  @example
+  {% render 'overlay-background', style: 'solid', color: section.settings.overlay_color, opacity: 40 %}
+{% enddoc %}
+
+{%- liquid
+  if opacity == blank or opacity <= 0 or color == blank
+    echo 'none'
+  else
+    assign alpha = opacity | divided_by: 100.0
+    assign solid = color | color_modify: 'alpha', alpha
+    assign clear = color | color_modify: 'alpha', 0
+    case style
+      when 'gradient-side'
+        if side == 'right'
+          assign dir = 'to left'
+        else
+          assign dir = 'to right'
+        endif
+        echo 'linear-gradient(' | append: dir | append: ', ' | append: solid | append: ' 0%, ' | append: clear | append: ' 70%)'
+      when 'gradient-bottom'
+        echo 'linear-gradient(to top, ' | append: solid | append: ' 0%, ' | append: clear | append: ' 70%)'
+      else
+        echo solid
+    endcase
+  endif
+-%}

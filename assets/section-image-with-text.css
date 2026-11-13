@@ -41,7 +41,7 @@
 }
 
 .image-with-text__heading {
-  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-size: clamp(1.56rem, 3.4vw, 3rem);
   line-height: 1.3;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--color-foreground) 88%, transparent);

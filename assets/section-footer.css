@@ -71,7 +71,7 @@
 .footer__logo-name {
   font-family: var(--font-logo--family);
   font-weight: var(--font-logo--weight);
-  font-size: clamp(1.75rem, 2.6vw, 2.4rem);
+  font-size: clamp(1.488rem, 2.6vw, 2.4rem);
   white-space: nowrap;
 }
 

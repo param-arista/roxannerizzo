@@ -11,6 +11,7 @@
   "current": {
     "cart_empty_collection": "bestseller",
     "free_shipping_threshold": 99,
+    "header_overlay_home": true,
     "sections": {
       "cart-drawer": {
         "type": "cart-drawer",

@@ -11,6 +11,7 @@
   assign logo_widths = section.settings.logo_width | append: ',' | append: logo_width_2x
 -%}
 
+<sticky-header data-sticky="{{ section.settings.sticky_header }}">
 <header class="header" style="--logo-width: {{ section.settings.logo_width }}px;">
   <div class="header__inner">
     {%- if menu != blank -%}
@@ -122,6 +123,7 @@
     </div>
   </div>
 </header>
+</sticky-header>
 
 {%- render 'search-modal' -%}
 
@@ -131,6 +133,18 @@
   "tag": "div",
   "class": "header-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky header",
+      "options": [
+        { "value": "none", "label": "None (scrolls away with the page)" },
+        { "value": "always", "label": "Always visible" },
+        { "value": "scroll-up", "label": "Hide on scroll down, show on scroll up" }
+      ],
+      "default": "always",
+      "info": "On the home page the header stays transparent over the hero and turns solid once you scroll (see Theme settings > Header)."
+    },
     {
       "type": "header",
       "content": "Logo"

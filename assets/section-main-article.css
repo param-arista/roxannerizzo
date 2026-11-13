@@ -40,7 +40,7 @@
 }
 
 .main-article__title {
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(1.56rem, 4vw, 3.25rem);
 }
 
 .main-article__image {

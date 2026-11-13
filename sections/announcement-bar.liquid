@@ -1,13 +1,48 @@
 {% comment %}
-  Dark strip of short messages above the header. Desktop shows every
-  message separated by slashes; phones show the first one only.
+  Dark strip of short messages above the header. Desktop and phones each
+  either show the messages in a row (desktop: all, separated by slashes;
+  phones: the first one) or as a one-at-a-time slider with optional arrows
+  and autoplay. Slider behaviour lives in <announcement-bar> (theme.js);
+  without JavaScript the first message is shown.
 {% endcomment %}
 
+{%- liquid
+  assign desktop_mode = section.settings.desktop_layout
+  assign mobile_mode = section.settings.mobile_layout
+  assign speed = section.settings.autoplay_speed
+  unless section.settings.autoplay
+    assign speed = 0
+  endunless
+  assign show_arrows = false
+  if section.settings.show_arrows and section.blocks.size > 1
+    assign show_arrows = true
+  endif
+-%}
+
 {%- if section.blocks.size > 0 -%}
-  <div class="announcement-bar" role="region" aria-label="{{ 'sections.announcement_bar.label' | t }}">
-    <ul class="announcement-bar__list">
+  <announcement-bar
+    class="announcement-bar announcement-bar--desktop-{{ desktop_mode }} announcement-bar--mobile-{{ mobile_mode }}{% if show_arrows %} announcement-bar--arrows{% endif %}"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="{{ 'sections.announcement_bar.label' | t }}"
+    data-desktop="{{ desktop_mode }}"
+    data-mobile="{{ mobile_mode }}"
+    data-speed="{{ speed }}"
+    style="--announcement-bg: {{ section.settings.background_color }}; --announcement-text: {{ section.settings.text_color }};"
+  >
+    {%- if show_arrows -%}
+      <button type="button" class="announcement-bar__arrow announcement-bar__arrow--prev" data-announcement-prev>
+        {%- render 'icon', name: 'chevron-left' -%}
+        <span class="visually-hidden">{{ 'sections.announcement_bar.previous' | t }}</span>
+      </button>
+    {%- endif -%}
+
+    <ul class="announcement-bar__list" aria-live="off">
       {%- for block in section.blocks -%}
-        <li class="announcement-bar__item" {{ block.shopify_attributes }}>
+        <li
+          class="announcement-bar__item{% if forloop.first %} is-active{% endif %}"
+          {{ block.shopify_attributes }}
+        >
           {%- if block.settings.link != blank -%}
             <a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
           {%- else -%}
@@ -16,7 +51,14 @@
         </li>
       {%- endfor -%}
     </ul>
-  </div>
+
+    {%- if show_arrows -%}
+      <button type="button" class="announcement-bar__arrow announcement-bar__arrow--next" data-announcement-next>
+        {%- render 'icon', name: 'chevron-right' -%}
+        <span class="visually-hidden">{{ 'sections.announcement_bar.next' | t }}</span>
+      </button>
+    {%- endif -%}
+  </announcement-bar>
 {%- endif -%}
 
 {% schema %}
@@ -25,6 +67,74 @@
   "tag": "div",
   "class": "announcement-bar-section",
   "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1F2329"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "row", "label": "All messages in a row" },
+        { "value": "slider", "label": "Slider (one message at a time)" }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "row", "label": "First message only" },
+        { "value": "slider", "label": "Slider (one message at a time)" }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate messages",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change message every",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    }
+  ],
   "blocks": [
     {
       "type": "message",

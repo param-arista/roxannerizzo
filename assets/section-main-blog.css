@@ -71,7 +71,7 @@
   }
 
   .blog-grid--featured .blog-grid__item:first-child .article-card__title {
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-size: clamp(1.275rem, 2.2vw, 2rem);
   }
 
   .blog-grid--featured .blog-grid__item:first-child .article-card__media {

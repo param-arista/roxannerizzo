@@ -27,7 +27,7 @@
 }
 
 .main-page__content h2 {
-  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  font-size: clamp(1.275rem, 2.2vw, 1.875rem);
   text-transform: uppercase;
 }
 

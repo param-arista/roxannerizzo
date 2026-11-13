@@ -25,7 +25,7 @@
 }
 
 .section-heading__title {
-  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-size: clamp(1.56rem, 3.4vw, 3rem);
   letter-spacing: -0.005em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -108,7 +108,7 @@
 }
 
 .page-header__title {
-  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-size: clamp(1.56rem, 3.6vw, 3.25rem);
 }
 
 .page-header__text p + p {

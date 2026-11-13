@@ -18,6 +18,7 @@
         "logo_text": "Roxanne Rizzo",
         "logo_tagline": "New York",
         "show_star": true,
+        "sticky_header": "always",
         "menu": "main-menu"
       }
     }

@@ -49,7 +49,7 @@
 
   {% liquid
     assign body_class = 'template-' | append: template.name
-    if template.name == 'index' and settings.header_overlay_home
+    if template.name == 'index' and settings.header_overlay_home != false
       assign body_class = body_class | append: ' has-overlay-header'
     endif
   %}

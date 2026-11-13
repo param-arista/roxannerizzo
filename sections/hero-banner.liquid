@@ -1,7 +1,9 @@
 {% comment %}
   Full-width hero: background image (optional separate phone image), a
-  two-part heading (accent line + main lines) and one button. Styles live
-  in critical.css because the hero is the LCP element.
+  two-part heading (accent line + main lines) and one button. Base styles
+  live in critical.css because the hero is the LCP element; the per-section
+  settings (colors, 9-point position, sizes, spacing) are printed below as
+  a style block scoped to this section's id, so they always win.
 {% endcomment %}
 
 {%- liquid
@@ -26,11 +28,172 @@
   else
     assign mobile_ratio = 0.8
   endif
+
+  comment
+    "top-left" -> vertical "top", horizontal "left" -> flex values + text-align
+  endcomment
+  assign d_parts = section.settings.desktop_position | split: '-'
+  assign m_parts = section.settings.mobile_position | split: '-'
+
+  case d_parts[0]
+    when 'top'
+      assign d_justify = 'flex-start'
+    when 'bottom'
+      assign d_justify = 'flex-end'
+    else
+      assign d_justify = 'center'
+  endcase
+  case d_parts[1]
+    when 'center'
+      assign d_align = 'center'
+      assign d_text = 'center'
+    when 'right'
+      assign d_align = 'flex-end'
+      assign d_text = 'right'
+    else
+      assign d_align = 'flex-start'
+      assign d_text = 'left'
+  endcase
+
+  case m_parts[0]
+    when 'top'
+      assign m_justify = 'flex-start'
+    when 'bottom'
+      assign m_justify = 'flex-end'
+    else
+      assign m_justify = 'center'
+  endcase
+  case m_parts[1]
+    when 'center'
+      assign m_align = 'center'
+      assign m_text = 'center'
+    when 'right'
+      assign m_align = 'flex-end'
+      assign m_text = 'right'
+    else
+      assign m_align = 'flex-start'
+      assign m_text = 'left'
+  endcase
+
+  assign size_d = section.settings.heading_size_desktop
+  assign size_m = section.settings.heading_size_mobile
+  assign size_vw = size_d | times: 100.0 | divided_by: 1440 | round: 2
+  assign scope = '#shopify-section-' | append: section.id
+
+  comment
+    Mobile colours fall back to the desktop ones when left empty
+  endcomment
+  assign accent_d = section.settings.accent_color | default: 'var(--color-accent)'
+  assign text_d = section.settings.text_color | default: 'var(--color-foreground)'
+  assign btn_bg_d = section.settings.button_bg_color | default: 'var(--color-accent)'
+  assign btn_text_d = section.settings.button_text_color | default: 'var(--color-accent-text)'
+  assign accent_m = section.settings.accent_color_mobile | default: accent_d
+  assign text_m = section.settings.text_color_mobile | default: text_d
+  assign btn_bg_m = section.settings.button_bg_color_mobile | default: btn_bg_d
+  assign btn_text_m = section.settings.button_text_color_mobile | default: btn_text_d
 -%}
+
+{%- capture overlay_d -%}
+  {%- render 'overlay-background',
+    style: section.settings.overlay_style,
+    color: section.settings.overlay_color,
+    opacity: section.settings.overlay_opacity,
+    side: d_text
+  -%}
+{%- endcapture -%}
+{%- capture overlay_m -%}
+  {%- render 'overlay-background',
+    style: section.settings.overlay_style_mobile,
+    color: section.settings.overlay_color_mobile,
+    opacity: section.settings.overlay_opacity_mobile,
+    side: m_text
+  -%}
+{%- endcapture -%}
+
+{% style %}
+  {{ scope }} .hero {
+    --hero-text: {{ text_d }};
+    --hero-accent: {{ accent_d }};
+    --hero-button-bg: {{ btn_bg_d }};
+    --hero-button-text: {{ btn_text_d }};
+    --hero-overlay: {{ overlay_d }};
+    --hero-pad: {{ section.settings.padding_desktop }}px;
+  }
+
+  {{ scope }} .hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay, none);
+    pointer-events: none;
+  }
+
+  {{ scope }} .hero__content {
+    justify-content: {{ d_justify }};
+    align-items: {{ d_align }};
+    text-align: {{ d_text }};
+    gap: {{ section.settings.button_spacing_desktop }}px;
+  }
+
+  {{ scope }} .hero__heading {
+    max-width: min({{ section.settings.content_width }}vw, 100%);
+    font-size: clamp({{ size_m }}px, {{ size_vw }}vw, {{ size_d }}px);
+    color: var(--hero-text);
+  }
+
+  {{ scope }} .hero__heading-accent {
+    color: var(--hero-accent);
+    margin-block-end: {{ section.settings.line_spacing_desktop }}px;
+  }
+
+  {{ scope }} .hero__button {
+    border-color: var(--hero-button-bg);
+    background-color: var(--hero-button-bg);
+    color: var(--hero-button-text);
+  }
+
+  @media (max-width: 749px) {
+    {{ scope }} .hero {
+      --hero-text: {{ text_m }};
+      --hero-accent: {{ accent_m }};
+      --hero-button-bg: {{ btn_bg_m }};
+      --hero-button-text: {{ btn_text_m }};
+      --hero-overlay: {{ overlay_m }};
+      --hero-pad: {{ section.settings.padding_mobile }}px;
+    }
+
+    {{ scope }} .hero__content {
+      justify-content: {{ m_justify }};
+      align-items: {{ m_align }};
+      text-align: {{ m_text }};
+      gap: {{ section.settings.button_spacing_mobile }}px;
+    }
+
+    {{ scope }} .hero__heading {
+      font-size: {{ size_m }}px;
+      max-width: 100%;
+    }
+
+    {{ scope }} .hero__heading-accent {
+      margin-block-end: {{ section.settings.line_spacing_mobile }}px;
+    }
+
+    {%- if section.settings.mobile_image_height != 'auto' %}
+    {{ scope }} .hero__media {
+      aspect-ratio: auto;
+      min-height: {{ section.settings.mobile_image_height }}px;
+    }
+
+    .has-overlay-header main > {{ scope }}:first-child .hero__media {
+      min-height: calc({{ section.settings.mobile_image_height }}px + var(--header-height));
+    }
+    {%- endif %}
+  }
+{% endstyle %}
 
 <section
   class="hero hero--{{ section.settings.height }}{% if section.settings.mobile_layout == 'overlay' %} hero--mobile-overlay{% endif %}"
-  style="--hero-text: {{ section.settings.text_color }}; --mobile-ratio: {{ mobile_ratio }};"
+  style="--mobile-ratio: {{ mobile_ratio }};"
   aria-labelledby="HeroHeading-{{ section.id }}"
 >
   <div class="hero__media hero__media--desktop{% if mobile_image != blank %} hero__media--has-mobile{% endif %}">
@@ -84,7 +247,7 @@
     </{{ heading_tag }}>
 
     {%- if section.settings.button_label != blank -%}
-      <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+      <a class="button hero__button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
         {{- section.settings.button_label | escape -}}
       </a>
     {%- endif -%}
@@ -114,9 +277,18 @@
       "id": "height",
       "label": "Height",
       "options": [
-        { "value": "small", "label": "Small" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "large", "label": "Large" }
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
       ],
       "default": "large"
     },
@@ -125,8 +297,14 @@
       "id": "mobile_layout",
       "label": "Phone layout",
       "options": [
-        { "value": "stacked", "label": "Text below the image" },
-        { "value": "overlay", "label": "Text on the image (top)" }
+        {
+          "value": "stacked",
+          "label": "Text below the image"
+        },
+        {
+          "value": "overlay",
+          "label": "Text on the image"
+        }
       ],
       "default": "stacked"
     },
@@ -148,12 +326,6 @@
       "default": "Instant skin perfecting\nbronzing mist"
     },
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color on image",
-      "default": "#1F2328"
-    },
-    {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
@@ -163,6 +335,346 @@
       "type": "url",
       "id": "button_link",
       "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Heading accent line color",
+      "info": "The first line (e.g. Bronze Glow). Leave empty to use the theme accent color."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading color",
+      "default": "#1F2328",
+      "info": "Main heading lines."
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "info": "Leave empty to use the theme accent color."
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "info": "Leave empty to use the theme accent text color."
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Image overlay style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "gradient-side",
+          "label": "Gradient from the text side"
+        },
+        {
+          "value": "gradient-bottom",
+          "label": "Gradient from the bottom"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Image overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "info": "0% = no overlay. Raise it when the text is hard to read on the image.",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "Content position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "middle-left"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 28,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 62
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Text max width",
+      "info": "Share of the screen width the heading may use, so it doesn't run over the model.",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "line_spacing_desktop",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Space below accent line",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_spacing_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Space between text and button",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top / bottom padding",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "color",
+      "id": "accent_color_mobile",
+      "label": "Heading accent line color",
+      "info": "Leave empty to use the desktop color."
+    },
+    {
+      "type": "color",
+      "id": "text_color_mobile",
+      "label": "Heading color",
+      "info": "Leave empty to use the desktop color."
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_mobile",
+      "label": "Button background color",
+      "info": "Leave empty to use the desktop color."
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_mobile",
+      "label": "Button text color",
+      "info": "Leave empty to use the desktop color."
+    },
+    {
+      "type": "select",
+      "id": "overlay_style_mobile",
+      "label": "Image overlay style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "gradient-side",
+          "label": "Gradient from the text side"
+        },
+        {
+          "value": "gradient-bottom",
+          "label": "Gradient from the bottom"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_mobile",
+      "label": "Image overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_mobile",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "info": "0% = no overlay on phones.",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "mobile_position",
+      "label": "Content position",
+      "info": "With \"Text below the image\", only left / center / right applies.",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "top-left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_height",
+      "label": "Image height",
+      "info": "\"Image ratio\" keeps the whole picture; a wide desktop image then gets very short on phones. Add a Phone image for the best result.",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Image ratio"
+        },
+        {
+          "value": "320",
+          "label": "Small (320px)"
+        },
+        {
+          "value": "420",
+          "label": "Medium (420px)"
+        },
+        {
+          "value": "520",
+          "label": "Large (520px)"
+        },
+        {
+          "value": "640",
+          "label": "Extra large (640px)"
+        }
+      ],
+      "default": "420"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "line_spacing_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Space below accent line",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_spacing_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between text and button",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Top / bottom padding",
+      "default": 40
     }
   ],
   "presets": [
