@@ -111,6 +111,7 @@
         "column_2"
       ],
       "settings": {
+        "image": "shopify://shop_images/industry_secret.webp",
         "image_position": "left",
         "eyebrow": "Our story",
         "heading": "Once an industry secret, now available to everyone",
@@ -127,6 +128,7 @@
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/lucy-liu.avif",
             "name": "Lucy Liu",
             "role": "Actress, Artist & Advocate",
             "quote": "Bronze Glow is the best!"
@@ -136,6 +138,7 @@
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Bill_Corso.avif",
             "name": "Bill Corso",
             "role": "Oscar & Emmy-winning MUA",
             "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens. If I ever get more than one bottle, my wife steals one for her everyday."
@@ -145,6 +148,7 @@
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Liam_Neeson.avif",
             "name": "Liam Neeson",
             "role": "Award-Winning Irish Actor",
             "quote": "It should be called confidence in a can!"
@@ -154,9 +158,50 @@
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Ashlee_Glazer.avif",
             "name": "Ashlee Glazer",
             "role": "Celebrity Makeup Artist",
             "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth."
+          }
+        },
+        "review_TirpRW": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Scott_Barnes.avif",
+            "name": "Scott Barnes",
+            "role": "Scott Barnes, Celebrity Makeup Artist and Author",
+            "quote": "\"It's not just a bronzer. It's snatch-ural!\""
+          }
+        },
+        "review_6MwKXA": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Laura_Benanti.avif",
+            "name": "Laura Benanti",
+            "role": "Tony Award Winning Actress and Singer",
+            "quote": "\"Love Bronze Glow! It gives this new mom the illusion of rest.\""
+          }
+        },
+        "review_ngPT4j": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Nicki_Lederman.avif",
+            "name": "Nicki Lederman",
+            "role": "Oscar and Emmy Award Winning Celebrity Makeup Artist",
+            "quote": "\"From doing makeup for my daughter's proms or getting celebs ready for the red carpet, to using it as an important finish after tattoo covering, beauty makeup and character makeup designs for my film and tv work, Bronze Glow is one of my most important and essential products in my kit.\""
+          }
+        },
+        "review_ciHNh7": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Leslie_Kritzer_a2f1b9fc-f56b-4273-8209-b6164f5952ef.avif",
+            "name": "Leslie Kritzer",
+            "role": "Broadway Actor and Singer",
+            "quote": "\"The best glow on the market!\""
           }
         }
       },
@@ -164,7 +209,11 @@
         "review_1",
         "review_2",
         "review_3",
-        "review_4"
+        "review_4",
+        "review_TirpRW",
+        "review_6MwKXA",
+        "review_ngPT4j",
+        "review_ciHNh7"
       ],
       "settings": {
         "eyebrow": "Loved by",
@@ -239,6 +288,7 @@
         "card_1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Bronze_Glow-shop.webp",
             "title": "Bronze Glow",
             "button_label": "Shop Now",
             "link": "shopify://collections/all"
@@ -247,6 +297,7 @@
         "card_2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Mulberry_Street-shop.webp",
             "title": "Mulberry Street",
             "button_label": "Notify Me",
             "link": ""
@@ -304,7 +355,7 @@
         "eyebrow": "The accessories",
         "heading": "The travel collection",
         "text": "<p>Vibrant beauty bags featuring Roxanne's original artwork, available in four sizes for your essentials.</p>",
-        "collection": "",
+        "collection": "sets",
         "products_limit": 4,
         "columns": 4,
         "width": "full",
@@ -314,6 +365,19 @@
         "card_button_label": "Shop Now",
         "button_label": "",
         "button_link": ""
+      }
+    },
+    "book_appointment": {
+      "type": "booking-feature",
+      "settings": {
+        "image": "shopify://shop_images/Roxanne_appointment.webp",
+        "side_label": "The personal beauty experience",
+        "eyebrow": "Let's connect",
+        "heading": "A conversation with Roxanne",
+        "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
+        "button_label": "Book an Appointment",
+        "button_link": "",
+        "new_tab": false
       }
     },
     "follow_the_glow": {
@@ -399,6 +463,7 @@
     "shop_the_glow",
     "how_it_wears",
     "travel_collection",
+    "book_appointment",
     "follow_the_glow"
   ]
 }

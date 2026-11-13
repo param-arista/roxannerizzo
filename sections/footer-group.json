@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
@@ -8,6 +17,7 @@
         "brand": {
           "type": "brand",
           "settings": {
+            "logo_width": 300,
             "logo_text": "Roxanne Rizzo",
             "logo_tagline": "New York",
             "show_newsletter": true,
@@ -27,7 +37,7 @@
           "type": "menu",
           "settings": {
             "title": "Products",
-            "menu": "footer-products"
+            "menu": ""
           }
         },
         "contact": {
@@ -43,7 +53,9 @@
         },
         "image": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/industry_secret.webp"
+          }
         }
       },
       "block_order": [
@@ -54,8 +66,8 @@
         "image"
       ],
       "settings": {
-        "background": "#3E3333",
-        "text_color": "#FFFFFF",
+        "background": "#3e3333",
+        "text_color": "#ffffff",
         "copyright": "Roxanne Rizzo New York",
         "credit": "Powered by Arista Systems Pvt.Ltd."
       }
