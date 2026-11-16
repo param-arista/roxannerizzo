@@ -100,6 +100,17 @@
     ]
   },
   {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Square PNG, at least 192 × 192 px. Without one, the bronze star is used."
+      }
+    ]
+  },
+  {
     "name": "Layout",
     "settings": [
       {
