@@ -87,11 +87,6 @@
   color: var(--color-accent);
 }
 
-.button--secondary:hover {
-  opacity: 1;
-  background-color: color-mix(in srgb, var(--color-accent) 8%, transparent);
-}
-
 .button--full {
   width: 100%;
 }

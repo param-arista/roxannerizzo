@@ -175,11 +175,18 @@ a {
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
 }
 
-.button:hover {
-  opacity: 0.88;
+/* Every button: black background, white text on hover */
+.button:not(:disabled, [aria-disabled='true']):hover {
+  opacity: 1;
+  border-color: #000;
+  background-color: #000;
+  color: #fff;
 }
 
 /* Eyebrow / heading helpers shared by sections */
@@ -733,6 +740,31 @@ sticky-header {
   select,
   textarea {
     font-size: max(1rem, 16px);
+  }
+}
+
+/* Scroll fade-in (Theme settings → Animations). theme.js adds .reveal only to
+   sections below the fold, and .is-revealed once they scroll into view. */
+html[data-reveal] .reveal {
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration, 800ms) ease-out,
+    transform var(--reveal-duration, 800ms) cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+html[data-reveal='fade-up'] .reveal {
+  transform: translateY(2.5rem);
+}
+
+html[data-reveal] .reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-reveal] .reveal {
+    opacity: 1;
+    transform: none;
   }
 }
 

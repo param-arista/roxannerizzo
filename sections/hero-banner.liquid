@@ -152,6 +152,12 @@
     color: var(--hero-button-text);
   }
 
+  {{ scope }} .hero__button:hover {
+    border-color: #000;
+    background-color: #000;
+    color: #fff;
+  }
+
   @media (max-width: 749px) {
     {{ scope }} .hero {
       --hero-text: {{ text_m }};

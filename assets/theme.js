@@ -591,4 +591,37 @@
       }
     );
   }
+
+  /**
+   * Scroll fade-in (Theme settings → Animations). Only sections that start
+   * below the fold are hidden, so nothing visible on load flickers and the
+   * first screen (hero) shows at once. Sections added later in the theme
+   * editor are left visible.
+   */
+  const revealStyle = document.documentElement.dataset.reveal;
+  if (revealStyle && !reducedMotion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+    );
+
+    document
+      .querySelectorAll('main > .shopify-section, .shopify-section-group-footer-group')
+      .forEach((section) => {
+        if (section.getBoundingClientRect().top < window.innerHeight) return;
+        section.classList.add('reveal');
+        observer.observe(section);
+      });
+
+    // In the editor, show a section right away when it is selected
+    document.addEventListener('shopify:section:select', (event) => {
+      event.target.classList.add('is-revealed');
+    });
+  }
 })();

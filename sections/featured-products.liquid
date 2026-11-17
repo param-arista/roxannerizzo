@@ -47,7 +47,19 @@
     <ul class="featured-products__grid" role="list">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
-          <li class="featured-products__item" {{ block.shopify_attributes }}>
+          {%- liquid
+            assign badge_style = ''
+            if block.settings.badge_background != blank
+              assign badge_style = badge_style | append: '--badge-bg: ' | append: block.settings.badge_background | append: ';'
+            endif
+            if block.settings.badge_border != blank
+              assign badge_style = badge_style | append: '--badge-border: ' | append: block.settings.badge_border | append: ';'
+            endif
+            if block.settings.badge_text != blank
+              assign badge_style = badge_style | append: '--badge-text: ' | append: block.settings.badge_text | append: ';'
+            endif
+          -%}
+          <li class="featured-products__item" {% if badge_style != blank %}style="{{ badge_style }}"{% endif %} {{ block.shopify_attributes }}>
             {%- render 'product-card',
               card_id: block.id,
               product: block.settings.product,
@@ -309,6 +321,22 @@
           "id": "badge",
           "label": "Badge",
           "info": "E.g. Best seller, New arrival, Value set. Leave empty for none."
+        },
+        {
+          "type": "color",
+          "id": "badge_background",
+          "label": "Badge background",
+          "info": "Leave colors empty to use the default badge style."
+        },
+        {
+          "type": "color",
+          "id": "badge_border",
+          "label": "Badge border"
+        },
+        {
+          "type": "color",
+          "id": "badge_text",
+          "label": "Badge text"
         }
       ]
     }

@@ -40,10 +40,10 @@
   inset-block-start: 0.5rem;
   inset-inline-end: 0.5rem;
   padding: 0.15rem 1.1rem;
-  border: 1px solid rgb(0 0 0 / 0.45);
+  border: 1px solid var(--badge-border, rgb(0 0 0 / 0.45));
   border-radius: 999px;
-  background-color: rgb(255 255 255 / 0.5);
-  color: var(--color-foreground);
+  background-color: var(--badge-bg, rgb(255 255 255 / 0.5));
+  color: var(--badge-text, var(--color-foreground));
   font-size: 0.5625rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -128,6 +128,15 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+/* The card-wide link sits on top of the button, so the button never gets
+   :hover itself; style it when the card is hovered instead. */
+.product-card:hover .product-card__button,
+.product-card:has(.product-card__link:focus-visible) .product-card__button {
+  border-color: #000;
+  background-color: #000;
+  color: #fff;
 }
 
 .product-card__button {

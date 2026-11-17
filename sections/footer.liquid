@@ -82,6 +82,8 @@
             {%- endif -%}
 
             {%- render 'social-icons', label: block.settings.social_label -%}
+            {%- assign has_brand = true -%}
+            {%- assign brand_social_label = block.settings.social_label -%}
           </div>
 
         {%- when 'menu' -%}
@@ -93,13 +95,25 @@
           -%}
           <nav class="footer__block footer__block--menu" {{ block.shopify_attributes }} aria-label="{{ menu_label | escape }}">
             {%- if block.settings.title != blank -%}
-              <h2 class="footer__title">{{ block.settings.title | escape }}</h2>
+              {%- comment -%} Accordion on phones (closed by footer-accordion.js), always open on larger screens {%- endcomment -%}
+              <details class="footer__accordion" open>
+                <summary class="footer__accordion-summary">
+                  <h2 class="footer__title">{{ block.settings.title | escape }}</h2>
+                  <span class="footer__accordion-icon" aria-hidden="true"></span>
+                </summary>
+                <ul class="footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- else -%}
+              <ul class="footer__links" role="list">
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
             {%- endif -%}
-            <ul class="footer__links" role="list">
-              {%- for link in block.settings.menu.links -%}
-                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-              {%- endfor -%}
-            </ul>
           </nav>
 
         {%- when 'contact' -%}
@@ -141,6 +155,13 @@
           </div>
       {%- endcase -%}
     {%- endfor -%}
+
+    {%- comment -%} Phones: social icons move to the end, under the image {%- endcomment -%}
+    {%- if has_brand -%}
+      <div class="footer__block footer__social-mobile">
+        {%- render 'social-icons', label: brand_social_label -%}
+      </div>
+    {%- endif -%}
   </div>
 
   <div class="footer__bottom">
@@ -154,6 +175,8 @@
 </footer>
 
 {%- render 'section-spacing', section: section, target: '.footer__grid' -%}
+
+<script src="{{ 'footer-accordion.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {

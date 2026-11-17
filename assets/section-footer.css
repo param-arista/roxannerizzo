@@ -31,6 +31,74 @@
   }
 }
 
+/* Tablet and phone: the newsletter (text and email field) uses the full width */
+@media (max-width: 1099px) {
+  .footer__grid .footer__newsletter {
+    max-width: none;
+  }
+}
+
+/* Social icons: in the brand block on tablet/desktop, at the end on phones */
+.footer__grid > .footer__social-mobile {
+  display: none;
+}
+
+@media (max-width: 749px) {
+  .footer__block--brand .social-icons {
+    display: none;
+  }
+
+  .footer__grid > .footer__social-mobile {
+    display: grid;
+  }
+
+  .footer__social-mobile .social-icons {
+    margin-block-start: 0;
+  }
+}
+
+/* Phone: the image block is exactly as tall as the image (no empty space under it) */
+@media (max-width: 749px) {
+  .footer__grid > .footer__block--image {
+    display: block;
+    aspect-ratio: auto;
+  }
+
+  .footer__grid > .footer__block--image img {
+    height: auto;
+  }
+}
+
+/* Tablet: three columns. Top row: brand over the first two columns, image in
+   the third; the menus and contact block sit three across underneath. */
+@media (min-width: 750px) and (max-width: 1099px) {
+  .footer__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer__block--brand {
+    grid-row: 1;
+    grid-column: 1 / 3;
+  }
+
+  .footer__grid > .footer__block--image {
+    grid-row: 1;
+    grid-column: 3;
+    /* fill the third column, as tall as the brand block */
+    justify-self: stretch;
+    align-self: stretch;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    min-height: 16rem;
+  }
+
+  .footer__block--menu,
+  .footer__block--contact {
+    grid-column: auto;
+  }
+}
+
 @media (min-width: 1100px) {
   .footer__grid {
     grid-template-columns: minmax(0, 2.25fr) minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1.2fr);
@@ -89,7 +157,7 @@
 .footer__newsletter {
   display: grid;
   gap: 0.4rem;
-  max-width: 19rem;
+  max-width: 20rem;
 }
 
 .footer__newsletter-heading {
@@ -202,6 +270,89 @@
 /* Menus and contact */
 .footer__title {
   margin-block-end: 1rem;
+}
+
+/* Menu accordion: looks like a plain title on tablet and desktop */
+.footer__accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+  cursor: default;
+}
+
+.footer__accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.footer__accordion-icon {
+  display: none;
+}
+
+/* Phones: title row with +/- on the right, divider line under each menu */
+@media (max-width: 749px) {
+  .footer__block--menu:has(.footer__accordion) {
+    gap: 0;
+  }
+
+  .footer__accordion {
+    border-block-end: 1px solid rgb(255 255 255 / 0.2);
+  }
+
+  /* line above the first menu too */
+  .footer__block--menu:not(.footer__block--menu + .footer__block--menu) .footer__accordion {
+    border-block-start: 1px solid rgb(255 255 255 / 0.2);
+  }
+
+  .footer__accordion-summary {
+    padding-block: 1rem;
+    cursor: pointer;
+  }
+
+  .footer__accordion-summary .footer__title {
+    margin: 0;
+  }
+
+  .footer__accordion-icon {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .footer__accordion-icon::before,
+  .footer__accordion-icon::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: currentcolor;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+  }
+
+  /* vertical bar of the + */
+  .footer__accordion-icon::after {
+    transform: translateY(-50%) rotate(90deg);
+  }
+
+  /* open: the vertical bar folds flat, leaving − */
+  .footer__accordion[open] .footer__accordion-icon::after {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .footer__accordion .footer__links {
+    padding-block-end: 1.25rem;
+  }
+
+  /* Menus stack with no gap between them, so the dividers sit evenly */
+  .footer__grid > .footer__block--menu + .footer__block--menu {
+    margin-block-start: calc(-1 * 2.5rem);
+  }
 }
 
 .footer__links {

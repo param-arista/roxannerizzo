@@ -72,10 +72,32 @@
 
 .contact-feature__text {
   max-width: 36rem;
-  font-size: 1.25rem;
-  line-height: 1.4;
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.25rem);
+  line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--color-accent);
+}
+
+.contact-feature__text > * + * {
+  margin-block-start: 0.75em;
+}
+
+/* Tablet and phone: the text sits under the image, so use the full width */
+@media (max-width: 989px) {
+  .contact-feature__text {
+    max-width: none;
+    letter-spacing: 0.01em;
+  }
+}
+
+@media (max-width: 749px) {
+  .contact-feature__text {
+    line-height: 1.55;
+  }
+
+  .contact-feature .contact-feature__book {
+    width: 100%;
+  }
 }
 
 .contact-feature__form {
