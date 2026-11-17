@@ -17,9 +17,34 @@
         "mobile_layout": "stacked",
         "heading_accent": "Bronze Glow",
         "heading": "Instant skin perfecting\nbronzing mist",
-        "text_color": "#1f2328",
         "button_label": "Shop Now",
-        "button_link": "shopify://collections/all"
+        "button_link": "shopify://collections/all",
+        "accent_color": "",
+        "text_color": "#1f2328",
+        "button_bg_color": "",
+        "button_text_color": "",
+        "overlay_style": "solid",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "desktop_position": "middle-left",
+        "heading_size_desktop": 62,
+        "content_width": 60,
+        "line_spacing_desktop": 0,
+        "button_spacing_desktop": 72,
+        "padding_desktop": 80,
+        "accent_color_mobile": "",
+        "text_color_mobile": "",
+        "button_bg_color_mobile": "",
+        "button_text_color_mobile": "",
+        "overlay_style_mobile": "solid",
+        "overlay_color_mobile": "#000000",
+        "overlay_opacity_mobile": 0,
+        "mobile_position": "top-left",
+        "mobile_image_height": "420",
+        "heading_size_mobile": 28,
+        "line_spacing_mobile": 0,
+        "button_spacing_mobile": 24,
+        "padding_mobile": 40
       }
     },
     "rating_strip": {
@@ -29,7 +54,11 @@
         "rating_text": "4.9 Average Rating",
         "quote": "It should be called confidence in a can!",
         "author": "Liam Neeson",
-        "author_image": "shopify://shop_images/Liam_Neeson.webp"
+        "author_image": "shopify://shop_images/Liam_Neeson.webp",
+        "padding_top_desktop": 14,
+        "padding_bottom_desktop": 14,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
       }
     },
     "featured_products": {
@@ -71,11 +100,17 @@
         "columns": 3,
         "width": "contained",
         "image_ratio": "wide",
+        "image_fit": "cover",
+        "background_color": "",
         "card_background": "",
         "show_rating": true,
         "card_button_label": "",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "founder_quote": {
@@ -85,7 +120,11 @@
         "quote": "A clean and simple way to look and feel healthy, regardless of age, gender or skin tone",
         "author": "Roxanne Rizzo, Founder",
         "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
-        "alt_background": true
+        "alt_background": true,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "our_story": {
@@ -118,7 +157,11 @@
         "text": "<p>Roxanne Rizzo New York was founded in 2009 by celebrity makeup artist Roxanne Rizzo, born from years of working behind the scenes in film and television. As high-definition cameras changed the industry, makeup had to change with it. Every uneven tone, shadow and patch of redness became more visible on camera. <strong>Bronze Glow was created in 2009 and perfected on set under HD cameras and professional film lighting.</strong></p><p>The result was a buildable, universal mist that gives skin an instant, warm, healthy-looking complexion. No color matching or tools needed. What started in Roxanne's own makeup kit became a go-to final step on film and television sets around the world. Now, it's becoming a household name for everyday use.</p>",
         "button_label": "",
         "button_link": "",
-        "alt_background": false
+        "alt_background": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "reviews": {
@@ -219,7 +262,38 @@
         "eyebrow": "Loved by",
         "heading": "Reviews",
         "grayscale": true,
-        "alt_background": true
+        "alt_background": true,
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "card_bg_color": "",
+        "card_border_color": "",
+        "star_color": "",
+        "name_color": "",
+        "role_color": "",
+        "quote_color": "",
+        "arrow_color": "",
+        "cards_desktop": "4",
+        "cards_tablet": "2",
+        "cards_mobile": "1.2",
+        "card_gap_desktop": 48,
+        "card_gap_tablet": 24,
+        "card_gap_mobile": 16,
+        "card_border_width": 1.5,
+        "card_radius": 6,
+        "star_size": 14,
+        "swipe": true,
+        "loop": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "show_dots": false,
+        "show_arrows_mobile": false,
+        "show_dots_mobile": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "press": {
@@ -228,6 +302,7 @@
         "logo_1": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/US1.png",
             "name": "Us Weekly",
             "link": ""
           }
@@ -278,8 +353,35 @@
       ],
       "settings": {
         "heading": "",
+        "layout": "row",
+        "logo_size": "height",
         "logo_height": 56,
-        "grayscale": true
+        "logo_height_mobile": 32,
+        "grayscale": true,
+        "background_color": "",
+        "heading_color": "",
+        "text_color": "",
+        "arrow_color": "",
+        "logos_desktop": "6",
+        "logos_tablet": "4",
+        "logos_mobile": "2.5",
+        "swipe": true,
+        "loop": true,
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "show_arrows": false,
+        "show_arrows_mobile": false,
+        "show_dots_desktop": false,
+        "show_dots_tablet": false,
+        "show_dots_mobile": false,
+        "marquee_speed": 3,
+        "marquee_direction": "left",
+        "marquee_gap": 80,
+        "marquee_pause": true,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "shop_the_glow": {
@@ -311,7 +413,11 @@
       "settings": {
         "eyebrow": "Our bestsellers",
         "heading": "Shop the glow",
-        "columns": 2
+        "columns": 2,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "how_it_wears": {
@@ -346,7 +452,22 @@
       ],
       "settings": {
         "eyebrow": "How it wears",
-        "heading": "Instant. Flawless. Safe."
+        "heading": "Instant. Flawless. Safe.",
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "panel_background": "",
+        "panel_border_color": "",
+        "panel_border_width": 0,
+        "panel_radius": 0,
+        "divider_color": "",
+        "divider_width": 1,
+        "title_color": "",
+        "text_color": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "travel_collection": {
@@ -361,11 +482,16 @@
         "width": "full",
         "image_ratio": "standard",
         "image_fit": "contain",
+        "background_color": "",
         "card_background": "#eaeaeb",
         "show_rating": false,
         "card_button_label": "Shop Now",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "book_appointment": {
@@ -378,7 +504,11 @@
         "text": "<p>Roxanne would love to hear your thoughts and help you find what works best for you.</p>",
         "button_label": "Book an Appointment",
         "button_link": "",
-        "new_tab": false
+        "new_tab": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "follow_the_glow": {
@@ -449,7 +579,11 @@
         "stat_label": "Instagram Followers",
         "button_label": "Follow on Instagram",
         "button_link": "",
-        "alt_background": true
+        "alt_background": true,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     }
   },
