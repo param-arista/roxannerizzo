@@ -1,0 +1,101 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "eyebrow": "Good to know",
+        "width": "narrow"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "topic_using": {
+          "type": "topic",
+          "settings": { "title": "Using Bronze Glow" }
+        },
+        "q_apply": {
+          "type": "question",
+          "settings": {
+            "question": "How do I apply Bronze Glow?",
+            "answer": "<p>Shake well. Hold 8–10 inches from skin and mist evenly with the 360° nozzle. Build in light layers to your preferred depth of bronze.</p>",
+            "open": true
+          }
+        },
+        "q_makeup": {
+          "type": "question",
+          "settings": {
+            "question": "Can I wear it with makeup?",
+            "answer": "<p>Yes. Wear it alone on bare skin, layer it over makeup, or use it as a setting spray as your final step.</p>",
+            "open": false
+          }
+        },
+        "q_shade": {
+          "type": "question",
+          "settings": {
+            "question": "Which shade should I choose?",
+            "answer": "<p>There's no color matching needed. Bronze Glow is a universal, buildable mist made to suit every skin tone, age and gender. Add more layers for a deeper bronze.</p>",
+            "open": false
+          }
+        },
+        "topic_ingredients": {
+          "type": "topic",
+          "settings": { "title": "Ingredients" }
+        },
+        "q_clean": {
+          "type": "question",
+          "settings": {
+            "question": "What is Bronze Glow made with?",
+            "answer": "<p>It's paraben, sulfate and phthalate free, low in DHA and non-comedogenic.</p>",
+            "open": false
+          }
+        },
+        "q_vegan": {
+          "type": "question",
+          "settings": {
+            "question": "Is it vegan and cruelty-free?",
+            "answer": "<p>Yes. Bronze Glow is 100% vegan and never tested on animals.</p>",
+            "open": false
+          }
+        },
+        "topic_orders": {
+          "type": "topic",
+          "settings": { "title": "Orders & shipping" }
+        },
+        "q_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes, we ship internationally. Shipping is calculated at checkout.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "topic_using",
+        "q_apply",
+        "q_makeup",
+        "q_shade",
+        "topic_ingredients",
+        "q_clean",
+        "q_vegan",
+        "topic_orders",
+        "q_shipping"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "text": "",
+        "alt_background": false,
+        "cta_text": "Still have questions? We'd love to help.",
+        "cta_label": "Contact us",
+        "cta_link": "/pages/contact",
+        "structured_data": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq"
+  ]
+}

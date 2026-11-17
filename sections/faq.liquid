@@ -1,0 +1,155 @@
+{% comment %}
+  FAQ: the home page's centred heading over questions that open and close
+  (native <details>, no JavaScript). "Topic" blocks start a new group with
+  its own small heading; "Question" blocks follow it. Optional "Still have
+  questions?" link at the end, and FAQPage structured data for search
+  engines built from the same questions.
+{% endcomment %}
+
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_id = 'FaqHeading-' | append: section.id
+  assign question_count = 0
+  for block in section.blocks
+    if block.type == 'question' and block.settings.question != blank and block.settings.answer != blank
+      assign question_count = question_count | plus: 1
+    endif
+  endfor
+-%}
+
+<section
+  class="section faq{% if section.settings.alt_background %} section--alt{% endif %}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="page-width">
+    {%- render 'section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.text,
+      id: heading_id
+    -%}
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'topic' -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="faq__topic" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+
+          {%- when 'question' -%}
+            {%- if block.settings.question != blank -%}
+              <details class="faq__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="faq__question">
+                  <span>{{ block.settings.question | escape }}</span>
+                  <svg class="faq__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 12h12"/><path class="faq__icon-plus" d="M12 6v12"/></svg>
+                </summary>
+                <div class="faq__answer rte">{{ block.settings.answer }}</div>
+              </details>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank or section.settings.cta_label != blank -%}
+      <div class="faq__cta">
+        {%- if section.settings.cta_text != blank -%}
+          <p class="faq__cta-text">{{ section.settings.cta_text | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+          <a class="button" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.structured_data and question_count > 0 -%}
+  {%- assign written = 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'question' and block.settings.question != blank and block.settings.answer != blank -%}
+            {%- if written > 0 -%},{%- endif -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | strip | json }}
+              }
+            }
+            {%- assign written = written | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "div",
+  "class": "faq-section",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good to know" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "richtext", "id": "text", "label": "Intro" },
+    { "type": "checkbox", "id": "alt_background", "label": "Grey background", "default": false },
+    {
+      "type": "header",
+      "content": "Still have questions?"
+    },
+    { "type": "text", "id": "cta_text", "label": "Text", "default": "Still have questions? We'd love to help." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Contact us" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    {
+      "type": "header",
+      "content": "Search engines"
+    },
+    {
+      "type": "checkbox",
+      "id": "structured_data",
+      "label": "Add FAQ structured data",
+      "info": "Tells search engines these are questions and answers. Use it on one FAQ section per page only.",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Topic",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Using Bronze Glow" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Your question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Your answer.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Your first question" } },
+        { "type": "question", "settings": { "question": "Your second question" } },
+        { "type": "question", "settings": { "question": "Your third question" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
