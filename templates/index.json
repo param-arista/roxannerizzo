@@ -68,21 +68,30 @@
           "type": "product",
           "settings": {
             "product": "bronze-glow",
-            "badge": "Value set"
+            "badge": "Value set",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         },
         "product_2": {
           "type": "product",
           "settings": {
             "product": "bronze-glow-duo",
-            "badge": "New arrival"
+            "badge": "New arrival",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         },
         "product_3": {
           "type": "product",
           "settings": {
             "product": "glow-go-set",
-            "badge": "Best seller"
+            "badge": "Best seller",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         }
       },
@@ -263,16 +272,16 @@
         "heading": "Reviews",
         "grayscale": true,
         "alt_background": true,
-        "background_color": "#F4F4F4",
-        "eyebrow_color": "#A86D45",
+        "background_color": "#f4f4f4",
+        "eyebrow_color": "#a86d45",
         "heading_color": "#404040",
-        "card_bg_color": "#F4F4F4",
-        "card_border_color": "#ABABAB",
-        "star_color": "#D6A44E",
+        "card_bg_color": "#f4f4f4",
+        "card_border_color": "#ababab",
+        "star_color": "#d6a44e",
         "name_color": "#292929",
         "role_color": "#292929",
-        "quote_color": "#4E4E4E",
-        "arrow_color": "#ABABAB",
+        "quote_color": "#4e4e4e",
+        "arrow_color": "#ababab",
         "cards_desktop": "4",
         "cards_tablet": "2",
         "cards_mobile": "1.2",
@@ -366,7 +375,7 @@
         "background_color": "",
         "heading_color": "",
         "text_color": "",
-        "arrow_color": "#D6A44E",
+        "arrow_color": "#d6a44e",
         "logos_desktop": "6",
         "logos_tablet": "4",
         "logos_mobile": "2.5",
@@ -459,13 +468,13 @@
         "eyebrow": "How it wears",
         "heading": "Instant. Flawless. Safe.",
         "background_color": "",
-        "eyebrow_color": "#A86D45",
+        "eyebrow_color": "#a86d45",
         "heading_color": "#404040",
-        "panel_background": "#F4F4F4",
+        "panel_background": "#f4f4f4",
         "panel_border_color": "",
         "panel_border_width": 0,
         "panel_radius": 0,
-        "divider_color": "#FFFFFF",
+        "divider_color": "#ffffff",
         "divider_width": 2,
         "title_color": "#404040",
         "text_color": "#404040",
@@ -496,7 +505,7 @@
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 16
       }
     },
     "book_appointment": {
