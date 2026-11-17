@@ -107,10 +107,10 @@
         "card_button_label": "",
         "button_label": "",
         "button_link": "",
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "founder_quote": {
@@ -121,10 +121,10 @@
         "author": "Roxanne Rizzo, Founder",
         "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
         "alt_background": true,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "our_story": {
@@ -158,10 +158,10 @@
         "button_label": "",
         "button_link": "",
         "alt_background": false,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "reviews": {
@@ -290,10 +290,10 @@
         "show_dots": false,
         "show_arrows_mobile": false,
         "show_dots_mobile": false,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "press": {
@@ -310,6 +310,7 @@
         "logo_2": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/InStyle1.webp",
             "name": "InStyle",
             "link": ""
           }
@@ -317,6 +318,7 @@
         "logo_3": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/People1.webp",
             "name": "People",
             "link": ""
           }
@@ -324,6 +326,7 @@
         "logo_4": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/allure1.webp",
             "name": "Allure",
             "link": ""
           }
@@ -331,6 +334,7 @@
         "logo_5": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/Cosmoplitan1.webp",
             "name": "Cosmopolitan",
             "link": ""
           }
@@ -338,6 +342,7 @@
         "logo_6": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/Vogue1.webp",
             "name": "Vogue",
             "link": ""
           }
@@ -378,10 +383,10 @@
         "marquee_direction": "left",
         "marquee_gap": 80,
         "marquee_pause": true,
-        "padding_top_desktop": 60,
-        "padding_bottom_desktop": 60,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "shop_the_glow": {
@@ -414,10 +419,10 @@
         "eyebrow": "Our bestsellers",
         "heading": "Shop the glow",
         "columns": 2,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "how_it_wears": {
@@ -464,10 +469,10 @@
         "divider_width": 1,
         "title_color": "",
         "text_color": "",
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "travel_collection": {
@@ -488,10 +493,10 @@
         "card_button_label": "Shop Now",
         "button_label": "",
         "button_link": "",
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "book_appointment": {
@@ -505,10 +510,10 @@
         "button_label": "Book an Appointment",
         "button_link": "",
         "new_tab": false,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "follow_the_glow": {
