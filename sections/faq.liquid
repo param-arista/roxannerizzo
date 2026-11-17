@@ -7,6 +7,7 @@
 {% endcomment %}
 
 {{ 'section-faq.css' | asset_url | stylesheet_tag }}
+{%- render 'section-spacing', section: section -%}
 
 {%- liquid
   assign heading_id = 'FaqHeading-' | append: section.id
@@ -121,7 +122,15 @@
       "label": "Add FAQ structured data",
       "info": "Tells search engines these are questions and answers. Use it on one FAQ section per page only.",
       "default": true
-    }
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 0, "info": "0 sits the questions right under the page title." },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 88 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 56 }
   ],
   "blocks": [
     {

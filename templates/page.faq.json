@@ -90,7 +90,11 @@
         "cta_text": "Still have questions? We'd love to help.",
         "cta_label": "Contact us",
         "cta_link": "/pages/contact",
-        "structured_data": true
+        "structured_data": true,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       }
     }
   },
