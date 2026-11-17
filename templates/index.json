@@ -522,6 +522,7 @@
         "post_1": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_26.webp",
             "caption": "",
             "link": "",
             "is_video": true
@@ -530,6 +531,7 @@
         "post_2": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_31.webp",
             "caption": "",
             "link": "",
             "is_video": false
@@ -538,6 +540,7 @@
         "post_3": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_27.webp",
             "caption": "",
             "link": "",
             "is_video": true
@@ -546,6 +549,7 @@
         "post_4": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_30.webp",
             "caption": "",
             "link": "",
             "is_video": false
@@ -554,6 +558,7 @@
         "post_5": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_28.webp",
             "caption": "",
             "link": "",
             "is_video": false
@@ -562,6 +567,7 @@
         "post_6": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_29.webp",
             "caption": "",
             "link": "",
             "is_video": true
