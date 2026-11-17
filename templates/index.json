@@ -591,10 +591,10 @@
         "button_label": "Follow on Instagram",
         "button_link": "",
         "alt_background": true,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     }
   },
