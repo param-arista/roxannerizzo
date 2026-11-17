@@ -65,6 +65,8 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Image with text",
@@ -82,8 +84,14 @@
       "id": "image_position",
       "label": "Image position on desktop",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
@@ -121,6 +129,50 @@
       "id": "alt_background",
       "label": "Light grey background",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
   "blocks": [
@@ -147,8 +199,20 @@
     {
       "name": "Image with text",
       "blocks": [
-        { "type": "column", "settings": { "title": "Our vision", "text": "Bringing simplicity back to beauty." } },
-        { "type": "column", "settings": { "title": "Our values", "text": "Beauty for everyone no color matching ever needed." } }
+        {
+          "type": "column",
+          "settings": {
+            "title": "Our vision",
+            "text": "Bringing simplicity back to beauty."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Our values",
+            "text": "Beauty for everyone no color matching ever needed."
+          }
+        }
       ]
     }
   ]

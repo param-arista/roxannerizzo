@@ -1,7 +1,8 @@
 {% comment %}
   "Loved by / Reviews": carousel of review cards (stars, round photo,
   name, role, quote). Swipe or scroll on every screen; prev/next arrows
-  appear once assets/carousel.js has loaded.
+  appear once assets/carousel.js has loaded. Colors, star size, autoplay,
+  arrows and dots come from the section settings (scoped style below).
 {% endcomment %}
 
 {{ 'section-reviews.css' | asset_url | stylesheet_tag }}
@@ -13,7 +14,66 @@
   if track_label == blank
     assign track_label = 'sections.reviews.label' | t
   endif
+  assign scope = '#shopify-section-' | append: section.id
+  assign st = section.settings
+  assign speed = 0
+  if st.autoplay
+    assign speed = st.autoplay_speed
+  endif
 -%}
+
+{% style %}
+  {{ scope }} .reviews {
+    {%- if st.background_color != blank %} background-color: {{ st.background_color }};{% endif %}
+    --review-star-size: {{ st.star_size }}px;
+    --reviews-desktop: {{ st.cards_desktop }};
+    --reviews-tablet: {{ st.cards_tablet }};
+    --reviews-mobile: {{ st.cards_mobile }};
+  }
+  {%- if st.eyebrow_color != blank %}
+  {{ scope }} .section-heading .eyebrow { color: {{ st.eyebrow_color }}; }
+  {%- endif %}
+  {%- if st.heading_color != blank %}
+  {{ scope }} .section-heading__title { color: {{ st.heading_color }}; opacity: 1; }
+  {%- endif %}
+  {{ scope }} .reviews__track {
+    --reviews-gap: {{ st.card_gap_desktop }}px;
+  }
+
+  @media (max-width: 989px) {
+    {{ scope }} .reviews__track {
+      --reviews-gap: {{ st.card_gap_tablet }}px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    {{ scope }} .reviews__track {
+      --reviews-gap: {{ st.card_gap_mobile }}px;
+    }
+  }
+
+  {{ scope }} .review-card {
+    border-width: {{ st.card_border_width }}px;
+    border-radius: {{ st.card_radius }}px;
+    {%- if st.card_bg_color != blank %} background-color: {{ st.card_bg_color }};{% endif %}
+    {%- if st.card_border_color != blank %} border-color: {{ st.card_border_color }};{% endif %}
+  }
+  {%- if st.star_color != blank %}
+  {{ scope }} .review-card .rating-stars { --color-rating: {{ st.star_color }}; }
+  {%- endif %}
+  {%- if st.name_color != blank %}
+  {{ scope }} .review-card__name { color: {{ st.name_color }}; }
+  {%- endif %}
+  {%- if st.role_color != blank %}
+  {{ scope }} .review-card__role { color: {{ st.role_color }}; }
+  {%- endif %}
+  {%- if st.quote_color != blank %}
+  {{ scope }} .review-card__quote { color: {{ st.quote_color }}; }
+  {%- endif %}
+  {%- if st.arrow_color != blank %}
+  {{ scope }} .reviews__arrow, {{ scope }} .carousel-dot { color: {{ st.arrow_color }}; }
+  {%- endif %}
+{% endstyle %}
 
 <section
   class="section reviews{% if section.settings.alt_background %} section--alt{% endif %}"
@@ -24,13 +84,15 @@
   <div class="page-width">
     {%- render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, id: heading_id -%}
 
-    <scroll-carousel class="reviews__carousel">
-      <button type="button" class="reviews__arrow reviews__arrow--prev" data-carousel-prev hidden>
-        {%- render 'icon', name: 'chevron-left' -%}
-        <span class="visually-hidden">{{ 'sections.reviews.previous' | t }}</span>
-      </button>
+    <scroll-carousel class="reviews__carousel{% if st.show_arrows %} reviews__carousel--arrows-desktop{% endif %}{% if st.show_arrows_mobile %} reviews__carousel--arrows-mobile{% endif %}{% if st.show_dots %} reviews__carousel--dots-desktop{% endif %}{% if st.show_dots_mobile %} reviews__carousel--dots-mobile{% endif %}" data-autoplay="{{ speed }}"{% if st.loop %} data-loop{% endif %}>
+      {%- if st.show_arrows or st.show_arrows_mobile -%}
+        <button type="button" class="reviews__arrow reviews__arrow--prev" data-carousel-prev hidden>
+          {%- render 'icon', name: 'chevron-left' -%}
+          <span class="visually-hidden">{{ 'sections.reviews.previous' | t }}</span>
+        </button>
+      {%- endif %}
 
-      <ul class="reviews__track" role="list" data-carousel-track tabindex="0" aria-label="{{ track_label | escape }}">
+      <ul class="reviews__track{% unless st.swipe %} reviews__track--no-swipe{% endunless %}" role="list" data-carousel-track tabindex="0" aria-label="{{ track_label | escape }}">
         {%- for block in section.blocks -%}
           <li class="reviews__item" {{ block.shopify_attributes }}>
             <figure class="review-card">
@@ -62,13 +124,21 @@
         {%- endfor -%}
       </ul>
 
-      <button type="button" class="reviews__arrow reviews__arrow--next" data-carousel-next hidden>
-        {%- render 'icon', name: 'chevron-right' -%}
-        <span class="visually-hidden">{{ 'sections.reviews.next' | t }}</span>
-      </button>
+      {%- if st.show_arrows or st.show_arrows_mobile -%}
+        <button type="button" class="reviews__arrow reviews__arrow--next" data-carousel-next hidden>
+          {%- render 'icon', name: 'chevron-right' -%}
+          <span class="visually-hidden">{{ 'sections.reviews.next' | t }}</span>
+        </button>
+      {%- endif -%}
+
+      {%- if st.show_dots or st.show_dots_mobile -%}
+        <div class="reviews__dots carousel-dots" data-carousel-dots data-label="{{ 'sections.reviews.go_to' | t: number: '[n]' | escape }}" hidden></div>
+      {%- endif %}
     </scroll-carousel>
   </div>
 </section>
+
+{%- render 'section-spacing', section: section -%}
 
 {% schema %}
 {
@@ -100,6 +170,317 @@
       "id": "alt_background",
       "label": "Light grey background",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Overrides \"Light grey background\". Leave empty for the default."
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background color"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name color"
+    },
+    {
+      "type": "color",
+      "id": "role_color",
+      "label": "Role color"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote color"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow and dot color"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave a color empty to use the theme default."
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "cards_desktop",
+      "label": "Cards per view on desktop",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "cards_tablet",
+      "label": "Cards per view on tablet",
+      "info": "Screens 750–989px wide.",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "cards_mobile",
+      "label": "Cards per view on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "1.2",
+          "label": "1 + peek of the next card"
+        },
+        {
+          "value": "1.5",
+          "label": "1.5"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1.2"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards on desktop",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "card_gap_tablet",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards on tablet",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards on mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Card border width",
+      "info": "0 removes the border.",
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Stars"
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Star size",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe",
+      "label": "Allow swipe / scroll",
+      "info": "Off: cards move only with arrows, dots or auto-slide, so keep at least one of them on.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Infinite loop",
+      "info": "After the last slide the first one follows again (slides are cloned), instead of scrolling back.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-slide",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Slide every",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows on desktop and tablet",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots on desktop and tablet",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Show arrows on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Show dots on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
   "blocks": [
@@ -148,10 +529,18 @@
     {
       "name": "Reviews",
       "blocks": [
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" }
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
       ]
     }
   ]

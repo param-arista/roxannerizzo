@@ -99,19 +99,79 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Cart page",
   "tag": "div",
   "class": "main-cart-section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shopping bag" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Your bag" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shopping bag"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your bag"
+    },
     {
       "type": "paragraph",
       "content": "Order note, accelerated checkout and the empty-cart link are in Theme settings → Cart."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
-  "enabled_on": { "templates": ["cart"] }
+  "enabled_on": {
+    "templates": [
+      "cart"
+    ]
+  }
 }
 {% endschema %}

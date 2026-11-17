@@ -10,8 +10,9 @@
   grid-column: 2;
   list-style: none;
   padding: 0.25rem 0.25rem 0.75rem;
+  --reviews-gap: clamp(1rem, 3.3vw, 3rem);
   display: flex;
-  gap: clamp(1rem, 3.3vw, 3rem);
+  gap: var(--reviews-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -22,21 +23,29 @@
   display: none;
 }
 
-/* 4 cards on desktop, 2 on tablets, 1 + a peek on phones */
+/* Swipe / scroll turned off: arrows, dots and autoplay still move the track */
+.reviews__track--no-swipe {
+  overflow-x: hidden;
+  touch-action: pan-y;
+}
+
+/* Cards per view (section settings): 4 desktop, 2 tablet, 1.2 phone by default */
 .reviews__item {
-  flex: 0 0 calc((100% - 3 * clamp(1rem, 3.3vw, 3rem)) / 4);
+  --per-view: var(--reviews-desktop, 4);
+  flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--reviews-gap)) / var(--per-view));
+  min-width: 0;
   scroll-snap-align: start;
 }
 
 @media (max-width: 989px) {
   .reviews__item {
-    flex-basis: calc((100% - clamp(1rem, 3.3vw, 3rem)) / 2);
+    --per-view: var(--reviews-tablet, 2);
   }
 }
 
 @media (max-width: 749px) {
   .reviews__item {
-    flex-basis: 82%;
+    --per-view: var(--reviews-mobile, 1.2);
   }
 }
 
@@ -75,14 +84,57 @@
   grid-column: 3;
 }
 
-@media (max-width: 749px) {
-  /* Phones swipe; arrows would only take width */
-  .reviews__arrow {
+/* Dot navigation (built by carousel.js), on its own row under the track */
+.reviews__dots {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-block-start: 1rem;
+  color: color-mix(in srgb, var(--color-foreground) 70%, transparent);
+}
+
+.reviews__dots[hidden] {
+  display: none;
+}
+
+/* Arrows and dots: on/off separately for desktop+tablet and for phones.
+   Without arrows the track takes the full width. */
+@media (min-width: 750px) {
+  .reviews__carousel:not(.reviews__carousel--arrows-desktop) .reviews__arrow {
     display: none;
   }
 
-  .reviews__track {
+  .reviews__carousel:not(.reviews__carousel--arrows-desktop) .reviews__track {
     grid-column: 1 / -1;
+  }
+
+  .reviews__carousel:not(.reviews__carousel--dots-desktop) .reviews__dots {
+    display: none;
+  }
+}
+
+@media (max-width: 749px) {
+  .reviews__carousel:not(.reviews__carousel--arrows-mobile) .reviews__arrow {
+    display: none;
+  }
+
+  .reviews__carousel:not(.reviews__carousel--arrows-mobile) .reviews__track {
+    grid-column: 1 / -1;
+  }
+
+  .reviews__carousel:not(.reviews__carousel--dots-mobile) .reviews__dots {
+    display: none;
+  }
+
+  .reviews__arrow {
+    width: 2rem;
+  }
+
+  .reviews__arrow .icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -100,7 +152,7 @@
 }
 
 .review-card .rating-stars {
-  font-size: 0.9rem;
+  font-size: var(--review-star-size, 0.9rem);
   margin-block-end: 0.3rem;
 }
 

@@ -135,6 +135,8 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Contact form with image",
@@ -188,6 +190,50 @@
       "label": "Email subject",
       "info": "Added to the email you receive, so these requests are easy to filter.",
       "default": "Appointment request"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
   "presets": [

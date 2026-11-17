@@ -30,8 +30,8 @@
 -%}
 
 <section
-  class="section featured-products featured-products--{{ section.settings.width }}"
-  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+  class="section featured-products featured-products--{{ section.settings.width }} featured-products--fit-{{ section.settings.image_fit | default: 'cover' }}"
+  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.background_color != blank %} background-color: {{ section.settings.background_color }};{% endif %}{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
   {% if section.settings.heading != blank %}
     aria-labelledby="{{ heading_id }}"
   {% endif %}
@@ -90,6 +90,8 @@
     {%- endif -%}
   </div>
 </section>
+
+{%- render 'section-spacing', section: section -%}
 
 {% schema %}
 {
@@ -156,8 +158,14 @@
       "id": "width",
       "label": "Grid width",
       "options": [
-        { "value": "contained", "label": "Contained, wide gaps" },
-        { "value": "full", "label": "Full page width, tight gaps" }
+        {
+          "value": "contained",
+          "label": "Contained, wide gaps"
+        },
+        {
+          "value": "full",
+          "label": "Full page width, tight gaps"
+        }
       ],
       "default": "contained"
     },
@@ -166,12 +174,46 @@
       "id": "image_ratio",
       "label": "Image shape",
       "options": [
-        { "value": "wide", "label": "Landscape (10:7)" },
-        { "value": "standard", "label": "Slightly landscape (5:4)" },
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait (4:5)" }
+        {
+          "value": "wide",
+          "label": "Landscape (10:7)"
+        },
+        {
+          "value": "standard",
+          "label": "Slightly landscape (5:4)"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        }
       ],
       "default": "wide"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill the frame (edges may be cut)"
+        },
+        {
+          "value": "contain",
+          "label": "Show the whole image (no cut)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "info": "Leave empty to use the theme background."
     },
     {
       "type": "color",
@@ -206,6 +248,50 @@
       "type": "url",
       "id": "button_link",
       "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
   "blocks": [
@@ -231,9 +317,24 @@
     {
       "name": "Featured products",
       "blocks": [
-        { "type": "product", "settings": { "badge": "Value set" } },
-        { "type": "product", "settings": { "badge": "New arrival" } },
-        { "type": "product", "settings": { "badge": "Best seller" } }
+        {
+          "type": "product",
+          "settings": {
+            "badge": "Value set"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "badge": "New arrival"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "badge": "Best seller"
+          }
+        }
       ]
     },
     {

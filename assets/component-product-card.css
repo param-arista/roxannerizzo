@@ -138,6 +138,17 @@
   font-size: 0.875rem;
 }
 
-.featured-products--full .product-card__row + .product-card__button {
-  margin-block-start: 1rem;
+/* Buttons line up across a row: the button always sits at the bottom of the
+   card (margin auto), with at least 1rem above it in the full-width layout. */
+.featured-products--full .product-card__body > :has(+ .product-card__button) {
+  margin-block-end: 0.5rem;
+}
+
+/* "Show the whole image": no cropping, the card colour fills the spare space */
+.featured-products--fit-contain .product-card__media {
+  background-color: var(--card-bg, var(--color-card));
+}
+
+.featured-products--fit-contain .product-card__media img {
+  object-fit: contain;
 }

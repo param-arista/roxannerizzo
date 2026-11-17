@@ -385,3 +385,46 @@ a.pagination__item:hover {
 .form-message ul {
   padding-inline-start: 1rem;
 }
+
+/** Carousel dots (built by assets/carousel.js), shared by sliders */
+.carousel-dot {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.carousel-dot::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: currentcolor;
+  opacity: 0.3;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dot[aria-current='true']::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+/* Carousel tracks: grab cursor for mouse drag (assets/carousel.js) */
+@media (hover: hover) and (pointer: fine) {
+  [data-carousel-track]:not([class*='--no-swipe']) {
+    cursor: grab;
+  }
+}
+
+[data-carousel-track].is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
+}

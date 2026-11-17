@@ -65,10 +65,27 @@
 .image-with-text__columns {
   list-style: none;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 16rem));
-  gap: 1.5rem 3.5rem;
+  /* Flex: columns share the full width equally — one column = 100%,
+     two = 50% each (minus the gap). Stacked 100% wide below 480px. */
+  display: flex;
+  justify-self: stretch;
+  gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
   margin-block-start: 0.75rem;
+}
+
+.image-with-text__columns > .image-with-text__column {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .image-with-text__columns {
+    flex-wrap: wrap;
+  }
+
+  .image-with-text__columns > .image-with-text__column {
+    flex-basis: 100%;
+  }
 }
 
 .image-with-text__column {

@@ -1,0 +1,32 @@
+{% doc %}
+  Prints the "Section spacing" settings (padding top / bottom, desktop and
+  mobile) as a style block scoped to this section's id. The id selector
+  outranks the padding in the section's own stylesheet, so the merchant's
+  values always win while the defaults keep the original look.
+
+  @param {object} section - The section (pass `section`)
+  @param {string} [target] - Element that carries the padding, inside the section wrapper. Default '.section'
+
+  @example
+  {% render 'section-spacing', section: section %}
+  {% render 'section-spacing', section: section, target: '.footer__grid' %}
+{% enddoc %}
+
+{%- liquid
+  assign target = target | default: '.section'
+  assign s = section.settings
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {{ target }} {
+    padding-block-start: {{ s.padding_top_desktop | default: 0 }}px;
+    padding-block-end: {{ s.padding_bottom_desktop | default: 0 }}px;
+  }
+
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} {{ target }} {
+      padding-block-start: {{ s.padding_top_mobile | default: 0 }}px;
+      padding-block-end: {{ s.padding_bottom_mobile | default: 0 }}px;
+    }
+  }
+{% endstyle %}

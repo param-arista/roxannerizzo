@@ -399,6 +399,8 @@
   {{ product | structured_data }}
 </script>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Product page",
@@ -416,10 +418,22 @@
       "id": "media_ratio",
       "label": "Image shape",
       "options": [
-        { "value": "auto", "label": "As uploaded" },
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait (4:5)" },
-        { "value": "landscape", "label": "Landscape (5:4)" }
+        {
+          "value": "auto",
+          "label": "As uploaded"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (5:4)"
+        }
       ],
       "default": "square"
     },
@@ -429,10 +443,56 @@
       "label": "Sticky Add to bag bar on phones",
       "info": "Slides up from the bottom once the main button scrolls out of view.",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 48
     }
   ],
   "blocks": [
-    { "type": "@app" },
+    {
+      "type": "@app"
+    },
     {
       "type": "text",
       "name": "Text",
@@ -442,25 +502,46 @@
           "id": "source",
           "label": "Show",
           "options": [
-            { "value": "type", "label": "Product type (falls back to the text below)" },
-            { "value": "text", "label": "The text below" }
+            {
+              "value": "type",
+              "label": "Product type (falls back to the text below)"
+            },
+            {
+              "value": "text",
+              "label": "The text below"
+            }
           ],
           "default": "type"
         },
-        { "type": "text", "id": "text", "label": "Text", "default": "Roxanne Rizzo" },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Roxanne Rizzo"
+        },
         {
           "type": "select",
           "id": "style",
           "label": "Style",
           "options": [
-            { "value": "eyebrow", "label": "Eyebrow (small, spaced, accent color)" },
-            { "value": "body", "label": "Body text" }
+            {
+              "value": "eyebrow",
+              "label": "Eyebrow (small, spaced, accent color)"
+            },
+            {
+              "value": "body",
+              "label": "Body text"
+            }
           ],
           "default": "eyebrow"
         }
       ]
     },
-    { "type": "title", "name": "Title", "limit": 1 },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
     {
       "type": "rating",
       "name": "Rating",
@@ -478,9 +559,21 @@
         }
       ]
     },
-    { "type": "price", "name": "Price", "limit": 1 },
-    { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
-    { "type": "quantity", "name": "Quantity selector", "limit": 1 },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity selector",
+      "limit": 1
+    },
     {
       "type": "buy_buttons",
       "name": "Buy buttons",
@@ -520,20 +613,58 @@
       "type": "highlights",
       "name": "Highlights",
       "settings": [
-        { "type": "text", "id": "item_1", "label": "Item 1", "default": "Vegan & cruelty free" },
-        { "type": "text", "id": "item_2", "label": "Item 2", "default": "No color matching needed" },
-        { "type": "text", "id": "item_3", "label": "Item 3", "default": "Made in New York" }
+        {
+          "type": "text",
+          "id": "item_1",
+          "label": "Item 1",
+          "default": "Vegan & cruelty free"
+        },
+        {
+          "type": "text",
+          "id": "item_2",
+          "label": "Item 2",
+          "default": "No color matching needed"
+        },
+        {
+          "type": "text",
+          "id": "item_3",
+          "label": "Item 3",
+          "default": "Made in New York"
+        }
       ]
     },
-    { "type": "description", "name": "Description", "limit": 1 },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
     {
       "type": "collapsible",
       "name": "Collapsible tab",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "How to use" },
-        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false },
-        { "type": "richtext", "id": "content", "label": "Content" },
-        { "type": "page", "id": "page", "label": "Content from page", "info": "Shown after the content above." }
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "How to use"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Content from page",
+          "info": "Shown after the content above."
+        }
       ]
     }
   ]

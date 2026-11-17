@@ -56,18 +56,96 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Blog posts",
   "tag": "div",
   "class": "main-blog-section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The journal" },
-    { "type": "checkbox", "id": "show_tags", "label": "Show topic filter (from article tags)", "default": true },
-    { "type": "checkbox", "id": "feature_first", "label": "Show the newest article large", "default": true },
-    { "type": "checkbox", "id": "show_excerpt", "label": "Show excerpts", "default": true },
-    { "type": "range", "id": "articles_per_page", "min": 3, "max": 24, "step": 3, "label": "Articles per page", "default": 9 }
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The journal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show topic filter (from article tags)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_first",
+      "label": "Show the newest article large",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpts",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "label": "Articles per page",
+      "default": 9
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
+    }
   ],
-  "enabled_on": { "templates": ["blog"] }
+  "enabled_on": {
+    "templates": [
+      "blog"
+    ]
+  }
 }
 {% endschema %}

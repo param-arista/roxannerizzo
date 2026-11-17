@@ -146,16 +146,81 @@
   {{ article | structured_data }}
 </script>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Blog post",
   "tag": "div",
   "class": "main-article-section",
   "settings": [
-    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": true },
-    { "type": "checkbox", "id": "show_reading_time", "label": "Show reading time", "default": true },
-    { "type": "checkbox", "id": "show_share", "label": "Show share links", "default": true }
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reading_time",
+      "label": "Show reading time",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share links",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
+    }
   ],
-  "enabled_on": { "templates": ["article"] }
+  "enabled_on": {
+    "templates": [
+      "article"
+    ]
+  }
 }
 {% endschema %}

@@ -78,29 +78,116 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Collections list",
   "tag": "div",
   "class": "main-list-collections-section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Collections" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop by"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collections"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
     {
       "type": "select",
       "id": "sort",
       "label": "Order",
       "options": [
-        { "value": "default", "label": "As in admin" },
-        { "value": "alphabetical", "label": "Alphabetical" },
-        { "value": "products_high", "label": "Most products first" }
+        {
+          "value": "default",
+          "label": "As in admin"
+        },
+        {
+          "value": "alphabetical",
+          "label": "Alphabetical"
+        },
+        {
+          "value": "products_high",
+          "label": "Most products first"
+        }
       ],
       "default": "default"
     },
-    { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Cards per row on desktop", "default": 3 },
-    { "type": "checkbox", "id": "show_empty", "label": "Show empty collections", "default": false }
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Cards per row on desktop",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_empty",
+      "label": "Show empty collections",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
+    }
   ],
-  "enabled_on": { "templates": ["list-collections"] }
+  "enabled_on": {
+    "templates": [
+      "list-collections"
+    ]
+  }
 }
 {% endschema %}

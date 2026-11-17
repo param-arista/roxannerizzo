@@ -247,6 +247,11 @@
         "other": "Cart, {{ count }} items"
       }
     },
+    "logo_list": {
+      "label": "As seen in",
+      "previous": "Previous logos",
+      "next": "Next logos"
+    },
     "rating_strip": {
       "label": "Customer reviews"
     },
@@ -261,7 +266,8 @@
     "reviews": {
       "label": "Reviews",
       "previous": "Previous reviews",
-      "next": "Next reviews"
+      "next": "Next reviews",
+      "go_to": "Go to slide {{ number }}"
     },
     "contact": {
       "name": "Your name",

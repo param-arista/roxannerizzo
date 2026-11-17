@@ -16,24 +16,85 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Page content",
   "tag": "div",
   "class": "main-page-section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Roxanne Rizzo" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Roxanne Rizzo"
+    },
     {
       "type": "select",
       "id": "width",
       "label": "Text width",
       "options": [
-        { "value": "narrow", "label": "Narrow (best for reading)" },
-        { "value": "wide", "label": "Wide" }
+        {
+          "value": "narrow",
+          "label": "Narrow (best for reading)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
       ],
       "default": "narrow"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
-  "enabled_on": { "templates": ["page"] }
+  "enabled_on": {
+    "templates": [
+      "page"
+    ]
+  }
 }
 {% endschema %}

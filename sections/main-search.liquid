@@ -179,6 +179,8 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section, target: '.main-search' -%}
+
 {% schema %}
 {
   "name": "Search results",
@@ -237,10 +239,22 @@
       "id": "image_ratio",
       "label": "Image shape",
       "options": [
-        { "value": "wide", "label": "Landscape (10:7)" },
-        { "value": "standard", "label": "Slightly landscape (5:4)" },
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait (4:5)" }
+        {
+          "value": "wide",
+          "label": "Landscape (10:7)"
+        },
+        {
+          "value": "standard",
+          "label": "Slightly landscape (5:4)"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        }
       ],
       "default": "standard"
     },
@@ -276,6 +290,50 @@
       "id": "popular_collection",
       "label": "Products from collection",
       "info": "Shown before a search and when a search finds nothing."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ]
 }

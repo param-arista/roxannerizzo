@@ -1,29 +1,95 @@
 {% comment %}
-  "As seen in" press row: one logo image per block, evenly spread.
-  Wraps to rows on small screens.
+  "As seen in" press row: one logo image (or text) per block. Layout is
+  either a row (evenly spread, wraps on small screens) or a slider built
+  on <scroll-carousel> (assets/carousel.js) with optional autoplay, swipe,
+  arrows and dots. Colors and sizes are printed as a style block scoped
+  to this section's id.
 {% endcomment %}
 
 {{ 'section-logo-list.css' | asset_url | stylesheet_tag }}
 
-<section class="section logo-list" style="--section-padding: clamp(2.5rem, 4.5vw, 3.75rem); --logo-height: {{ section.settings.logo_height }}px;">
+{%- liquid
+  assign st = section.settings
+  assign scope = '#shopify-section-' | append: section.id
+  assign is_slider = false
+  if st.layout == 'slider'
+    assign is_slider = true
+  endif
+
+  comment
+    Marquee: repeat the logos until a group holds 12+, so one group is wider
+    than the screen; two identical groups then loop seamlessly.
+  endcomment
+  assign block_count = section.blocks.size | at_least: 1
+  assign repeats = 12 | plus: block_count | minus: 1 | divided_by: block_count | at_least: 1
+  assign marquee_duration = block_count | times: repeats | times: st.marquee_speed
+  assign speed = 0
+  if st.autoplay
+    assign speed = st.autoplay_speed
+  endif
+  assign logo_h2x = st.logo_height | at_least: st.logo_height_mobile | times: 2
+  assign track_label = st.heading
+  if track_label == blank
+    assign track_label = 'sections.logo_list.label' | t
+  endif
+-%}
+
+{% style %}
+  {{ scope }} .logo-list {
+    {%- if st.background_color != blank %} background-color: {{ st.background_color }};{% endif %}
+    --logo-height: {{ st.logo_height }}px;
+    --logos-desktop: {{ st.logos_desktop }};
+    --logos-tablet: {{ st.logos_tablet }};
+    --logos-mobile: {{ st.logos_mobile }};
+    --marquee-gap: {{ st.marquee_gap }}px;
+  }
+  {%- if st.heading_color != blank %}
+  {{ scope }} .logo-list__heading { color: {{ st.heading_color }}; }
+  {%- endif %}
+  {%- if st.text_color != blank %}
+  {{ scope }} .logo-list__text { color: {{ st.text_color }}; }
+  {%- endif %}
+  {%- if st.arrow_color != blank %}
+  {{ scope }} .logo-list__arrow, {{ scope }} .carousel-dot { color: {{ st.arrow_color }}; }
+  {%- endif %}
+
+  @media (max-width: 749px) {
+    {{ scope }} .logo-list {
+      --logo-height: {{ st.logo_height_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="section logo-list">
   <div class="page-width">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="logo-list__heading">{{ section.settings.heading | escape }}</h2>
+    {%- if st.heading != blank -%}
+      <h2 class="logo-list__heading">{{ st.heading | escape }}</h2>
     {%- endif -%}
-    <ul class="logo-list__list{% if section.settings.grayscale %} logo-list__list--grayscale{% endif %}" role="list">
+
+    {%- capture items -%}
       {%- for block in section.blocks -%}
         <li class="logo-list__item" {{ block.shopify_attributes }}>
           {%- capture logo -%}
             {%- if block.settings.image != blank -%}
-              {%- liquid
-                assign logo_alt = block.settings.name | default: block.settings.image.alt
-                assign logo_h2x = section.settings.logo_height | times: 2
-              -%}
-              {{
-                block.settings.image
-                | image_url: height: logo_h2x
-                | image_tag: loading: 'lazy', alt: logo_alt, class: 'logo-list__image'
-              }}
+              {%- assign logo_alt = block.settings.name | default: block.settings.image.alt -%}
+              {%- if st.logo_size == 'actual' -%}
+                {{
+                  block.settings.image
+                  | image_url: width: block.settings.image.width
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: logo_alt,
+                    width: block.settings.image.width,
+                    height: block.settings.image.height,
+                    class: 'logo-list__image logo-list__image--actual'
+                }}
+              {%- else -%}
+                {{
+                  block.settings.image
+                  | image_url: height: logo_h2x
+                  | image_tag: loading: 'lazy', alt: logo_alt, class: 'logo-list__image'
+                }}
+              {%- endif -%}
             {%- else -%}
               <span class="logo-list__text">{{ block.settings.name | default: 'Logo' | escape }}</span>
             {%- endif -%}
@@ -35,16 +101,81 @@
           {%- endif -%}
         </li>
       {%- endfor -%}
-    </ul>
+    {%- endcapture -%}
+
+    {%- if is_slider -%}
+      <scroll-carousel
+        class="logo-list__carousel{% if st.show_arrows %} logo-list__carousel--arrows-desktop{% endif %}{% if st.show_arrows_mobile %} logo-list__carousel--arrows-mobile{% endif %}{% if st.show_dots_desktop %} logo-list__carousel--dots-desktop{% endif %}{% if st.show_dots_tablet %} logo-list__carousel--dots-tablet{% endif %}{% if st.show_dots_mobile %} logo-list__carousel--dots-mobile{% endif %}"
+        data-autoplay="{{ speed }}"{% if st.loop %} data-loop{% endif %}
+      >
+        {%- if st.show_arrows or st.show_arrows_mobile -%}
+          <button type="button" class="logo-list__arrow logo-list__arrow--prev" data-carousel-prev hidden>
+            {%- render 'icon', name: 'chevron-left' -%}
+            <span class="visually-hidden">{{ 'sections.logo_list.previous' | t }}</span>
+          </button>
+        {%- endif -%}
+
+        <ul
+          class="logo-list__track{% if st.grayscale %} logo-list__list--grayscale{% endif %}{% unless st.swipe %} logo-list__track--no-swipe{% endunless %}"
+          role="list"
+          data-carousel-track
+          tabindex="0"
+          aria-label="{{ track_label | escape }}"
+        >
+          {{- items -}}
+        </ul>
+
+        {%- if st.show_arrows or st.show_arrows_mobile -%}
+          <button type="button" class="logo-list__arrow logo-list__arrow--next" data-carousel-next hidden>
+            {%- render 'icon', name: 'chevron-right' -%}
+            <span class="visually-hidden">{{ 'sections.logo_list.next' | t }}</span>
+          </button>
+        {%- endif -%}
+
+        {%- if st.show_dots_desktop or st.show_dots_tablet or st.show_dots_mobile -%}
+          <div class="logo-list__dots" data-carousel-dots data-label="{{ 'sections.reviews.go_to' | t: number: '[n]' | escape }}" hidden></div>
+        {%- endif -%}
+      </scroll-carousel>
+      <script src="{{ 'carousel.js' | asset_url }}" defer></script>
+    {%- elsif st.layout == 'marquee' -%}
+      <div
+        class="logo-list__marquee{% if st.marquee_pause %} logo-list__marquee--pause{% endif %}{% if st.marquee_direction == 'right' %} logo-list__marquee--reverse{% endif %}"
+        style="--marquee-duration: {{ marquee_duration }}s;"
+      >
+        <div class="logo-list__marquee-track">
+          {%- for copy in (1..2) -%}
+            <ul
+              class="logo-list__marquee-group{% if st.grayscale %} logo-list__list--grayscale{% endif %}"
+              role="list"
+              {% if copy == 2 %}
+                aria-hidden="true" inert
+              {% else %}
+                aria-label="{{ track_label | escape }}"
+              {% endif %}
+            >
+              {%- for i in (1..repeats) -%}
+                {{- items -}}
+              {%- endfor -%}
+            </ul>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <ul class="logo-list__list{% if st.grayscale %} logo-list__list--grayscale{% endif %}" role="list">
+        {{- items -}}
+      </ul>
+    {%- endif -%}
   </div>
 </section>
+
+{%- render 'section-spacing', section: section -%}
 
 {% schema %}
 {
   "name": "Logo list",
   "tag": "div",
   "class": "logo-list-section",
-  "max_blocks": 10,
+  "max_blocks": 20,
   "settings": [
     {
       "type": "text",
@@ -53,20 +184,349 @@
       "info": "Optional, e.g. As seen in."
     },
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "row",
+          "label": "Row (all logos, wraps on phones)"
+        },
+        {
+          "value": "slider",
+          "label": "Slider (one step at a time)"
+        },
+        {
+          "value": "marquee",
+          "label": "Infinite continuous scroll"
+        }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "header",
+      "content": "Logos"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a logo or icon with \"Add Logo\", then pick the image in the block. Without an image the name shows as text."
+    },
+    {
+      "type": "select",
+      "id": "logo_size",
+      "label": "Logo size",
+      "options": [
+        {
+          "value": "height",
+          "label": "Same height for all logos"
+        },
+        {
+          "value": "actual",
+          "label": "Actual image size"
+        }
+      ],
+      "default": "height",
+      "info": "Actual image size shows each image at its uploaded pixel size (never wider than its space)."
+    },
+    {
       "type": "range",
       "id": "logo_height",
       "min": 24,
       "max": 96,
       "step": 2,
       "unit": "px",
-      "label": "Logo height",
-      "default": 56
+      "label": "Logo height on desktop",
+      "default": 56,
+      "info": "Used with \"Same height for all logos\"."
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo height on mobile",
+      "default": 32
     },
     {
       "type": "checkbox",
       "id": "grayscale",
       "label": "Show logos in black",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text logo color",
+      "info": "For logos shown as text (no image)."
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow and dot color"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave a color empty to use the theme default."
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "paragraph",
+      "content": "These apply when Layout is Slider."
+    },
+    {
+      "type": "select",
+      "id": "logos_desktop",
+      "label": "Logos per view on desktop",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        }
+      ],
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "logos_tablet",
+      "label": "Logos per view on tablet",
+      "info": "Screens 750–989px wide.",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "logos_mobile",
+      "label": "Logos per view on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "2.5",
+          "label": "2 + peek of the next logo"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe",
+      "label": "Allow swipe / scroll",
+      "info": "Off: logos move only with arrows, dots or auto-slide, so keep at least one of them on.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Infinite loop",
+      "info": "After the last slide the first one follows again (slides are cloned), instead of scrolling back.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-slide",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Slide every",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows on desktop and tablet",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Show arrows on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_desktop",
+      "label": "Show dots on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_tablet",
+      "label": "Show dots on tablet",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Show dots on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Infinite continuous scroll"
+    },
+    {
+      "type": "paragraph",
+      "content": "These apply when Layout is Infinite continuous scroll."
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "s",
+      "label": "Speed (seconds per logo)",
+      "info": "Lower is faster.",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "marquee_direction",
+      "label": "Direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Right to left"
+        },
+        {
+          "value": "right",
+          "label": "Left to right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "marquee_gap",
+      "min": 16,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between logos",
+      "default": 80
+    },
+    {
+      "type": "checkbox",
+      "id": "marquee_pause",
+      "label": "Pause on mouse hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 40
     }
   ],
   "blocks": [
@@ -77,14 +537,14 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Logo",
+          "label": "Logo or icon",
           "info": "Transparent PNG or SVG works best."
         },
         {
           "type": "text",
           "id": "name",
           "label": "Name",
-          "info": "Read out by screen readers, e.g. Vogue."
+          "info": "Shown as text when no image is set, and read out by screen readers, e.g. Vogue."
         },
         {
           "type": "url",
@@ -99,12 +559,24 @@
     {
       "name": "Logo list",
       "blocks": [
-        { "type": "logo" },
-        { "type": "logo" },
-        { "type": "logo" },
-        { "type": "logo" },
-        { "type": "logo" },
-        { "type": "logo" }
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
       ]
     }
   ]

@@ -14,7 +14,7 @@
 /* Bronze corner brackets: top-left and bottom-right of the quote */
 .founder-quote__quote {
   position: relative;
-  max-width: 58rem;
+  max-width: 65rem;
   padding: 0.75rem clamp(1.5rem, 5vw, 4.5rem);
   font-size: clamp(1.275rem, 2.9vw, 2.5rem);
   line-height: 1.3;

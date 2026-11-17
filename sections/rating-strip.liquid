@@ -42,6 +42,8 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section, target: '.rating-strip__inner' -%}
+
 {% schema %}
 {
   "name": "Rating strip",
@@ -77,6 +79,50 @@
       "id": "author_image",
       "label": "Author photo",
       "info": "Square, at least 120 × 120 px."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 14
     }
   ],
   "presets": [

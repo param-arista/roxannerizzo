@@ -6,6 +6,42 @@
 {{ 'section-feature-columns.css' | asset_url | stylesheet_tag }}
 
 {%- assign heading_id = 'FeatureHeading-' | append: section.id -%}
+{%- assign st = section.settings -%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .feature-columns {
+    {% if st.background_color != blank %}background-color: {{ st.background_color }};{% endif %}
+  }
+  {%- if st.eyebrow_color != blank %}
+    #shopify-section-{{ section.id }} .section-heading .eyebrow { color: {{ st.eyebrow_color }}; }
+  {%- endif %}
+  {%- if st.heading_color != blank %}
+    #shopify-section-{{ section.id }} .section-heading__title { color: {{ st.heading_color }}; }
+  {%- endif %}
+  #shopify-section-{{ section.id }} .feature-columns__panel {
+    {% if st.panel_background != blank %}background-color: {{ st.panel_background }};{% endif %}
+    {%- if st.panel_border_width > 0 %}
+      border: {{ st.panel_border_width }}px solid {{ st.panel_border_color | default: 'rgba(0,0,0,0.1)' }};
+    {%- endif %}
+    border-radius: {{ st.panel_radius }}px;
+  }
+  #shopify-section-{{ section.id }} .feature-columns__item + .feature-columns__item {
+    border-inline-start-width: {{ st.divider_width }}px;
+    {% if st.divider_color != blank %}border-color: {{ st.divider_color }};{% endif %}
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .feature-columns__item + .feature-columns__item {
+      border-inline-start-width: 0;
+      border-block-start-width: {{ st.divider_width }}px;
+    }
+  }
+  {%- if st.title_color != blank %}
+    #shopify-section-{{ section.id }} .feature-columns__title { color: {{ st.title_color }}; }
+  {%- endif %}
+  {%- if st.text_color != blank %}
+    #shopify-section-{{ section.id }} .feature-columns__text { color: {{ st.text_color }}; }
+  {%- endif %}
+{% endstyle %}
 
 <section
   class="section feature-columns"
@@ -31,6 +67,8 @@
   </div>
 </section>
 
+{%- render 'section-spacing', section: section -%}
+
 {% schema %}
 {
   "name": "Feature columns",
@@ -49,6 +87,130 @@
       "id": "heading",
       "label": "Heading",
       "default": "Instant. Flawless. Safe."
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "Leave a color empty to use the theme default."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Inner box"
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Box background"
+    },
+    {
+      "type": "color",
+      "id": "panel_border_color",
+      "label": "Box border"
+    },
+    {
+      "type": "range",
+      "id": "panel_border_width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Box border thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "panel_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Box corner radius",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Column divider lines"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Divider line thickness",
+      "info": "0 hides the lines.",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Column title"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Column text"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
     }
   ],
   "blocks": [
@@ -75,9 +237,24 @@
     {
       "name": "Feature columns",
       "blocks": [
-        { "type": "column", "settings": { "title": "Instant" } },
-        { "type": "column", "settings": { "title": "Flawless" } },
-        { "type": "column", "settings": { "title": "Safe" } }
+        {
+          "type": "column",
+          "settings": {
+            "title": "Instant"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Flawless"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Safe"
+          }
+        }
       ]
     }
   ]

@@ -153,6 +153,8 @@
   </div>
 </footer>
 
+{%- render 'section-spacing', section: section, target: '.footer__grid' -%}
+
 {% schema %}
 {
   "name": "Footer",
@@ -184,6 +186,50 @@
       "id": "credit",
       "label": "Credit line",
       "default": "Powered by Arista Systems Pvt.Ltd."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 40
     }
   ],
   "blocks": [
@@ -323,7 +369,9 @@
     }
   ],
   "enabled_on": {
-    "groups": ["footer"]
+    "groups": [
+      "footer"
+    ]
   }
 }
 {% endschema %}

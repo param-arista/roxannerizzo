@@ -21,15 +21,153 @@
   .logo-list__list {
     justify-content: center;
     gap: 1.25rem 2rem;
-    --logo-height: 32px;
   }
 }
 
 .logo-list__image {
   width: auto;
   height: var(--logo-height, 56px);
-  max-width: 13rem;
+  max-width: min(13rem, 100%);
   object-fit: contain;
+}
+
+/* ---------- Slider layout (<scroll-carousel>) ---------- */
+.logo-list__carousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-list__track {
+  --logo-gap: clamp(1rem, 3vw, 2.5rem);
+  --per-view: var(--logos-desktop, 6);
+  grid-column: 2;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--logo-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.logo-list__track::-webkit-scrollbar {
+  display: none;
+}
+
+.logo-list__track--no-swipe {
+  overflow-x: hidden;
+  touch-action: pan-y;
+}
+
+.logo-list__track > .logo-list__item {
+  flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--logo-gap)) / var(--per-view));
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 989px) {
+  .logo-list__track {
+    --per-view: var(--logos-tablet, 4);
+  }
+}
+
+@media (max-width: 749px) {
+  .logo-list__track {
+    --per-view: var(--logos-mobile, 2.5);
+  }
+}
+
+.logo-list__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: color-mix(in srgb, var(--color-foreground) 70%, transparent);
+  cursor: pointer;
+}
+
+.logo-list__arrow[hidden] {
+  display: none;
+}
+
+.logo-list__arrow .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.logo-list__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.logo-list__arrow--prev {
+  grid-column: 1;
+}
+
+.logo-list__arrow--next {
+  grid-column: 3;
+}
+
+.logo-list__dots {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-block-start: 1rem;
+  color: color-mix(in srgb, var(--color-foreground) 70%, transparent);
+}
+
+.logo-list__dots[hidden] {
+  display: none;
+}
+
+/* Arrows: desktop+tablet / mobile. Dots: desktop / tablet / mobile.
+   Without arrows the track takes the full width. */
+@media (min-width: 750px) {
+  .logo-list__carousel:not(.logo-list__carousel--arrows-desktop) .logo-list__arrow {
+    display: none;
+  }
+
+  .logo-list__carousel:not(.logo-list__carousel--arrows-desktop) .logo-list__track {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 990px) {
+  .logo-list__carousel:not(.logo-list__carousel--dots-desktop) .logo-list__dots {
+    display: none;
+  }
+}
+
+@media (min-width: 750px) and (max-width: 989px) {
+  .logo-list__carousel:not(.logo-list__carousel--dots-tablet) .logo-list__dots {
+    display: none;
+  }
+}
+
+@media (max-width: 749px) {
+  .logo-list__carousel:not(.logo-list__carousel--arrows-mobile) .logo-list__arrow {
+    display: none;
+  }
+
+  .logo-list__carousel:not(.logo-list__carousel--arrows-mobile) .logo-list__track {
+    grid-column: 1 / -1;
+  }
+
+  .logo-list__carousel:not(.logo-list__carousel--dots-mobile) .logo-list__dots {
+    display: none;
+  }
 }
 
 .logo-list__list--grayscale .logo-list__image {
@@ -50,4 +188,77 @@
 
 .logo-list__link:hover {
   opacity: 0.7;
+}
+
+/* Actual image size: the uploaded pixel size, capped to the available space */
+.logo-list__image--actual {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ---------- Infinite continuous scroll (marquee) ----------
+   Two identical groups side by side; the track slides left by one group
+   (-50%) and starts over, so the loop has no visible seam. */
+.logo-list__marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.logo-list__marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-list-marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+.logo-list__marquee--reverse .logo-list__marquee-track {
+  animation-direction: reverse;
+}
+
+.logo-list__marquee--pause:hover .logo-list__marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-list__marquee-group {
+  list-style: none;
+  margin: 0;
+  --gap: var(--marquee-gap, 80px);
+  padding: 0 var(--gap) 0 0;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--gap);
+}
+
+.logo-list__marquee-group .logo-list__item {
+  flex-shrink: 0;
+}
+
+.logo-list__marquee-group .logo-list__image {
+  max-width: none;
+}
+
+.logo-list__marquee-group .logo-list__text {
+  white-space: nowrap;
+}
+
+@media (max-width: 749px) {
+  .logo-list__marquee-group {
+    /* half the desktop gap on phones */
+    --gap: max(1.5rem, calc(var(--marquee-gap, 80px) * 0.5));
+  }
+}
+
+@keyframes logo-list-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* The theme's reduced-motion rule shortens every animation to 0.01ms, which
+   would make an infinite marquee flicker; keep the merchant's speed instead. */
+@media (prefers-reduced-motion: reduce) {
+  .logo-list__marquee .logo-list__marquee-track {
+    animation-duration: var(--marquee-duration, 30s) !important;
+  }
 }

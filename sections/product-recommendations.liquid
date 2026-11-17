@@ -52,6 +52,8 @@
   {%- endif -%}
 </product-recommendations>
 
+{%- render 'section-spacing', section: section, target: '.section:has(.featured-products__grid)' -%}
+
 {% schema %}
 {
   "name": "Product recommendations",
@@ -62,8 +64,18 @@
       "type": "paragraph",
       "content": "Recommendations come from Shopify and improve with orders. Fine-tune them in the Search & Discovery app."
     },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Complete the glow" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Complete the glow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You may also like"
+    },
     {
       "type": "range",
       "id": "columns",
@@ -78,18 +90,96 @@
       "id": "image_ratio",
       "label": "Image shape",
       "options": [
-        { "value": "wide", "label": "Landscape (10:7)" },
-        { "value": "standard", "label": "Slightly landscape (5:4)" },
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait (4:5)" }
+        {
+          "value": "wide",
+          "label": "Landscape (10:7)"
+        },
+        {
+          "value": "standard",
+          "label": "Slightly landscape (5:4)"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        }
       ],
       "default": "wide"
     },
-    { "type": "color", "id": "card_background", "label": "Card background" },
-    { "type": "checkbox", "id": "show_rating", "label": "Show star rating", "default": true },
-    { "type": "text", "id": "card_button_label", "label": "Card button label" },
-    { "type": "checkbox", "id": "alt_background", "label": "Grey background", "default": false }
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "Card button label"
+    },
+    {
+      "type": "checkbox",
+      "id": "alt_background",
+      "label": "Grey background",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 56
+    }
   ],
-  "enabled_on": { "templates": ["product"] }
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
 }
 {% endschema %}

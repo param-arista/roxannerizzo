@@ -360,6 +360,7 @@
         "columns": 4,
         "width": "full",
         "image_ratio": "standard",
+        "image_fit": "contain",
         "card_background": "#eaeaeb",
         "show_rating": false,
         "card_button_label": "Shop Now",
