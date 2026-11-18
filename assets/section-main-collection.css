@@ -108,14 +108,6 @@
   }
 }
 
-@media (max-width: 989px) {
-  .facets[open] .facets__panel {
-    padding: 1.25rem;
-    border-radius: 4px;
-    background-color: var(--color-section-alt);
-  }
-}
-
 .facet {
   border-block-end: 1px solid rgb(0 0 0 / 0.1);
 }
@@ -412,4 +404,225 @@
   font-family: var(--font-heading--family);
   font-size: clamp(1.25rem, 2vw, 1.625rem);
   text-transform: uppercase;
+}
+
+/* Desktop: the "Filters" heading and the toolbar (count + sort) are the same
+   height, so their text and their bottom lines sit on one level. */
+@media (min-width: 990px) {
+  .collection-layout {
+    --facets-row: 2.75rem;
+  }
+
+  .facets__header,
+  .facets-toolbar {
+    min-height: calc(var(--facets-row) + 1rem);
+    padding-block-end: 1rem;
+  }
+
+  .facets__header {
+    border-block-end: 1px solid rgb(0 0 0 / 0.1);
+  }
+
+  /* "Filters" label: white text on a filled bar, as tall as the sort select */
+  .facets__heading {
+    display: flex;
+    align-items: center;
+    min-height: var(--facets-row);
+    margin: 0;
+    padding: 0 1rem;
+    border: 0;
+    /* border-radius: var(--style-border-radius-buttons, 4px); */
+    border-radius: 0;
+    background-color: var(--color-accent);
+    color: var(--color-accent-text, #fff);
+    line-height: 1.2;
+  }
+
+  /* Sticky sidebar: stay clear of the sticky header, scroll if taller than the screen */
+  .facets {
+    inset-block-start: calc(var(--header-height, 0px) + 1.5rem);
+    max-height: calc(100vh - var(--header-height, 0px) - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .facets-toolbar {
+    align-items: center;
+  }
+
+  .facets-toolbar__sort .select select {
+    height: var(--facets-row);
+    min-height: var(--facets-row);
+  }
+}
+
+/* ---------- Filter drawer close button (phones/tablets only) ---------- */
+.facets__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.facets__header .facets__heading {
+  flex: 1;
+}
+
+.facets__close {
+  display: none;
+}
+
+/* Count + sort inside the drawer: phones/tablets only */
+.facets__drawer-meta {
+  display: none;
+}
+
+/* ---------- Phones & tablets ----------
+   Only the Filter button above the grid; the product count and sort select
+   move into the filters drawer, which slides in (and out) from the right. */
+@media (max-width: 989px) {
+  .collection-layout:not(.collection-layout--no-filters) .facets-toolbar {
+    display: none;
+  }
+
+  .facets__summary {
+    white-space: nowrap;
+  }
+
+  .facets__drawer-meta {
+    display: grid;
+    gap: 1rem;
+    padding-block: 1rem;
+    border-block-end: 1px solid rgb(0 0 0 / 0.1);
+  }
+
+  .facets__drawer-count {
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .facets__drawer-sort {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .facets__drawer-sort select {
+    width: 100%;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .facets__drawer-meta:empty {
+    display: none;
+  }
+
+  /* Dimmed backdrop: a click on it closes the drawer (facets.js) */
+  .facets[open]::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgb(0 0 0 / 0.45);
+    animation: facets-fade 0.3s ease;
+  }
+
+  .facets .facets__panel {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    width: min(24rem, 88vw);
+    margin: 0;
+    padding: 0 1.25rem 1.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 0;
+    background-color: var(--color-background);
+    box-shadow: -8px 0 24px rgb(0 0 0 / 0.12);
+    animation: facets-slide-in 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .facets__header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    padding-block: 1rem;
+    border-block-end: 1px solid rgb(0 0 0 / 0.1);
+    background-color: var(--color-background);
+  }
+
+  .facets__header .facets__heading {
+    padding: 0;
+    border: 0;
+  }
+
+  .facets__close {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-inline-end: -0.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .facets__close .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .facets__actions {
+    position: sticky;
+    inset-block-end: 0;
+    margin-block-start: auto;
+    padding-block: 1rem 0;
+    background-color: var(--color-background);
+  }
+
+  .facets__actions .button {
+    flex: 1;
+  }
+
+  /* No page scroll behind the open drawer */
+  html:has(.facets[open]) {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 989px) {
+  .facets.is-closing::before {
+    animation: facets-fade 0.3s ease reverse forwards;
+  }
+
+  .facets.is-closing .facets__panel {
+    animation: facets-slide-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+}
+
+@keyframes facets-slide-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes facets-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes facets-fade {
+  from {
+    opacity: 0;
+  }
 }

@@ -30,8 +30,8 @@
 -%}
 
 <section
-  class="section featured-products featured-products--{{ section.settings.width }} featured-products--fit-{{ section.settings.image_fit | default: 'cover' }}"
-  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.background_color != blank %} background-color: {{ section.settings.background_color }};{% endif %}{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+  class="section featured-products featured-products--{{ section.settings.width }} card-fit--{{ section.settings.image_fit | default: 'cover' }}"
+  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.background_color != blank %} background-color: {{ section.settings.background_color }};{% endif %}{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}{% if section.settings.card_image_background != blank %} --card-image-bg: {{ section.settings.card_image_background }};{% endif %}{% if section.settings.card_border_width > 0 %} --card-border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};{% endif %} --card-radius: {{ section.settings.card_radius | default: 4 }}px;"
   {% if section.settings.heading != blank %}
     aria-labelledby="{{ heading_id }}"
   {% endif %}
@@ -217,6 +217,10 @@
         {
           "value": "contain",
           "label": "Show the whole image (no cut)"
+        },
+        {
+          "value": "none",
+          "label": "None (Image shape default)"
         }
       ],
       "default": "cover"
@@ -232,6 +236,39 @@
       "id": "card_background",
       "label": "Card background",
       "info": "Leave empty to use the theme's product card color."
+    },
+    {
+      "type": "color",
+      "id": "card_image_background",
+      "label": "Card image background",
+      "info": "Only the image area of the card. Leave empty to use the default."
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border thickness",
+      "info": "0 = no border.",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E1DCD6"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 4
     },
     {
       "type": "checkbox",

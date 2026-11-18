@@ -8,6 +8,8 @@
   @param {string} section_id - section.id
   @param {string} [terms] - Search terms (search page)
   @param {boolean} [enable_filtering] - Show the filters
+  @param {boolean} [enable_sorting] - Also show the sort select inside the phone drawer
+  @param {number} [count] - Result count shown inside the phone drawer
 
   @example
   {% render 'facets', results: collection, section_id: section.id, enable_filtering: true, enable_sorting: true %}
@@ -54,7 +56,39 @@
     </summary>
 
     <div class="facets__panel">
-      <h2 class="facets__heading">{{ 'collections.filters' | t }}</h2>
+      <div class="facets__header">
+        <h2 class="facets__heading">{{ 'collections.filters' | t }}</h2>
+        <button type="button" class="facets__close" data-facets-close aria-label="{{ 'general.close' | t }}">
+          {%- render 'icon', name: 'close' -%}
+        </button>
+      </div>
+
+      {%- comment -%}
+        Phones/tablets only: result count and a sort select inside the drawer.
+        The select has no name; facets.js copies its value to the toolbar's
+        sort select (the one the form submits).
+      {%- endcomment -%}
+      <div class="facets__drawer-meta">
+        {%- if count != blank -%}
+          <p class="facets__drawer-count" data-facets-drawer-count>{{ 'collections.product_count' | t: count: count }}</p>
+        {%- endif -%}
+        {%- if enable_sorting and results.sort_options.size > 0 -%}
+          {%- assign current_sort = results.sort_by | default: results.default_sort_by -%}
+          <div class="facets__drawer-sort">
+            <label for="DrawerSortBy-{{ section_id }}">{{ 'collections.sort_by' | t }}</label>
+            <div class="select">
+              <select id="DrawerSortBy-{{ section_id }}" data-facets-sort-mirror>
+                {%- for option in results.sort_options -%}
+                  <option value="{{ option.value | escape }}" {% if option.value == current_sort %}selected{% endif %}>
+                    {{- option.name | escape -}}
+                  </option>
+                {%- endfor -%}
+              </select>
+              {%- render 'icon', name: 'chevron-right', class: 'select__chevron' -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
 
       {%- for filter in results.filters -%}
         {%- assign group_id = section_id | append: '-' | append: filter.param_name | handle -%}

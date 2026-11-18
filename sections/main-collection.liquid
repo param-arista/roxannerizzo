@@ -68,7 +68,9 @@
         {%- render 'facets',
           results: collection,
           section_id: section.id,
-          enable_filtering: section.settings.enable_filtering
+          enable_filtering: section.settings.enable_filtering,
+          enable_sorting: section.settings.enable_sorting,
+          count: collection.products_count
         -%}
 
         <div class="collection-layout__results" id="FacetResults-{{ section.id }}" data-facets-results>
@@ -91,9 +93,9 @@
             </div>
           {%- else -%}
             <ul
-              class="product-grid"
+              class="product-grid card-fit--{{ section.settings.image_fit | default: 'cover' }}"
               role="list"
-              style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+              style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}{% if section.settings.card_image_background != blank %} --card-image-bg: {{ section.settings.card_image_background }};{% endif %}{% if section.settings.card_border_width > 0 %} --card-border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};{% endif %} --card-radius: {{ section.settings.card_radius | default: 4 }}px;"
             >
               {%- for product in collection.products -%}
                 <li class="product-grid__item">
@@ -224,10 +226,63 @@
       "default": "standard"
     },
     {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill the frame (edges may be cut)"
+        },
+        {
+          "value": "contain",
+          "label": "Show the whole image (no cut)"
+        },
+        {
+          "value": "none",
+          "label": "None (Image shape default)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
       "type": "color",
       "id": "card_background",
       "label": "Card background",
       "info": "Leave empty to use the theme's product card color."
+    },
+    {
+      "type": "color",
+      "id": "card_image_background",
+      "label": "Card image background",
+      "info": "Only the image area of the card. Leave empty to use the default."
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border thickness",
+      "info": "0 = no border.",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E1DCD6"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 4
     },
     {
       "type": "checkbox",

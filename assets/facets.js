@@ -22,10 +22,46 @@ if (!customElements.get('facet-filters')) {
 
       this.onChange = this.debounce(() => this.submit(), 400);
       this.addEventListener('change', (event) => {
+        // Drawer sort select: copy the choice to the toolbar select, which the form submits
+        if (event.target.matches('[data-facets-sort-mirror]')) {
+          const sort = document.getElementById(`SortBy-${this.sectionId}`);
+          if (sort) sort.value = event.target.value;
+          this.onChange();
+          return;
+        }
         if (event.target.matches('[data-facet-input]')) this.onChange();
       });
 
+      // Phones/tablets: the panel is a drawer. Close it with the × button,
+      // a click on the dimmed backdrop (the <details> itself) or Escape.
+      // Closing plays the slide-out animation first (.is-closing), then
+      // closes the <details>.
+      this.closeDrawer = () => {
+        const details = this.disclosure;
+        if (desktop.matches || !details?.open || details.classList.contains('is-closing')) return;
+        const panel = details.querySelector('.facets__panel');
+        const finish = () => {
+          window.clearTimeout(fallback);
+          panel?.removeEventListener('animationend', finish);
+          details.classList.remove('is-closing');
+          details.open = false;
+          details.querySelector('summary')?.focus();
+        };
+        const fallback = window.setTimeout(finish, 450);
+        panel?.addEventListener('animationend', finish);
+        details.classList.add('is-closing');
+      };
+      this.onKeydown = (event) => {
+        if (event.key === 'Escape') this.closeDrawer();
+      };
+      document.addEventListener('keydown', this.onKeydown);
+
       this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-facets-close]') || event.target === this.disclosure) {
+          event.preventDefault();
+          this.closeDrawer();
+          return;
+        }
         const link = event.target.closest('[data-facet-link]');
         if (link) {
           event.preventDefault();
@@ -37,7 +73,7 @@ if (!customElements.get('facet-filters')) {
         if (apply) {
           event.preventDefault();
           this.onChange();
-          if (!desktop.matches && this.disclosure) this.disclosure.open = false;
+          this.closeDrawer();
         }
       });
 
@@ -48,6 +84,7 @@ if (!customElements.get('facet-filters')) {
     disconnectedCallback() {
       desktop.removeEventListener('change', this.syncDisclosure);
       window.removeEventListener('popstate', this.onPopState);
+      document.removeEventListener('keydown', this.onKeydown);
     }
 
     debounce(fn, wait) {
@@ -100,7 +137,12 @@ if (!customElements.get('facet-filters')) {
           }
         });
 
-        ['.facets__summary', '.facets__actions'].forEach((selector) => {
+        // Keep the drawer's sort select in step with the toolbar one
+        const sort = document.getElementById(`SortBy-${this.sectionId}`);
+        const mirror = this.querySelector('[data-facets-sort-mirror]');
+        if (sort && mirror) mirror.value = sort.value;
+
+        ['.facets__summary', '.facets__actions', '[data-facets-drawer-count]'].forEach((selector) => {
           const current = this.querySelector(selector);
           const fresh = doc.querySelector(selector);
           if (current && fresh) current.innerHTML = fresh.innerHTML;
