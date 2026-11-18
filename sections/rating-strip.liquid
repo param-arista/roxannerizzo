@@ -5,6 +5,20 @@
 
 {{ 'section-rating-strip.css' | asset_url | stylesheet_tag }}
 
+{%- assign st = section.settings -%}
+{% style %}
+  #shopify-section-{{ section.id }} .rating-strip {
+    {% if st.background_color != blank %}background-color: {{ st.background_color }};{% endif %}
+    {% if st.text_color != blank %}color: {{ st.text_color }};{% endif %}
+  }
+  {%- if st.star_color != blank %}
+  #shopify-section-{{ section.id }} .rating-strip__star { color: {{ st.star_color }}; }
+  {%- endif %}
+  {%- if st.divider_color != blank %}
+  #shopify-section-{{ section.id }} .rating-strip__rating + .rating-strip__quote { border-color: {{ st.divider_color }}; }
+  {%- endif %}
+{% endstyle %}
+
 <section class="rating-strip" aria-label="{{ 'sections.rating_strip.label' | t }}">
   <div class="rating-strip__inner page-width">
     {%- if section.settings.rating_label != blank or section.settings.rating_text != blank -%}
@@ -79,6 +93,31 @@
       "id": "author_image",
       "label": "Author photo",
       "info": "Square, at least 120 × 120 px."
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "Leave a color empty to use the theme default."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider line"
     },
     {
       "type": "header",

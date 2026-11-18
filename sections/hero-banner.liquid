@@ -91,6 +91,25 @@
   assign text_m = section.settings.text_color_mobile | default: text_d
   assign btn_bg_m = section.settings.button_bg_color_mobile | default: btn_bg_d
   assign btn_text_m = section.settings.button_text_color_mobile | default: btn_text_d
+
+  comment
+    Text box behind heading + button: "none", or an opacity (100 = solid)
+    applied to the text box color. Phones: "same" follows desktop.
+  endcomment
+  assign box_bg_d = 'transparent'
+  if section.settings.box_style != blank and section.settings.box_style != 'none'
+    assign box_alpha = section.settings.box_style | divided_by: 100.0
+    assign box_bg_d = section.settings.box_color | default: '#ffffff' | color_modify: 'alpha', box_alpha
+  endif
+  assign box_style_m = section.settings.box_style_mobile | default: 'same'
+  if box_style_m == 'same'
+    assign box_style_m = section.settings.box_style
+  endif
+  assign box_bg_m = 'transparent'
+  if box_style_m != blank and box_style_m != 'none'
+    assign box_alpha = box_style_m | divided_by: 100.0
+    assign box_bg_m = section.settings.box_color | default: '#ffffff' | color_modify: 'alpha', box_alpha
+  endif
 -%}
 
 {%- capture overlay_d -%}
@@ -132,7 +151,18 @@
     justify-content: {{ d_justify }};
     align-items: {{ d_align }};
     text-align: {{ d_text }};
+  }
+
+  {{ scope }} .hero__box {
+    display: flex;
+    flex-direction: column;
+    align-items: {{ d_align }};
     gap: {{ section.settings.button_spacing_desktop }}px;
+    max-width: 100%;
+    background-color: {{ box_bg_d }};
+    {%- if box_bg_d != 'transparent' %}
+    padding: {{ section.settings.box_padding }}px;
+    {%- endif %}
   }
 
   {{ scope }} .hero__heading {
@@ -172,7 +202,17 @@
       justify-content: {{ m_justify }};
       align-items: {{ m_align }};
       text-align: {{ m_text }};
+    }
+
+    {{ scope }} .hero__box {
+      align-items: {{ m_align }};
       gap: {{ section.settings.button_spacing_mobile }}px;
+      background-color: {{ box_bg_m }};
+      {%- if box_bg_m != 'transparent' %}
+      padding: {{ section.settings.box_padding_mobile }}px;
+      {%- else %}
+      padding: 0;
+      {%- endif %}
     }
 
     {{ scope }} .hero__heading {
@@ -249,6 +289,7 @@
   {%- endif -%}
 
   <div class="hero__content">
+    <div class="hero__box">
     <{{ heading_tag }} class="hero__heading" id="HeroHeading-{{ section.id }}">
       {%- if section.settings.heading_accent != blank -%}
         <span class="hero__heading-accent">{{ section.settings.heading_accent | escape }}</span>
@@ -263,6 +304,7 @@
         {{- section.settings.button_label | escape -}}
       </a>
     {%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -413,6 +455,55 @@
       "label": "Image overlay opacity",
       "info": "0% = no overlay. Raise it when the text is hard to read on the image.",
       "default": 0
+    },
+    {
+      "type": "select",
+      "id": "box_style",
+      "label": "Text box behind heading & button",
+      "info": "Solid or see-through background behind the text, in the color below.",
+      "options": [
+        {
+          "value": "none",
+          "label": "No box"
+        },
+        {
+          "value": "100",
+          "label": "Solid"
+        },
+        {
+          "value": "80",
+          "label": "Transparent 80%"
+        },
+        {
+          "value": "60",
+          "label": "Transparent 60%"
+        },
+        {
+          "value": "40",
+          "label": "Transparent 40%"
+        },
+        {
+          "value": "20",
+          "label": "Transparent 20%"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "box_color",
+      "label": "Text box color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "box_padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Text box padding",
+      "default": 32
     },
     {
       "type": "select",
@@ -573,6 +664,53 @@
       "label": "Image overlay opacity",
       "info": "0% = no overlay on phones.",
       "default": 0
+    },
+    {
+      "type": "select",
+      "id": "box_style_mobile",
+      "label": "Text box behind heading & button",
+      "info": "Uses the desktop text box color.",
+      "options": [
+        {
+          "value": "same",
+          "label": "Same as desktop"
+        },
+        {
+          "value": "none",
+          "label": "No box"
+        },
+        {
+          "value": "100",
+          "label": "Solid"
+        },
+        {
+          "value": "80",
+          "label": "Transparent 80%"
+        },
+        {
+          "value": "60",
+          "label": "Transparent 60%"
+        },
+        {
+          "value": "40",
+          "label": "Transparent 40%"
+        },
+        {
+          "value": "20",
+          "label": "Transparent 20%"
+        }
+      ],
+      "default": "same"
+    },
+    {
+      "type": "range",
+      "id": "box_padding_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Text box padding",
+      "default": 16
     },
     {
       "type": "select",
