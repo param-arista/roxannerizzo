@@ -298,7 +298,7 @@
         "show_arrows": true,
         "show_dots": false,
         "show_arrows_mobile": false,
-        "show_dots_mobile": false,
+        "show_dots_mobile": true,
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 32,
