@@ -21,21 +21,69 @@
         "products_per_page": 12,
         "columns": 3,
         "image_ratio": "wide",
+        "card_background": "",
         "show_rating": true,
         "show_sale_badge": true,
-        "card_button_label": ""
+        "card_button_label": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       }
     },
     "how_it_wears": {
       "type": "feature-columns",
       "blocks": {
-        "column_1": { "type": "column", "settings": { "title": "Instant", "text": "<p>A light, buildable mist with a 360° nozzle — glow from head to toe in seconds.</p>" } },
-        "column_2": { "type": "column", "settings": { "title": "Flawless", "text": "<p>Evens skin tone and softens the look of spots, scars and redness for a healthy glow.</p>" } },
-        "column_3": { "type": "column", "settings": { "title": "Safe", "text": "<p>Paraben, sulfate and phthalate free. 100% vegan and never tested on animals.</p>" } }
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "Instant",
+            "text": "<p>A light, buildable mist with a 360° nozzle — glow from head to toe in seconds.</p>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "Flawless",
+            "text": "<p>Evens skin tone and softens the look of spots, scars and redness for a healthy glow.</p>"
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "title": "Safe",
+            "text": "<p>Paraben, sulfate and phthalate free. 100% vegan and never tested on animals.</p>"
+          }
+        }
       },
-      "block_order": ["column_1", "column_2", "column_3"],
-      "settings": { "eyebrow": "Why Bronze Glow", "heading": "Instant. Flawless. Safe." }
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3"
+      ],
+      "settings": {
+        "eyebrow": "Why Bronze Glow",
+        "heading": "Instant. Flawless. Safe.",
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "panel_background": "",
+        "panel_border_color": "",
+        "panel_border_width": 0,
+        "panel_radius": 0,
+        "divider_color": "",
+        "divider_width": 1,
+        "title_color": "",
+        "text_color": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     }
   },
-  "order": ["main", "how_it_wears"]
+  "order": [
+    "main",
+    "how_it_wears"
+  ]
 }
