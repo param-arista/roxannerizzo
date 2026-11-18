@@ -127,6 +127,13 @@
   padding: 0;
 }
 
+/* Phones: breadcrumbs centred */
+@media (max-width: 749px) {
+  .breadcrumbs__list {
+    justify-content: center;
+  }
+}
+
 .breadcrumbs__list li + li::before {
   content: '/';
   margin-inline-end: 0.6rem;
