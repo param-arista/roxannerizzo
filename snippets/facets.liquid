@@ -64,14 +64,11 @@
       </div>
 
       {%- comment -%}
-        Phones/tablets only: result count and a sort select inside the drawer.
+        Phones/tablets only: a sort select inside the drawer.
         The select has no name; facets.js copies its value to the toolbar's
         sort select (the one the form submits).
       {%- endcomment -%}
       <div class="facets__drawer-meta">
-        {%- if count != blank -%}
-          <p class="facets__drawer-count" data-facets-drawer-count>{{ 'collections.product_count' | t: count: count }}</p>
-        {%- endif -%}
         {%- if enable_sorting and results.sort_options.size > 0 -%}
           {%- assign current_sort = results.sort_by | default: results.default_sort_by -%}
           <div class="facets__drawer-sort">
@@ -195,6 +192,11 @@
       </div>
     </div>
   </details>
+
+  {%- comment -%} Phones/tablets: product count to the right of the Filter button {%- endcomment -%}
+  {%- if count != blank -%}
+    <p class="facets__mobile-count" data-facets-mobile-count>{{ 'collections.product_count' | t: count: count }}</p>
+  {%- endif -%}
 
   {%- comment -%}
     Phones/tablets: round Filter button that floats top-right once the main

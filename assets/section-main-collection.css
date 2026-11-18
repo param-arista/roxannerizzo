@@ -528,6 +528,37 @@
   }
 }
 
+/* Product count beside the Filter button: phones/tablets only */
+.facets__mobile-count {
+  display: none;
+}
+
+@media (max-width: 989px) {
+  .collection-layout:not(.collection-layout--no-filters) {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .collection-layout:not(.collection-layout--no-filters) > .facets {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .facets__mobile-count {
+    display: block;
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .collection-layout:not(.collection-layout--no-filters) > .collection-layout__results {
+    grid-column: 1 / -1;
+  }
+}
+
 /* Count + sort inside the drawer: phones/tablets only */
 .facets__drawer-meta {
   display: none;
@@ -550,12 +581,6 @@
     gap: 1rem;
     padding-block: 1rem;
     border-block-end: 1px solid rgb(0 0 0 / 0.1);
-  }
-
-  .facets__drawer-count {
-    font-size: 0.875rem;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
   }
 
   .facets__drawer-sort {

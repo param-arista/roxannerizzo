@@ -164,7 +164,7 @@ if (!customElements.get('facet-filters')) {
         const mirror = this.querySelector('[data-facets-sort-mirror]');
         if (sort && mirror) mirror.value = sort.value;
 
-        ['.facets__summary', '.facets__actions', '[data-facets-drawer-count]', '.facets__floating'].forEach((selector) => {
+        ['.facets__summary', '.facets__actions', '[data-facets-mobile-count]', '.facets__floating'].forEach((selector) => {
           const current = this.querySelector(selector);
           const fresh = doc.querySelector(selector);
           if (current && fresh) current.innerHTML = fresh.innerHTML;
