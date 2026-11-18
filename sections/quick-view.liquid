@@ -1,0 +1,203 @@
+{% comment %}
+  Quick view: a compact product page shown in a dialog from a product card.
+  Never placed in a template — theme.js fetches it with the Section Rendering
+  API ({{ product.url }}?section_id=quick-view) and puts it inside the
+  <quick-view-modal> dialog (snippets/quick-view-modal.liquid). Reuses the
+  product page's gallery, variant picker and add-to-bag form (product.js,
+  section-main-product.css), so behaviour matches the PDP.
+{% endcomment %}
+
+{%- if product != blank -%}
+  {%- liquid
+    assign current_variant = product.selected_or_first_available_variant
+
+    assign selected_title = ''
+    for option in product.options_with_values
+      unless forloop.first
+        assign selected_title = selected_title | append: ' / '
+      endunless
+      assign selected_title = selected_title | append: option.selected_value
+    endfor
+    assign combination_missing = false
+    if product.has_only_default_variant == false and current_variant.title != selected_title
+      assign combination_missing = true
+    endif
+    assign can_buy = current_variant.available
+    if combination_missing
+      assign can_buy = false
+    endif
+    assign form_id = 'ProductForm-' | append: section.id
+    assign media_count = product.media.size
+    assign featured_media = current_variant.featured_media | default: product.featured_media
+    assign title_id = 'QuickViewTitle-' | append: section.id
+  -%}
+
+  <div class="product quick-view__product" data-quick-view-root data-section-id="{{ section.id }}" style="--media-ratio: 1 / 1;" aria-labelledby="{{ title_id }}">
+    <div class="product__layout quick-view__layout">
+      <media-gallery class="product__media" data-section-id="{{ section.id }}" aria-label="{{ 'products.gallery' | t }}" role="region">
+        <div class="product__stage">
+          <ul class="product__slides" role="list" data-gallery-track tabindex="0" aria-label="{{ 'products.gallery' | t }}">
+            {%- if media_count == 0 -%}
+              <li class="product__slide is-active">
+                {{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}
+              </li>
+            {%- else -%}
+              {%- if featured_media -%}
+                {%- render 'product-media', media: featured_media, product_title: product.title, section_id: section.id, index: 1, count: media_count, eager: true, active: true -%}
+              {%- endif -%}
+              {%- assign index = 1 -%}
+              {%- for media in product.media -%}
+                {%- unless media.id == featured_media.id -%}
+                  {%- assign index = index | plus: 1 -%}
+                  {%- render 'product-media', media: media, product_title: product.title, section_id: section.id, index: index, count: media_count, eager: false, active: false -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+
+          {%- if media_count > 1 -%}
+            <button type="button" class="product__arrow product__arrow--prev" data-gallery-prev hidden>
+              {%- render 'icon', name: 'chevron-left' -%}
+              <span class="visually-hidden">{{ 'products.previous_media' | t }}</span>
+            </button>
+            <button type="button" class="product__arrow product__arrow--next" data-gallery-next hidden>
+              {%- render 'icon', name: 'chevron-right' -%}
+              <span class="visually-hidden">{{ 'products.next_media' | t }}</span>
+            </button>
+          {%- endif -%}
+        </div>
+      </media-gallery>
+
+      <div class="product__info quick-view__info">
+        {%- render 'product-badges', product: product, class: 'quick-view__badges' -%}
+
+        <h2 class="product__title quick-view__title" id="{{ title_id }}">{{ product.title | escape }}</h2>
+
+        <div class="product__price" id="Price-{{ section.id }}" data-swap>
+          {%- render 'price', variant: current_variant, class: 'price--large' -%}
+        </div>
+
+        {%- unless product.has_only_default_variant -%}
+          <variant-picker
+            class="product__variants"
+            id="VariantPicker-{{ section.id }}"
+            data-swap
+            data-section-id="{{ section.id }}"
+            data-product-url="{{ product.url }}"
+            data-update-url="false"
+            data-variant-id="{% unless combination_missing %}{{ current_variant.id }}{% endunless %}"
+            data-variant-media-id="{{ current_variant.featured_media.id }}"
+          >
+            {%- for option in product.options_with_values -%}
+              <fieldset class="option">
+                <legend class="option__legend">
+                  {{ option.name | escape }}:
+                  <span class="option__selected">{{ option.selected_value | escape }}</span>
+                </legend>
+                <div class="option__values">
+                  {%- for value in option.values -%}
+                    {%- assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                    <input
+                      class="option__input"
+                      type="radio"
+                      id="{{ input_id }}"
+                      name="{{ option.name | escape }}-{{ section.id }}"
+                      value="{{ value | escape }}"
+                      data-value-id="{{ value.id }}"
+                      {% if value.selected %}
+                        checked
+                      {% endif %}
+                    >
+                    <label
+                      class="option__label{% if value.available == false %} option__label--unavailable{% endif %}{% if value.swatch %} option__label--swatch{% endif %}"
+                      for="{{ input_id }}"
+                      {% if value.swatch.color %}
+                        style="--swatch: {{ value.swatch.color }};"
+                      {% endif %}
+                    >
+                      {%- if value.swatch -%}
+                        <span class="option__swatch" aria-hidden="true">
+                          {%- if value.swatch.image -%}
+                            {{ value.swatch.image | image_url: width: 72 | image_tag: alt: '', loading: 'lazy' }}
+                          {%- endif -%}
+                        </span>
+                        <span class="visually-hidden">{{ value | escape }}</span>
+                      {%- else -%}
+                        {{ value | escape }}
+                      {%- endif -%}
+                      {%- if value.available == false -%}
+                        <span class="visually-hidden">, {{ 'products.sold_out' | t }}</span>
+                      {%- endif -%}
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          </variant-picker>
+        {%- endunless -%}
+
+        <div class="product__quantity">
+          <p class="option__legend" aria-hidden="true">{{ 'products.quantity' | t }}</p>
+          {%- assign qty_label = 'products.quantity' | t -%}
+          {%- assign qty_id = 'Quantity-' | append: section.id -%}
+          {%- render 'quantity-input',
+            id: qty_id,
+            form: form_id,
+            name: 'quantity',
+            value: current_variant.quantity_rule.min,
+            min: current_variant.quantity_rule.min,
+            max: current_variant.quantity_rule.max,
+            step: current_variant.quantity_rule.increment,
+            label: qty_label,
+            title: product.title
+          -%}
+        </div>
+
+        <product-form class="product__buy" data-section-id="{{ section.id }}">
+          {%- form 'product', product, id: form_id, class: 'product__form', novalidate: 'novalidate', data-product-form: '' -%}
+            {%- comment -%} Inserted by JS, so the hidden id is always live here (no no-JS select) {%- endcomment -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" id="VariantId-{{ section.id }}">
+
+            <div class="product__form-error" role="alert" data-form-error hidden></div>
+
+            <button
+              type="submit"
+              name="add"
+              id="AddButton-{{ section.id }}"
+              class="button button--full product__add"
+              data-swap
+              {% unless can_buy %}
+                disabled
+              {% endunless %}
+            >
+              <span data-add-label>
+                {%- if current_variant == null or combination_missing -%}
+                  {{ 'products.unavailable' | t }}
+                {%- elsif current_variant.available -%}
+                  {{ 'products.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              <span class="product__spinner" aria-hidden="true" hidden></span>
+            </button>
+          {%- endform -%}
+        </product-form>
+
+        {%- if product.description != blank -%}
+          <p class="quick-view__excerpt">{{ product.description | strip_html | truncatewords: 32 }}</p>
+        {%- endif -%}
+
+        <a class="quick-view__details" href="{{ product.url }}">{{ 'products.view_full_details' | t }}</a>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Quick view",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

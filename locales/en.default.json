@@ -201,7 +201,10 @@
     "view_details": "View details",
     "option_unavailable": "{{ value }}, sold out",
     "variant": "Variant",
-    "sticky_label": "Add {{ title }} to bag"
+    "sticky_label": "Add {{ title }} to bag",
+    "quick_view": "Quick view",
+    "quick_view_label": "Quick view: {{ title }}",
+    "view_full_details": "View full details"
   },
   "search": {
     "title": "Search",

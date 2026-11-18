@@ -1,0 +1,164 @@
+/**
+ * Quick view dialog (snippets/quick-view-modal.liquid + sections/quick-view).
+ * Loaded on first open only, after section-main-product.css, so these rules
+ * just adapt the product page layout to a panel.
+ */
+.quick-view {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.quick-view[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.quick-view::backdrop {
+  background-color: rgb(31 35 40 / 0.45);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.quick-view.is-open::backdrop {
+  opacity: 1;
+}
+
+.quick-view__panel {
+  position: relative;
+  width: min(60rem, 100%);
+  max-height: min(42rem, calc(100dvh - 3rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 4px;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.16);
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.quick-view.is-open .quick-view__panel {
+  opacity: 1;
+  transform: none;
+}
+
+.quick-view__close {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.85);
+  color: var(--color-foreground);
+  cursor: pointer;
+}
+
+.quick-view__close .icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.quick-view__close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Product page layout, adapted */
+.quick-view .product {
+  padding: 0;
+}
+
+.quick-view .product__layout {
+  margin: 0;
+  gap: 0;
+}
+
+.quick-view .product__info {
+  position: static;
+  gap: 1rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.quick-view .product__media {
+  margin: 0;
+}
+
+.quick-view .product__slides {
+  border-radius: 0;
+}
+
+.quick-view__title {
+  padding-inline-end: 2.5rem;
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+}
+
+.quick-view__excerpt {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.quick-view__details {
+  align-self: flex-start;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: inherit;
+  text-underline-offset: 0.25em;
+}
+
+@media (min-width: 750px) {
+  .quick-view .product__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .quick-view .product__media {
+    position: sticky;
+    inset-block-start: 0;
+  }
+}
+
+/* Phones: a bottom sheet */
+@media (max-width: 749px) {
+  .quick-view[open] {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .quick-view__panel {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 12px 12px 0 0;
+    transform: translateY(100%);
+  }
+
+  .quick-view .product__arrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick-view__panel,
+  .quick-view::backdrop {
+    transition: none;
+  }
+}

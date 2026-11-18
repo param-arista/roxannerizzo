@@ -9,6 +9,7 @@
  *   <predictive-search>  live suggestions inside it
  *   <sticky-header>      sticky / hide-on-scroll header, solid once scrolled
  *   <announcement-bar>   one-at-a-time message slider (arrows + autoplay)
+ *   <quick-view-modal>   product quick view from a card's Quick view button
  */
 (() => {
   const theme = window.theme || { routes: {}, strings: {} };
@@ -50,14 +51,14 @@
     requestAnimationFrame(() => dialog.classList.add('is-open'));
   };
 
-  const closeDialog = (dialog) => {
+  const closeDialog = (dialog, { restoreFocus = true } = {}) => {
     if (!dialog.open || dialog._closing) return;
     dialog._closing = true;
     dialog.classList.remove('is-open');
     const finish = () => {
       dialog._closing = false;
       dialog.close();
-      dialog._trigger?.focus?.();
+      if (restoreFocus) dialog._trigger?.focus?.();
     };
     if (reducedMotion.matches) finish();
     else window.setTimeout(finish, 280);
@@ -303,7 +304,15 @@
               return;
             }
             drawer.render(data.sections['cart-drawer']);
-            drawer.open(this.button);
+            // From quick view: close it and hand focus-return to the card's button.
+            const quickView = this.closest('quick-view-modal');
+            if (quickView) {
+              const trigger = quickView.trigger;
+              quickView.close({ restoreFocus: false });
+              drawer.open(trigger);
+            } else {
+              drawer.open(this.button);
+            }
             announce(theme.strings.added);
           } catch (error) {
             this.setError(theme.strings.cartError);
@@ -317,6 +326,104 @@
           if (!this.error) return;
           this.error.textContent = message;
           this.error.hidden = !message;
+        }
+      }
+    );
+  }
+
+  /* ---------- <quick-view-modal> ---------- */
+  // A card's [data-quick-view] button fetches sections/quick-view for that
+  // product (Section Rendering API) into the dialog. The product page's CSS
+  // and product.js are loaded on first open only. Any failure falls back to
+  // the product page itself.
+  if (!customElements.get('quick-view-modal')) {
+    const loadStylesheet = (href) =>
+      new Promise((resolve) => {
+        if ([...document.styleSheets].some((sheet) => sheet.href && sheet.href.split('?')[0] === new URL(href, location.href).href.split('?')[0])) {
+          resolve();
+          return;
+        }
+        const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href });
+        link.onload = link.onerror = () => resolve();
+        document.head.append(link);
+      });
+
+    const loadScript = (src) =>
+      new Promise((resolve, reject) => {
+        if (customElements.get('variant-picker')) {
+          resolve();
+          return;
+        }
+        const script = Object.assign(document.createElement('script'), { src, defer: true });
+        script.onload = () => resolve();
+        script.onerror = reject;
+        document.head.append(script);
+      });
+
+    customElements.define(
+      'quick-view-modal',
+      class extends HTMLElement {
+        connectedCallback() {
+          this.dialog = this.querySelector('[data-quick-view-dialog]');
+          this.content = this.querySelector('[data-quick-view-content]');
+          if (!this.dialog || !this.content) return;
+          wireDialog(this.dialog, '[data-quick-view-close]');
+          this.dialog.addEventListener('close', () => this.content.replaceChildren());
+          document.addEventListener('click', (event) => {
+            const trigger = event.target.closest('[data-quick-view]');
+            if (!trigger) return;
+            event.preventDefault();
+            this.open(trigger);
+          });
+        }
+
+        get trigger() {
+          return this.dialog._trigger;
+        }
+
+        loadAssets() {
+          if (!this.assets) {
+            const css = (this.dataset.css || '').split(',').filter(Boolean).map(loadStylesheet);
+            this.assets = Promise.all([...css, loadScript(this.dataset.script)]).catch((error) => {
+              this.assets = null;
+              throw error;
+            });
+          }
+          return this.assets;
+        }
+
+        async open(trigger) {
+          if (trigger.getAttribute('aria-busy') === 'true') return;
+          const productUrl = trigger.dataset.quickView;
+          this.controller?.abort();
+          this.controller = new AbortController();
+          trigger.setAttribute('aria-busy', 'true');
+
+          try {
+            const url = new URL(productUrl, window.location.origin);
+            url.searchParams.set('section_id', 'quick-view');
+            const [html] = await Promise.all([
+              fetch(url, { signal: this.controller.signal }).then((response) => {
+                if (!response.ok) throw new Error(String(response.status));
+                return response.text();
+              }),
+              this.loadAssets(),
+            ]);
+            const fresh = parseHTML(html).querySelector('[data-quick-view-root]');
+            if (!fresh) throw new Error('No product');
+            this.content.replaceChildren(fresh);
+            const title = fresh.querySelector('.quick-view__title');
+            if (title) this.dialog.setAttribute('aria-labelledby', title.id);
+            openDialog(this.dialog, trigger);
+          } catch (error) {
+            if (error.name !== 'AbortError') window.location.assign(productUrl);
+          } finally {
+            trigger.removeAttribute('aria-busy');
+          }
+        }
+
+        close(options) {
+          closeDialog(this.dialog, options);
         }
       }
     );

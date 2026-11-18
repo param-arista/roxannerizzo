@@ -7,6 +7,7 @@
   @param {string} card_id - Unique id within the page (e.g. block.id), used for the heading id
   @param {product} [product] - The product
   @param {string} [badge] - Badge text shown top-right (e.g. "Best seller")
+    (the product's own badges, metafield custom.badges, show top-left)
   @param {boolean} [show_rating] - Show the star rating when the product has one
   @param {string} [button_label] - Full-width button text; blank hides it
   @param {string} [sizes] - The image sizes attribute
@@ -48,6 +49,21 @@
     {%- endif -%}
     {%- if badge != blank -%}
       <span class="product-card__badge">{{ badge | escape }}</span>
+    {%- endif -%}
+    {%- if product != blank -%}
+      {%- render 'product-badges', product: product, class: 'product-card__badges' -%}
+      {%- if settings.quick_view_enabled -%}
+        {%- assign quick_view_label = 'products.quick_view_label' | t: title: product.title -%}
+        <button
+          type="button"
+          class="product-card__quick-view"
+          data-quick-view="{{ product.url }}"
+          aria-haspopup="dialog"
+          aria-label="{{ quick_view_label | escape }}"
+        >
+          {{- 'products.quick_view' | t -}}
+        </button>
+      {%- endif -%}
     {%- endif -%}
   </div>
 

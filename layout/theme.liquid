@@ -74,6 +74,10 @@
       {% section 'cart-drawer' %}
     {%- endif -%}
 
+    {%- if settings.quick_view_enabled -%}
+      {% render 'quick-view-modal' %}
+    {%- endif -%}
+
     <p class="visually-hidden" role="status" aria-live="polite" id="ThemeAnnouncer"></p>
   </body>
 </html>

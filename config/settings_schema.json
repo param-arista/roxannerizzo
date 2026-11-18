@@ -263,6 +263,22 @@
     ]
   },
   {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "quick_view_enabled",
+        "label": "Quick view button",
+        "info": "Opens the product in a pop-up (images, options, Add to bag) without leaving the page.",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Badges (Best Seller, New Arrival…) come from each product's Badges metafield (custom.badges, a list of Product badge metaobject entries)."
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {

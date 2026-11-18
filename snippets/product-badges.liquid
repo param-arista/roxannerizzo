@@ -1,0 +1,44 @@
+{% doc %}
+  Badges chosen on the product (metafield custom.badges = list of
+  "Product badge" metaobject entries: label, optional background / text
+  colour). Renders nothing when the product has none.
+
+  Admin setup:
+    Settings → Custom data → Metaobjects → Add definition "Product badge"
+      (type: product_badge) with fields
+        label            Single line text (required)
+        background_color Color (optional, default = theme accent)
+        text_color       Color (optional)
+    Settings → Custom data → Products → Add definition "Badges"
+      (namespace and key: custom.badges), type Metaobject → Product badge,
+      "List of entries".
+
+  @param {product} product - The product
+  @param {string} [class] - Extra class on the list
+
+  @example
+  {% render 'product-badges', product: product %}
+{% enddoc %}
+
+{%- assign badges = product.metafields.custom.badges.value -%}
+{%- if badges != blank -%}
+  <ul class="product-badges {{ class }}" role="list">
+    {%- for badge in badges -%}
+      {%- liquid
+        assign label = badge.label.value
+        assign fill = badge.background_color.value
+        assign ink = badge.text_color.value
+      -%}
+      {%- if label != blank -%}
+        <li
+          class="product-badges__item"
+          {% if fill != blank or ink != blank %}
+            style="{% if fill != blank %}--badge-fill: {{ fill }};{% endif %}{% if ink != blank %}--badge-ink: {{ ink }};{% endif %}"
+          {% endif %}
+        >
+          {{- label | escape -}}
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
