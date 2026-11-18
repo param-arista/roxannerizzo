@@ -30,9 +30,20 @@
     assign media_count = product.media.size
     assign featured_media = current_variant.featured_media | default: product.featured_media
     assign title_id = 'QuickViewTitle-' | append: section.id
+
+    comment
+      Gallery frame takes the first image's own shape (kept between portrait
+      2:3 and landscape 16:9), so it shows whole instead of being cropped square
+    endcomment
+    assign media_ratio = featured_media.preview_image.aspect_ratio | default: 1
+    if media_ratio < 0.67
+      assign media_ratio = 0.67
+    elsif media_ratio > 1.78
+      assign media_ratio = 1.78
+    endif
   -%}
 
-  <div class="product quick-view__product" data-quick-view-root data-section-id="{{ section.id }}" style="--media-ratio: 1 / 1;" aria-labelledby="{{ title_id }}">
+  <div class="product quick-view__product" data-quick-view-root data-section-id="{{ section.id }}" style="--media-ratio: {{ media_ratio }};" aria-labelledby="{{ title_id }}">
     <div class="product__layout quick-view__layout">
       <media-gallery class="product__media" data-section-id="{{ section.id }}" aria-label="{{ 'products.gallery' | t }}" role="region">
         <div class="product__stage">

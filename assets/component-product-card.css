@@ -236,6 +236,13 @@ html:not(.js) .product-card__quick-view {
   display: none;
 }
 
+/* No quick view on phones: the card simply opens the product page */
+@media (max-width: 749px) {
+  .product-card__quick-view {
+    display: none;
+  }
+}
+
 @media (hover: hover) {
   .product-card__quick-view {
     opacity: 0;

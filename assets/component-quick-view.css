@@ -104,6 +104,25 @@
 
 .quick-view .product__slides {
   border-radius: 0;
+  background-color: #fff;
+}
+
+/* The whole product image, never cropped: framed with a thin border and
+   some breathing room, like the product page reference */
+.quick-view .product__media {
+  padding: clamp(1rem, 3vw, 2.25rem);
+  padding-inline-end: 0;
+}
+
+.quick-view .product__stage {
+  border: 1px solid rgb(0 0 0 / 0.2);
+  background-color: #fff;
+}
+
+.quick-view .product__slide img,
+.quick-view .product__slide video,
+.quick-view .product__placeholder {
+  object-fit: contain;
 }
 
 .quick-view__title {
@@ -153,6 +172,10 @@
 
   .quick-view .product__arrow {
     display: none;
+  }
+
+  .quick-view .product__media {
+    padding: 1rem 1rem 0;
   }
 }
 
