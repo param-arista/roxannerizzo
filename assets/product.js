@@ -133,7 +133,8 @@
             const idInput = document.getElementById(`VariantId-${sectionId}`);
             if (idInput) idInput.value = variantId || '';
 
-            if (variantId) {
+            // Quick view stays on the current page's URL.
+            if (variantId && this.dataset.updateUrl !== 'false') {
               const params = new URLSearchParams(window.location.search);
               params.set('variant', variantId);
               window.history.replaceState({}, '', `${window.location.pathname}?${params}`);

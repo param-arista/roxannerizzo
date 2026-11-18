@@ -1,0 +1,23 @@
+{% doc %}
+  The quick view dialog shell (rendered once in layout/theme.liquid when the
+  Quick view theme setting is on). theme.js loads the styles and product.js
+  on first open, then fills [data-quick-view-content] with sections/quick-view.
+
+  @example
+  {% render 'quick-view-modal' %}
+{% enddoc %}
+
+<quick-view-modal
+  data-css="{{ 'section-main-product.css' | asset_url }},{{ 'component-quick-view.css' | asset_url }}"
+  data-script="{{ 'product.js' | asset_url }}"
+>
+  <dialog class="quick-view" data-quick-view-dialog aria-label="{{ 'products.quick_view' | t }}">
+    <div class="quick-view__panel">
+      <button type="button" class="quick-view__close" data-quick-view-close>
+        {%- render 'icon', name: 'close' -%}
+        <span class="visually-hidden">{{ 'general.close' | t }}</span>
+      </button>
+      <div class="quick-view__content" data-quick-view-content></div>
+    </div>
+  </dialog>
+</quick-view-modal>
