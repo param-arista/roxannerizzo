@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "foreground_color": "#404040",
     "header_overlay_home": true,
     "cart_empty_collection": "bestseller",
     "free_shipping_threshold": 99,
