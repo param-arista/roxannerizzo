@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
@@ -5,23 +14,59 @@
     "announcement_bar": {
       "type": "announcement-bar",
       "blocks": {
-        "message_1": { "type": "message", "settings": { "text": "International shipping", "link": "" } },
-        "message_2": { "type": "message", "settings": { "text": "Vegan & cruelty free", "link": "" } },
-        "message_3": { "type": "message", "settings": { "text": "Made in New York", "link": "" } }
+        "message_1": {
+          "type": "message",
+          "settings": {
+            "text": "International shipping",
+            "link": ""
+          }
+        },
+        "message_2": {
+          "type": "message",
+          "settings": {
+            "text": "Vegan & cruelty free",
+            "link": ""
+          }
+        },
+        "message_3": {
+          "type": "message",
+          "settings": {
+            "text": "Made in New York",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["message_1", "message_2", "message_3"],
-      "settings": {}
+      "block_order": [
+        "message_1",
+        "message_2",
+        "message_3"
+      ],
+      "settings": {
+        "background_color": "#1f2329",
+        "text_color": "#ffffff",
+        "desktop_layout": "row",
+        "mobile_layout": "slider",
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "show_arrows": true
+      }
     },
     "header": {
       "type": "header",
       "settings": {
+        "sticky_header": "always",
+        "logo": "shopify://shop_images/roxannerizzo-logo.webp",
+        "logo_width": 224,
+        "show_star": true,
         "logo_text": "Roxanne Rizzo",
         "logo_tagline": "New York",
-        "show_star": true,
-        "sticky_header": "always",
-        "menu": "main-menu"
+        "menu": "main-menu",
+        "wishlist_url": ""
       }
     }
   },
-  "order": ["announcement_bar", "header"]
+  "order": [
+    "announcement_bar",
+    "header"
+  ]
 }
