@@ -473,6 +473,61 @@
   display: none;
 }
 
+/* Floating Filter button (phones/tablets, after scrolling past the main one) */
+.facets__floating {
+  display: none;
+}
+
+@media (max-width: 989px) {
+  .facets__floating {
+    position: fixed;
+    inset-block-start: calc(var(--header-height, 4rem) + 0.75rem);
+    inset-inline-end: var(--page-margin, 1rem);
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    background-color: var(--color-background);
+    color: var(--color-accent);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s;
+  }
+
+  .facets__floating.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* hidden while the drawer is open */
+  .facets[open] ~ .facets__floating {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .facets__floating .icon {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .facets__floating .facets__count-badge {
+    position: absolute;
+    inset-block-start: -0.3rem;
+    inset-inline-end: -0.3rem;
+  }
+}
+
 /* Count + sort inside the drawer: phones/tablets only */
 .facets__drawer-meta {
   display: none;
@@ -546,6 +601,12 @@
     border-radius: 0;
     background-color: var(--color-background);
     box-shadow: -8px 0 24px rgb(0 0 0 / 0.12);
+  }
+
+  /* The slide-in is set only while open, so it restarts on every opening.
+     (Modern browsers keep a closed <details>' content rendered but hidden,
+     so an animation set all the time would have finished on page load.) */
+  .facets[open] .facets__panel {
     animation: facets-slide-in 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
   }
 
@@ -600,11 +661,11 @@
 }
 
 @media (max-width: 989px) {
-  .facets.is-closing::before {
+  .facets[open].is-closing::before {
     animation: facets-fade 0.3s ease reverse forwards;
   }
 
-  .facets.is-closing .facets__panel {
+  .facets[open].is-closing .facets__panel {
     animation: facets-slide-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
   }
 }

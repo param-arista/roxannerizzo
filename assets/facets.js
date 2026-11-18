@@ -45,18 +45,39 @@ if (!customElements.get('facet-filters')) {
           panel?.removeEventListener('animationend', finish);
           details.classList.remove('is-closing');
           details.open = false;
-          details.querySelector('summary')?.focus();
+          // Return focus to whatever opened the drawer, without scrolling the page
+          const opener = this.opener?.isConnected ? this.opener : details.querySelector('summary');
+          opener?.focus({ preventScroll: true });
+          this.opener = null;
         };
         const fallback = window.setTimeout(finish, 450);
         panel?.addEventListener('animationend', finish);
         details.classList.add('is-closing');
       };
+      // Floating Filter button: shown once the main Filter button scrolls away
+      this.floating = this.querySelector('[data-facets-open]');
+      const summary = this.disclosure?.querySelector('summary');
+      if (this.floating && summary && 'IntersectionObserver' in window) {
+        this.floatObserver = new IntersectionObserver(([entry]) => {
+          const passed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+          this.floating.classList.toggle('is-visible', passed);
+        });
+        this.floatObserver.observe(summary);
+      }
+
       this.onKeydown = (event) => {
         if (event.key === 'Escape') this.closeDrawer();
       };
       document.addEventListener('keydown', this.onKeydown);
 
       this.addEventListener('click', (event) => {
+        if (event.target.closest('[data-facets-open]')) {
+          if (this.disclosure && !desktop.matches) {
+            this.opener = this.floating;
+            this.disclosure.open = true;
+          }
+          return;
+        }
         if (event.target.closest('[data-facets-close]') || event.target === this.disclosure) {
           event.preventDefault();
           this.closeDrawer();
@@ -85,6 +106,7 @@ if (!customElements.get('facet-filters')) {
       desktop.removeEventListener('change', this.syncDisclosure);
       window.removeEventListener('popstate', this.onPopState);
       document.removeEventListener('keydown', this.onKeydown);
+      this.floatObserver?.disconnect();
     }
 
     debounce(fn, wait) {
@@ -142,7 +164,7 @@ if (!customElements.get('facet-filters')) {
         const mirror = this.querySelector('[data-facets-sort-mirror]');
         if (sort && mirror) mirror.value = sort.value;
 
-        ['.facets__summary', '.facets__actions', '[data-facets-drawer-count]'].forEach((selector) => {
+        ['.facets__summary', '.facets__actions', '[data-facets-drawer-count]', '.facets__floating'].forEach((selector) => {
           const current = this.querySelector(selector);
           const fresh = doc.querySelector(selector);
           if (current && fresh) current.innerHTML = fresh.innerHTML;
