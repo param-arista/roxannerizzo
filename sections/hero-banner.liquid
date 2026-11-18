@@ -184,6 +184,12 @@
       margin-block-end: {{ section.settings.line_spacing_mobile }}px;
     }
 
+    {%- if section.settings.mobile_image_focus != blank and section.settings.mobile_image_focus != 'focal' %}
+    {{ scope }} .hero__media img {
+      object-position: {{ section.settings.mobile_image_focus }} 50%;
+    }
+    {%- endif %}
+
     {%- if section.settings.mobile_image_height != 'auto' %}
     {{ scope }} .hero__media {
       aspect-ratio: auto;
@@ -612,6 +618,21 @@
         }
       ],
       "default": "top-left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_focus",
+      "label": "Image position on phones",
+      "info": "Which part of the picture stays visible when a phone crops its sides.",
+      "options": [
+        { "value": "focal", "label": "Image focal point" },
+        { "value": "0%", "label": "Left" },
+        { "value": "25%", "label": "Center left" },
+        { "value": "50%", "label": "Center" },
+        { "value": "75%", "label": "Center right" },
+        { "value": "100%", "label": "Right" }
+      ],
+      "default": "focal"
     },
     {
       "type": "select",

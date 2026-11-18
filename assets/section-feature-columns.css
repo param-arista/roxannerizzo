@@ -54,3 +54,10 @@
     padding-block-start: 1.75rem;
   }
 }
+
+/* Phones: body text 16px */
+@media (max-width: 749px) {
+  .feature-columns__text {
+    font-size: 1rem;
+  }
+}

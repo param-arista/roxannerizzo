@@ -33,7 +33,7 @@
 .promo-card__footer {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.75rem 1rem;
   padding-block-start: 1.25rem;

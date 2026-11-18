@@ -40,6 +40,7 @@
         "overlay_color_mobile": "#000000",
         "overlay_opacity_mobile": 15,
         "mobile_position": "bottom-left",
+        "mobile_image_focus": "75%",
         "mobile_image_height": "420",
         "heading_size_mobile": 28,
         "line_spacing_mobile": 0,
