@@ -13,9 +13,9 @@
     "header_overlay_home": true,
     "cart_empty_collection": "bestseller",
     "free_shipping_threshold": 99,
-    "social_instagram_link": "#",
-    "social_facebook_link": "#",
-    "social_tiktok_link": "#",
+    "social_instagram_link": "https://www.instagram.com/roxannerizzo/",
+    "social_facebook_link": "https://www.facebook.com/RoxaneRizzoNewYork/",
+    "social_tiktok_link": "",
     "sections": {
       "cart-drawer": {
         "type": "cart-drawer",
