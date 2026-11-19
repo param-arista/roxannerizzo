@@ -48,7 +48,7 @@
   class="section product product--fit-{{ section.settings.media_fit | default: 'contain' }}"
   data-section-id="{{ section.id }}"
   data-product-url="{{ product.url }}"
-  style="--media-ratio: {{ media_ratio }};{% if section.settings.media_background != blank %} --media-bg: {{ section.settings.media_background }};{% endif %}"
+  style="--media-ratio: {{ media_ratio }}; --media-max-h: {{ section.settings.media_max_height | default: 620 }}px; --media-max-h-mobile: {{ section.settings.media_max_height_mobile | default: 420 }}px;{% if section.settings.media_background != blank %} --media-bg: {{ section.settings.media_background }};{% endif %}"
   aria-label="{{ product.title | escape }}"
 >
   <div class="page-width">
@@ -452,6 +452,27 @@
         }
       ],
       "default": "contain"
+    },
+    {
+      "type": "range",
+      "id": "media_max_height",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Image max height (desktop)",
+      "info": "Caps the gallery height on larger screens; the image stays whole inside.",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "media_max_height_mobile",
+      "min": 240,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "label": "Image max height (phones)",
+      "default": 420
     },
     {
       "type": "color",

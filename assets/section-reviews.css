@@ -15,6 +15,7 @@
   gap: var(--reviews-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.25rem;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }

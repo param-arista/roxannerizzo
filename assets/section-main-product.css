@@ -46,6 +46,30 @@
   background-color: var(--media-bg, var(--color-card));
 }
 
+/* Gallery height cap (section setting): the frame never gets taller than
+   this, so the page doesn't open on one huge image */
+.product .product__slide {
+  max-height: var(--media-max-h, 620px);
+}
+
+/* Tablet/desktop: also keep the gallery (plus thumbnails) above the fold on
+   short screens, e.g. a laptop: never taller than the window minus the
+   header, breadcrumbs and thumbnail row (but not below 300px) */
+@media (min-width: 750px) {
+  .product .product__slide {
+    max-height: min(
+      var(--media-max-h, 620px),
+      max(300px, calc(100svh - var(--header-height, 5.25rem) - 10rem))
+    );
+  }
+}
+
+@media (max-width: 749px) {
+  .product .product__slide {
+    max-height: var(--media-max-h-mobile, 420px);
+  }
+}
+
 /* Image fit = Show the whole image: never crop the product photo */
 .product--fit-contain .product__slide img,
 .product--fit-contain .product__slide video {
@@ -529,6 +553,7 @@
   gap: 1rem;
   padding-block: 1.1rem;
   font-size: 0.875rem;
+  font-weight: var(--font-body--weight-bold, 700);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   list-style: none;

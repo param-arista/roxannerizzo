@@ -190,7 +190,20 @@ if (!customElements.get('scroll-carousel')) {
     /** Item index (clones included) at the start of the track. */
     get rawIndex() {
       const step = this.step;
-      return step ? Math.round(Math.abs(this.track.scrollLeft) / step) : 0;
+      if (!step) return 0;
+      // nearest item to the current scroll position, from the real layout
+      const position = Math.abs(this.track.scrollLeft);
+      const guess = Math.round(position / step);
+      let best = guess;
+      let bestDistance = Infinity;
+      for (let i = Math.max(0, guess - 2); i <= Math.min(this.track.children.length - 1, guess + 2); i++) {
+        const distance = Math.abs(this.offsetOf(i) - position);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = i;
+        }
+      }
+      return best;
     }
 
     /** Real slide index (0-based) currently at the start of the track. */
@@ -200,8 +213,24 @@ if (!customElements.get('scroll-carousel')) {
       return this.rawIndex;
     }
 
+    /** Exact scroll offset of item `raw` (clones included), measured from the
+        layout rather than raw * step: item widths are fractional, and
+        multiplying a rounded width drifts by a few pixels after many clones,
+        which left the first card cut at the edge. */
+    offsetOf(raw) {
+      const items = this.track.children;
+      const item = items[Math.max(0, Math.min(raw, items.length - 1))];
+      const first = items[0];
+      if (!item || !first) return 0;
+      const a = item.getBoundingClientRect();
+      const b = first.getBoundingClientRect();
+      return this.rtl === 1 ? a.left - b.left : b.right - a.right;
+    }
+
     scrollToRaw(raw, behavior = 'smooth') {
-      this.track.scrollTo({ left: raw * this.step * this.rtl, behavior });
+      const max = this.max;
+      const left = Math.min(Math.max(this.offsetOf(raw), 0), max);
+      this.track.scrollTo({ left: left * this.rtl, behavior });
     }
 
     /** Instant, invisible jump (snap and smooth scrolling off for one frame). */
