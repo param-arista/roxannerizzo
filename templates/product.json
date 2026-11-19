@@ -108,7 +108,7 @@
       "settings": {
         "show_breadcrumbs": true,
         "media_ratio": "square",
-        "show_sticky_bar": false,
+        "show_sticky_bar": true,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 0,
