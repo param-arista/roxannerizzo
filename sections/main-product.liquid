@@ -45,10 +45,10 @@
 -%}
 
 <section
-  class="section product"
+  class="section product product--fit-{{ section.settings.media_fit | default: 'contain' }}"
   data-section-id="{{ section.id }}"
   data-product-url="{{ product.url }}"
-  style="--media-ratio: {{ media_ratio }};"
+  style="--media-ratio: {{ media_ratio }};{% if section.settings.media_background != blank %} --media-bg: {{ section.settings.media_background }};{% endif %}"
   aria-label="{{ product.title | escape }}"
 >
   <div class="page-width">
@@ -436,6 +436,29 @@
         }
       ],
       "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "media_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Show the whole image (no cut)"
+        },
+        {
+          "value": "cover",
+          "label": "Fill the frame (edges may be cut)"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "Image background",
+      "info": "Behind the product images. Leave empty to use the theme's card color.",
+      "default": "#FFFFFF"
     },
     {
       "type": "checkbox",

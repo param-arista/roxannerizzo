@@ -262,3 +262,16 @@ html:not(.js) .product-card__quick-view {
     transition: none;
   }
 }
+
+/* Phones: product title and price at 14px */
+@media (max-width: 749px) {
+  .product-card .product-card__title,
+  .product-card .product-card__price {
+    font-size: 0.875rem;
+  }
+
+  /* Product badges (e.g. TSA) at 12px */
+  .product-badges .product-badges__item {
+    font-size: 0.75rem;
+  }
+}

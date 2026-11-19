@@ -110,9 +110,13 @@ a {
   color: inherit;
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+/* No focus outline anywhere on the site (store owner's choice). This also
+   removes the keyboard focus ring, so Tab users can't see where they are. */
+*:focus,
+*:focus-visible,
+.facet__checkbox:focus-visible + label::before,
+.option__input:focus-visible + .option__label {
+  outline: none !important;
 }
 
 .visually-hidden {

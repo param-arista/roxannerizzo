@@ -24,9 +24,9 @@
 -%}
 
 <product-recommendations
-  class="section featured-products featured-products--contained{% if section.settings.alt_background %} section--alt{% endif %}"
+  class="section featured-products featured-products--contained card-fit--{{ section.settings.image_fit | default: 'cover' }}{% if section.settings.alt_background %} section--alt{% endif %}"
   data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ columns }}&intent=related"
-  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}"
+  style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}{% if section.settings.card_image_background != blank %} --card-image-bg: {{ section.settings.card_image_background }};{% endif %}{% if section.settings.card_border_width > 0 %} --card-border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};{% endif %} --card-radius: {{ section.settings.card_radius | default: 4 }}px;"
 >
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <section class="page-width" aria-labelledby="{{ heading_id }}">
@@ -110,9 +110,62 @@
       "default": "wide"
     },
     {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill the frame (edges may be cut)"
+        },
+        {
+          "value": "contain",
+          "label": "Show the whole image (no cut)"
+        },
+        {
+          "value": "none",
+          "label": "None (Image shape default)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
       "type": "color",
       "id": "card_background",
       "label": "Card background"
+    },
+    {
+      "type": "color",
+      "id": "card_image_background",
+      "label": "Card image background",
+      "info": "Only the image area of the card. Leave empty to use the default."
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border thickness",
+      "info": "0 = no border.",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E1DCD6"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 4
     },
     {
       "type": "checkbox",

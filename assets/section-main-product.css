@@ -43,7 +43,13 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   border-radius: 4px;
-  background-color: var(--color-card);
+  background-color: var(--media-bg, var(--color-card));
+}
+
+/* Image fit = Show the whole image: never crop the product photo */
+.product--fit-contain .product__slide img,
+.product--fit-contain .product__slide video {
+  object-fit: contain;
 }
 
 .product__slides::-webkit-scrollbar {
