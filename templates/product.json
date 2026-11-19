@@ -277,7 +277,7 @@
         "cards_desktop": "4",
         "cards_tablet": "2",
         "cards_mobile": "1.2",
-        "card_gap_desktop": 40,
+        "card_gap_desktop": 30,
         "card_gap_tablet": 20,
         "card_gap_mobile": 12,
         "card_border_width": 1.5,
