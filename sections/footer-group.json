@@ -69,7 +69,11 @@
         "background": "#3e3333",
         "text_color": "#ffffff",
         "copyright": "Roxanne Rizzo New York",
-        "credit": "Powered by Arista Systems Pvt.Ltd."
+        "credit": "Powered by <a href=\"https://aristasystems.in/\" target=\"_blank\" title=\"https://aristasystems.in/\">Arista Systems Pvt.Ltd</a>.",
+        "padding_top_desktop": 76,
+        "padding_bottom_desktop": 48,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 40
       }
     }
   },

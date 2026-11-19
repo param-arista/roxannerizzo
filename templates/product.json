@@ -68,7 +68,8 @@
           "settings": {
             "heading": "How to use",
             "open": false,
-            "content": "<p>Shake well. Hold 8–10 inches from skin and mist evenly with the 360° nozzle. Build in light layers to your preferred depth of bronze. Wear alone, over makeup, or as a setting spray.</p>"
+            "content": "<p>Shake well. Hold 8–10 inches from skin and mist evenly with the 360° nozzle. Build in light layers to your preferred depth of bronze. Wear alone, over makeup, or as a setting spray.</p>",
+            "page": ""
           }
         },
         "ingredients": {
@@ -76,7 +77,8 @@
           "settings": {
             "heading": "Ingredients",
             "open": false,
-            "content": "<p>Paraben, sulfate and phthalate free. Low in DHA, non-comedogenic, 100% vegan and never tested on animals.</p>"
+            "content": "<p>Paraben, sulfate and phthalate free. Low in DHA, non-comedogenic, 100% vegan and never tested on animals.</p>",
+            "page": ""
           }
         },
         "shipping": {
@@ -84,7 +86,8 @@
           "settings": {
             "heading": "Shipping & returns",
             "open": false,
-            "content": "<p>We ship internationally. Shipping is calculated at checkout.</p>"
+            "content": "<p>We ship internationally. Shipping is calculated at checkout.</p>",
+            "page": ""
           }
         }
       },
@@ -104,7 +107,12 @@
       ],
       "settings": {
         "show_breadcrumbs": true,
-        "media_ratio": "square"
+        "media_ratio": "square",
+        "show_sticky_bar": true,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
       }
     },
     "how_it_wears": {
@@ -139,60 +147,154 @@
       ],
       "settings": {
         "eyebrow": "How it wears",
-        "heading": "Instant. Flawless. Safe."
+        "heading": "Instant. Flawless. Safe.",
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "panel_background": "",
+        "panel_border_color": "",
+        "panel_border_width": 0,
+        "panel_radius": 0,
+        "divider_color": "#FFFFFF",
+        "divider_width": 2,
+        "title_color": "",
+        "text_color": "",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
-    "reviews": {
+    "reviews_i6GkhH": {
       "type": "reviews",
       "blocks": {
-        "review_1": {
+        "review_LTAGA7": {
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/lucy-liu.avif",
             "name": "Lucy Liu",
             "role": "Actress, Artist & Advocate",
             "quote": "Bronze Glow is the best!"
           }
         },
-        "review_2": {
+        "review_e8KEQN": {
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Bill_Corso.avif",
             "name": "Bill Corso",
             "role": "Oscar & Emmy-winning MUA",
-            "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens."
+            "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens. If I ever get more than one bottle, my wife steals one for her everyday."
           }
         },
-        "review_3": {
+        "review_D9ByRT": {
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Liam_Neeson.avif",
             "name": "Liam Neeson",
             "role": "Award-Winning Irish Actor",
             "quote": "It should be called confidence in a can!"
           }
         },
-        "review_4": {
+        "review_kCNgLX": {
           "type": "review",
           "settings": {
             "stars": 5,
+            "image": "shopify://shop_images/Ashlee_Glazer.avif",
             "name": "Ashlee Glazer",
             "role": "Celebrity Makeup Artist",
             "quote": "Roxanne Rizzo Bronze Glow is my personal favorite product to give me all-over warmth."
           }
+        },
+        "review_VYbFMy": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Scott_Barnes.avif",
+            "name": "Scott Barnes",
+            "role": "Scott Barnes, Celebrity Makeup Artist and Author",
+            "quote": "\"It's not just a bronzer. It's snatch-ural!\""
+          }
+        },
+        "review_8fh3rD": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Laura_Benanti.avif",
+            "name": "Laura Benanti",
+            "role": "Tony Award Winning Actress and Singer",
+            "quote": "\"Love Bronze Glow! It gives this new mom the illusion of rest.\""
+          }
+        },
+        "review_PbwAMC": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Nicki_Lederman.avif",
+            "name": "Nicki Lederman",
+            "role": "Oscar and Emmy Award Winning Celebrity Makeup Artist",
+            "quote": "\"From doing makeup for my daughter's proms or getting celebs ready for the red carpet, to using it as an important finish after tattoo covering, beauty makeup and character makeup designs for my film and tv work, Bronze Glow is one of my most important and essential products in my kit.\""
+          }
+        },
+        "review_RKVnXp": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "image": "shopify://shop_images/Leslie_Kritzer_a2f1b9fc-f56b-4273-8209-b6164f5952ef.avif",
+            "name": "Leslie Kritzer",
+            "role": "Broadway Actor and Singer",
+            "quote": "\"The best glow on the market!\""
+          }
         }
       },
       "block_order": [
-        "review_1",
-        "review_2",
-        "review_3",
-        "review_4"
+        "review_LTAGA7",
+        "review_e8KEQN",
+        "review_D9ByRT",
+        "review_kCNgLX",
+        "review_VYbFMy",
+        "review_8fh3rD",
+        "review_PbwAMC",
+        "review_RKVnXp"
       ],
       "settings": {
         "eyebrow": "Loved by",
         "heading": "Reviews",
         "grayscale": true,
-        "alt_background": true
+        "alt_background": true,
+        "background_color": "#f4f4f4",
+        "eyebrow_color": "#a86d45",
+        "heading_color": "#404040",
+        "card_bg_color": "#f4f4f4",
+        "card_border_color": "#ababab",
+        "star_color": "#d6a44e",
+        "name_color": "#292929",
+        "role_color": "#292929",
+        "quote_color": "#4e4e4e",
+        "arrow_color": "#ababab",
+        "cards_desktop": "4",
+        "cards_tablet": "2",
+        "cards_mobile": "1.2",
+        "card_gap_desktop": 30,
+        "card_gap_tablet": 20,
+        "card_gap_mobile": 12,
+        "card_border_width": 1.5,
+        "card_radius": 6,
+        "star_size": 14,
+        "swipe": true,
+        "loop": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "show_dots": false,
+        "show_arrows_mobile": false,
+        "show_dots_mobile": true,
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "recommendations": {
@@ -202,16 +304,21 @@
         "heading": "You may also like",
         "columns": 3,
         "image_ratio": "wide",
+        "card_background": "",
         "show_rating": true,
         "card_button_label": "",
-        "alt_background": false
+        "alt_background": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     }
   },
   "order": [
     "main",
     "how_it_wears",
-    "reviews",
+    "reviews_i6GkhH",
     "recommendations"
   ]
 }
