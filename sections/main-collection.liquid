@@ -22,17 +22,21 @@
   endcase
   assign columns = section.settings.columns
   assign sizes = '(min-width: 990px) calc((100vw - 22rem) / ' | append: columns | append: '), (min-width: 750px) 33vw, 50vw'
-  assign show_banner = false
-  if section.settings.show_image and collection.image
-    assign show_banner = true
-  endif
+  comment
+    Banner image: the collection's own image, else the section's placeholder
+    image, else the store's default banner file (collection_img.avif)
+  endcomment
+  assign banner_image = collection.image | default: section.settings.placeholder_image
+  assign banner_fallback_url = 'https://cdn.shopify.com/s/files/1/0760/5085/8084/files/collection_img.avif?v=1795110231'
+  assign show_banner = section.settings.show_image
 -%}
 
 <section class="main-collection" aria-labelledby="{{ heading_id }}">
   {%- if show_banner -%}
     <div class="collection-banner">
+      {%- if banner_image != blank -%}
       {{
-        collection.image
+        banner_image
         | image_url: width: 2400
         | image_tag:
           widths: '750, 1100, 1500, 1800, 2400',
@@ -42,6 +46,19 @@
           alt: '',
           class: 'collection-banner__image'
       }}
+      {%- else -%}
+        <img
+          class="collection-banner__image"
+          src="{{ banner_fallback_url }}&width=1800"
+          srcset="{{ banner_fallback_url }}&width=750 750w, {{ banner_fallback_url }}&width=1100 1100w, {{ banner_fallback_url }}&width=1500 1500w, {{ banner_fallback_url }}&width=1800 1800w, {{ banner_fallback_url }}&width=2400 2400w"
+          sizes="100vw"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+          width="2400"
+          height="600"
+        >
+      {%- endif -%}
     </div>
   {%- endif -%}
 
@@ -155,6 +172,12 @@
       "id": "show_image",
       "label": "Show collection image as a banner",
       "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "placeholder_image",
+      "label": "Placeholder banner image",
+      "info": "Shown when a collection has no image of its own. Empty = the store's default banner (collection_img.avif)."
     },
     {
       "type": "checkbox",
