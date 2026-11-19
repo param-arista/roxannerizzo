@@ -30,14 +30,14 @@
           "type": "menu",
           "settings": {
             "title": "Info",
-            "menu": "footer"
+            "menu": "info"
           }
         },
         "menu_products": {
           "type": "menu",
           "settings": {
             "title": "Products",
-            "menu": ""
+            "menu": "products-menu"
           }
         },
         "contact": {
