@@ -108,6 +108,8 @@
       "settings": {
         "show_breadcrumbs": true,
         "media_ratio": "square",
+        "media_fit": "contain",
+        "media_background": "#ffffff",
         "show_sticky_bar": true,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 80,
@@ -155,7 +157,7 @@
         "panel_border_color": "",
         "panel_border_width": 0,
         "panel_radius": 0,
-        "divider_color": "#FFFFFF",
+        "divider_color": "#ffffff",
         "divider_width": 2,
         "title_color": "",
         "text_color": "",
@@ -304,14 +306,19 @@
         "heading": "You may also like",
         "columns": 3,
         "image_ratio": "wide",
+        "image_fit": "contain",
         "card_background": "",
+        "card_image_background": "#FFFFFF",
+        "card_border_width": 0,
+        "card_border_color": "#e1dcd6",
+        "card_radius": 4,
         "show_rating": true,
         "card_button_label": "",
         "alt_background": false,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     }
   },
