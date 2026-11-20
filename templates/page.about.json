@@ -9,6 +9,17 @@
  */
 {
   "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "eyebrow": "About us",
+        "width": "wide",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      }
+    },
     "story": {
       "type": "image-with-text",
       "blocks": {
@@ -37,7 +48,12 @@
         "heading": "Once an industry secret, now available to everyone",
         "text": "<p>Roxanne Rizzo New York was founded in 2009 by celebrity makeup artist Roxanne Rizzo, born from years of working behind the scenes in film and television. As high-definition cameras changed the industry, makeup had to change with it. Every uneven tone, shadow and patch of redness became more visible on camera. <strong>Bronze Glow was created in 2009 and perfected on set under HD cameras and professional film lighting.</strong></p><p>The result was a buildable, universal mist that gives skin an instant, warm, healthy-looking complexion. No color matching or tools needed. What started in Roxanne's own makeup kit became a go-to final step on film and television sets around the world. Now, it's becoming a household name for everyday use.</p>",
         "button_label": "",
-        "alt_background": false
+        "button_link": "",
+        "alt_background": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "founder_quote": {
@@ -47,7 +63,11 @@
         "quote": "A clean and simple way to look and feel healthy, regardless of age, gender or skin tone",
         "author": "Roxanne Rizzo, Founder",
         "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
-        "alt_background": true
+        "alt_background": true,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "how_it_wears": {
@@ -82,7 +102,22 @@
       ],
       "settings": {
         "eyebrow": "How it wears",
-        "heading": "Instant. Flawless. Safe."
+        "heading": "Instant. Flawless. Safe.",
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "panel_background": "",
+        "panel_border_color": "",
+        "panel_border_width": 0,
+        "panel_radius": 0,
+        "divider_color": "",
+        "divider_width": 1,
+        "title_color": "",
+        "text_color": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "reviews": {
@@ -135,7 +170,38 @@
         "eyebrow": "Loved by",
         "heading": "Reviews",
         "grayscale": true,
-        "alt_background": true
+        "alt_background": true,
+        "background_color": "",
+        "eyebrow_color": "",
+        "heading_color": "",
+        "card_bg_color": "",
+        "card_border_color": "",
+        "star_color": "",
+        "name_color": "",
+        "role_color": "",
+        "quote_color": "",
+        "arrow_color": "",
+        "cards_desktop": "4",
+        "cards_tablet": "2",
+        "cards_mobile": "1.2",
+        "card_gap_desktop": 48,
+        "card_gap_tablet": 24,
+        "card_gap_mobile": 16,
+        "card_border_width": 1.5,
+        "card_radius": 6,
+        "star_size": 14,
+        "swipe": true,
+        "loop": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "show_dots": false,
+        "show_arrows_mobile": false,
+        "show_dots_mobile": false,
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "press": {
@@ -144,37 +210,43 @@
         "logo_1": {
           "type": "logo",
           "settings": {
-            "name": "Us Weekly"
+            "name": "Us Weekly",
+            "link": ""
           }
         },
         "logo_2": {
           "type": "logo",
           "settings": {
-            "name": "InStyle"
+            "name": "InStyle",
+            "link": ""
           }
         },
         "logo_3": {
           "type": "logo",
           "settings": {
-            "name": "People"
+            "name": "People",
+            "link": ""
           }
         },
         "logo_4": {
           "type": "logo",
           "settings": {
-            "name": "Allure"
+            "name": "Allure",
+            "link": ""
           }
         },
         "logo_5": {
           "type": "logo",
           "settings": {
-            "name": "Cosmopolitan"
+            "name": "Cosmopolitan",
+            "link": ""
           }
         },
         "logo_6": {
           "type": "logo",
           "settings": {
-            "name": "Vogue"
+            "name": "Vogue",
+            "link": ""
           }
         }
       },
@@ -188,15 +260,35 @@
       ],
       "settings": {
         "heading": "",
+        "layout": "row",
+        "logo_size": "height",
         "logo_height": 56,
-        "grayscale": true
-      }
-    },
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "eyebrow": "About us",
-        "width": "narrow"
+        "logo_height_mobile": 32,
+        "grayscale": true,
+        "background_color": "",
+        "heading_color": "",
+        "text_color": "",
+        "arrow_color": "",
+        "logos_desktop": "6",
+        "logos_tablet": "4",
+        "logos_mobile": "2.5",
+        "swipe": true,
+        "loop": true,
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "show_arrows": false,
+        "show_arrows_mobile": false,
+        "show_dots_desktop": false,
+        "show_dots_tablet": false,
+        "show_dots_mobile": false,
+        "marquee_speed": 3,
+        "marquee_direction": "left",
+        "marquee_gap": 80,
+        "marquee_pause": true,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     }
   },
