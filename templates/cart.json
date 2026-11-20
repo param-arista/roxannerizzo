@@ -13,7 +13,11 @@
       "type": "main-cart",
       "settings": {
         "eyebrow": "Shopping bag",
-        "heading": "Your bag"
+        "heading": "Your bag",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       }
     },
     "travel_collection": {
@@ -23,28 +27,40 @@
           "type": "product",
           "settings": {
             "product": "mulberry-street",
-            "badge": "Best seller"
+            "badge": "Best seller",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         },
         "product_2": {
           "type": "product",
           "settings": {
             "product": "bronze-glow-duo",
-            "badge": "Value set"
+            "badge": "Value set",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         },
         "product_3": {
           "type": "product",
           "settings": {
             "product": "summer-skin-set",
-            "badge": ""
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         },
         "product_4": {
           "type": "product",
           "settings": {
             "product": "glow-go-set",
-            "badge": ""
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
           }
         }
       },
@@ -58,12 +74,26 @@
         "eyebrow": "Complete the glow",
         "heading": "You may also like",
         "text": "",
+        "collection": "",
+        "products_limit": 4,
         "columns": 4,
-        "width": "contained",
+        "width": "full",
         "image_ratio": "wide",
+        "image_fit": "contain",
+        "background_color": "",
+        "card_background": "",
+        "card_image_background": "#FFFFFF",
+        "card_border_width": 1,
+        "card_border_color": "#F4F4F4",
+        "card_radius": 4,
         "show_rating": true,
         "card_button_label": "",
-        "card_background": ""
+        "button_label": "",
+        "button_link": "",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     }
   },
