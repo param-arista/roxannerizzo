@@ -241,7 +241,7 @@
         "star_size": 14,
         "swipe": true,
         "loop": true,
-        "autoplay": false,
+        "autoplay": true,
         "autoplay_speed": 5,
         "show_arrows": true,
         "show_dots": false,
