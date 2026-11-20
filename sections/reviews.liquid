@@ -26,6 +26,10 @@
   {{ scope }} .reviews {
     {%- if st.background_color != blank %} background-color: {{ st.background_color }};{% endif %}
     --review-star-size: {{ st.star_size }}px;
+    --review-avatar-size: {{ st.avatar_size | default: 80 }}px;
+    --review-avatar-size-mobile: {{ st.avatar_size_mobile | default: 80 }}px;
+    --review-avatar-radius: {{ st.avatar_radius | default: 50 }}%;
+    {%- if st.avatar_background != blank %} --review-avatar-bg: {{ st.avatar_background }};{% endif %}
     --reviews-desktop: {{ st.cards_desktop }};
     --reviews-tablet: {{ st.cards_tablet }};
     --reviews-mobile: {{ st.cards_mobile }};
@@ -76,7 +80,7 @@
 {% endstyle %}
 
 <section
-  class="section reviews{% if section.settings.alt_background %} section--alt{% endif %}"
+  class="section reviews"
   {% if section.settings.heading != blank %}
     aria-labelledby="{{ heading_id }}"
   {% endif %}
@@ -96,15 +100,22 @@
         {%- for block in section.blocks -%}
           <li class="reviews__item" {{ block.shopify_attributes }}>
             <figure class="review-card">
-              {%- if block.settings.stars > 0 -%}
+              {%- if st.show_stars != false and st.star_size > 0 and block.settings.stars > 0 -%}
                 {%- render 'rating-stars', rating: block.settings.stars -%}
               {%- endif -%}
-              <div class="review-card__avatar{% if section.settings.grayscale %} review-card__avatar--grayscale{% endif %}">
+              <div class="review-card__avatar review-card__avatar--{{ st.avatar_fit | default: 'contain' }}{% if section.settings.grayscale %} review-card__avatar--grayscale{% endif %}">
                 {%- if block.settings.image != blank -%}
+                  {%- comment -%}
+                    Uncropped image, sharp up to the largest photo size (320px)
+                    on 2x screens; the browser picks the width it needs.
+                  {%- endcomment -%}
+                  {%- assign avatar_px = st.avatar_size | default: 80 -%}
+                  {%- assign avatar_px_m = st.avatar_size_mobile | default: 80 -%}
+                  {%- assign avatar_sizes = '(max-width: 749px) ' | append: avatar_px_m | append: 'px, ' | append: avatar_px | append: 'px' -%}
                   {{
                     block.settings.image
-                    | image_url: width: 240, height: 240, crop: 'center'
-                    | image_tag: loading: 'lazy', alt: '', width: 80, height: 80
+                    | image_url: width: 640
+                    | image_tag: widths: '160, 240, 320, 480, 640', sizes: avatar_sizes, loading: 'lazy', alt: ''
                   }}
                 {%- else -%}
                   {{ 'image' | placeholder_svg_tag }}
@@ -163,12 +174,6 @@
       "type": "checkbox",
       "id": "grayscale",
       "label": "Black and white photos",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "alt_background",
-      "label": "Light grey background",
       "default": true
     },
     {
@@ -371,14 +376,78 @@
       "content": "Stars"
     },
     {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
       "type": "range",
       "id": "star_size",
-      "min": 10,
+      "min": 0,
       "max": 32,
       "step": 1,
       "unit": "px",
       "label": "Star size",
+      "info": "0 also hides the stars.",
       "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Photo"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size",
+      "min": 40,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Photo size (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "avatar_size_mobile",
+      "min": 40,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Photo size (phones)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "avatar_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "%",
+      "label": "Photo corner radius",
+      "info": "50% = round, 0% = square.",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "avatar_fit",
+      "label": "Photo fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill the frame (edges may be cut)"
+        },
+        {
+          "value": "contain",
+          "label": "Show the whole image (no cut)"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "color",
+      "id": "avatar_background",
+      "label": "Photo background",
+      "info": "Fills the space around a photo that doesn't fill its frame. Leave empty for the theme's card color."
     },
     {
       "type": "header",

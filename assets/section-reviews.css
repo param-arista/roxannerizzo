@@ -158,11 +158,14 @@
 }
 
 .review-card__avatar {
-  width: 5rem;
-  height: 5rem;
+  flex-shrink: 0;
+  width: var(--review-avatar-size, 5rem);
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 50%;
-  background-color: var(--color-card);
+  border-radius: var(--review-avatar-radius, 50%);
+  background-color: var(--review-avatar-bg, var(--color-card));
 }
 
 .review-card__avatar img,
@@ -170,6 +173,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.review-card__avatar--contain img {
+  object-fit: contain;
 }
 
 .review-card__avatar--grayscale img {
@@ -198,4 +205,10 @@
   font-size: 0.9375rem;
   line-height: 1.45;
   color: var(--color-muted);
+}
+
+@media (max-width: 749px) {
+  .review-card__avatar {
+    width: var(--review-avatar-size-mobile, 5rem);
+  }
 }

@@ -280,6 +280,11 @@ a {
 
 /* Slider: every message in the same cell, only the active one visible */
 @media (max-width: 749px) {
+  /* Phones: messages at 11px */
+  .announcement-bar .announcement-bar__list {
+    font-size: 0.6875rem;
+  }
+
   .announcement-bar--mobile-row .announcement-bar__item:not(:first-child) {
     display: none;
   }
