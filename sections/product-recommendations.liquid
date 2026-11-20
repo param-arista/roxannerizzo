@@ -24,7 +24,7 @@
 -%}
 
 <product-recommendations
-  class="section featured-products featured-products--contained card-fit--{{ section.settings.image_fit | default: 'cover' }}{% if section.settings.alt_background %} section--alt{% endif %}"
+  class="section featured-products featured-products--{{ section.settings.width | default: 'contained' }} card-fit--{{ section.settings.image_fit | default: 'cover' }}{% if section.settings.alt_background %} section--alt{% endif %}"
   data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ columns }}&intent=related"
   style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}{% if section.settings.card_image_background != blank %} --card-image-bg: {{ section.settings.card_image_background }};{% endif %}{% if section.settings.card_border_width > 0 %} --card-border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};{% endif %} --card-radius: {{ section.settings.card_radius | default: 4 }}px;"
 >
@@ -84,6 +84,22 @@
       "step": 1,
       "label": "Products",
       "default": 3
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Grid width",
+      "options": [
+        {
+          "value": "contained",
+          "label": "Contained, wide gaps"
+        },
+        {
+          "value": "full",
+          "label": "Full page width, tight gaps"
+        }
+      ],
+      "default": "contained"
     },
     {
       "type": "select",

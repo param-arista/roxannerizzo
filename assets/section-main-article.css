@@ -251,3 +251,16 @@
 .comment-form .button {
   justify-self: start;
 }
+
+/* Phones: article body text at 16px. Content pasted into the editor often
+   carries its own inline font sizes (e.g. <span style="font-size: 14px">),
+   so those are reset to follow the paragraph size. */
+@media (max-width: 749px) {
+  .main-article__content {
+    font-size: 1rem;
+  }
+
+  .main-article__content :is(p, li, div, span, a, strong, em, b, i):not(h1 *, h2 *, h3 *, h4 *, h5 *, h6 *) {
+    font-size: 1rem !important;
+  }
+}

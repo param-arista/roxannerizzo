@@ -39,7 +39,7 @@
       {%- if blog.articles.size == 0 -%}
         <p class="main-blog__empty">{{ 'blog.empty' | t }}</p>
       {%- else -%}
-        <ul class="blog-grid{% if section.settings.feature_first and paginate.current_page == 1 %} blog-grid--featured{% endif %}" role="list">
+        <ul class="blog-grid{% if section.settings.feature_first and paginate.current_page == 1 %} blog-grid--featured{% endif %}" role="list" style="--blog-columns: {{ section.settings.columns_desktop | default: 3 }};">
           {%- for article in blog.articles -%}
             <li class="blog-grid__item">
               {%- if forloop.first and section.settings.feature_first and paginate.current_page == 1 -%}
@@ -77,10 +77,23 @@
       "default": true
     },
     {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Articles per row on desktop",
+      "info": "Tablets show 2 per row, phones 1.",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
       "type": "checkbox",
       "id": "feature_first",
       "label": "Show the newest article large",
-      "default": true
+      "info": "Turn off for equal cards in every row.",
+      "default": false
     },
     {
       "type": "checkbox",

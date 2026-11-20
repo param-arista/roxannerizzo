@@ -47,8 +47,24 @@
   const openDialog = (dialog, trigger) => {
     if (dialog.open) return;
     dialog._trigger = trigger || document.activeElement;
+    // showModal() focuses the first button inside, which is still off-screen
+    // (the panel starts translated out of view). The browser then scrolls the
+    // page/dialog sideways to reveal it, so the drawer seemed to jump to the
+    // middle first. Undo any such scroll right away.
+    const { scrollX, scrollY } = window;
     dialog.showModal();
-    requestAnimationFrame(() => dialog.classList.add('is-open'));
+    const undoScroll = () => {
+      dialog.scrollLeft = 0;
+      dialog.scrollTop = 0;
+      if (window.scrollX !== scrollX || window.scrollY !== scrollY) window.scrollTo(scrollX, scrollY);
+    };
+    undoScroll();
+    // Lay out the closed (off-screen) state first so the slide always starts there
+    void dialog.offsetWidth;
+    requestAnimationFrame(() => {
+      undoScroll();
+      requestAnimationFrame(() => dialog.classList.add('is-open'));
+    });
   };
 
   const closeDialog = (dialog, { restoreFocus = true } = {}) => {
@@ -61,7 +77,7 @@
       if (restoreFocus) dialog._trigger?.focus?.();
     };
     if (reducedMotion.matches) finish();
-    else window.setTimeout(finish, 280);
+    else window.setTimeout(finish, 350);
   };
 
   const wireDialog = (dialog, closeSelector) => {
