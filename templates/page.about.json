@@ -13,7 +13,7 @@
       "type": "main-page",
       "settings": {
         "eyebrow": "About us",
-        "width": "wide",
+        "width": "narrow",
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 88,
         "padding_top_mobile": 0,
