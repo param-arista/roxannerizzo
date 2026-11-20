@@ -253,71 +253,77 @@
         "padding_bottom_mobile": 32
       }
     },
-    "press": {
+    "logo_list_bKNQxz": {
       "type": "logo-list",
       "blocks": {
-        "logo_1": {
+        "logo_P8CV6c": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/US1.png",
             "name": "Us Weekly",
             "link": ""
           }
         },
-        "logo_2": {
+        "logo_4WLrVp": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/InStyle1.webp",
             "name": "InStyle",
             "link": ""
           }
         },
-        "logo_3": {
+        "logo_74Nzzp": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/People1.webp",
             "name": "People",
             "link": ""
           }
         },
-        "logo_4": {
+        "logo_JjndW7": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/allure1.webp",
             "name": "Allure",
             "link": ""
           }
         },
-        "logo_5": {
+        "logo_bEmyKF": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/Cosmoplitan1.webp",
             "name": "Cosmopolitan",
             "link": ""
           }
         },
-        "logo_6": {
+        "logo_yQcYnq": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/Vogue1.webp",
             "name": "Vogue",
             "link": ""
           }
         }
       },
       "block_order": [
-        "logo_1",
-        "logo_2",
-        "logo_3",
-        "logo_4",
-        "logo_5",
-        "logo_6"
+        "logo_P8CV6c",
+        "logo_4WLrVp",
+        "logo_74Nzzp",
+        "logo_JjndW7",
+        "logo_bEmyKF",
+        "logo_yQcYnq"
       ],
       "settings": {
         "heading": "",
-        "layout": "row",
+        "layout": "marquee",
         "logo_size": "height",
-        "logo_height": 56,
-        "logo_height_mobile": 32,
-        "grayscale": true,
+        "logo_height": 70,
+        "logo_height_mobile": 60,
+        "grayscale": false,
         "background_color": "",
         "heading_color": "",
         "text_color": "",
-        "arrow_color": "",
+        "arrow_color": "#d6a44e",
         "logos_desktop": "6",
         "logos_tablet": "4",
         "logos_mobile": "2.5",
@@ -329,15 +335,15 @@
         "show_arrows_mobile": false,
         "show_dots_desktop": false,
         "show_dots_tablet": false,
-        "show_dots_mobile": false,
+        "show_dots_mobile": true,
         "marquee_speed": 3,
         "marquee_direction": "left",
         "marquee_gap": 80,
         "marquee_pause": true,
-        "padding_top_desktop": 60,
-        "padding_bottom_desktop": 60,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     }
   },
@@ -347,6 +353,6 @@
     "founder_quote",
     "how_it_wears",
     "reviews_eQDmr8",
-    "press"
+    "logo_list_bKNQxz"
   ]
 }
