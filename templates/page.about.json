@@ -111,7 +111,7 @@
         "panel_border_color": "",
         "panel_border_width": 0,
         "panel_radius": 0,
-        "divider_color": "#FFFFFF",
+        "divider_color": "#ffffff",
         "divider_width": 2,
         "title_color": "",
         "text_color": "",
@@ -237,72 +237,13 @@
         "card_gap_mobile": 12,
         "card_border_width": 1.5,
         "card_radius": 6,
+        "show_stars": true,
         "star_size": 14,
-        "swipe": true,
-        "loop": true,
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "show_arrows": true,
-        "show_dots": false,
-        "show_arrows_mobile": false,
-        "show_dots_mobile": true,
-        "padding_top_desktop": 40,
-        "padding_bottom_desktop": 40,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
-      }
-    },
-    "reviews_zwUV89": {
-      "type": "reviews",
-      "blocks": {
-        "review_Q6fnMB": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "image": "shopify://shop_images/f534c3_f24a34615e134d87a290c274f72ffc21_mv2_96947ace-b749-47c8-b54a-1a189c0f4b10.jpg",
-            "name": "Bronze Glow",
-            "role": "",
-            "quote": "Bronze Glow, is a skin perfecting mist formulated for HD cameras to give skin a healthy, warm, glowing complexion.  Bronze Glow has amassed a cult following and can be found in the kits of top makeup artists in the industry all around the world. It's the easiest way to look and feel healthy, sunkissed, and confident, regardless of age, gender, or skin tone."
-          }
-        },
-        "review_BnCh3M": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "image": "shopify://shop_images/Bill_Corso.avif",
-            "name": "Bill Corso",
-            "role": "Oscar & Emmy-winning MUA",
-            "quote": "One of my cannot do a show without favorite products. A go to for men, women, kids, old age, effects, aliens. If I ever get more than one bottle, my wife steals one for her everyday."
-          }
-        }
-      },
-      "block_order": [
-        "review_Q6fnMB",
-        "review_BnCh3M"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "",
-        "grayscale": false,
-        "background_color": "#f4f4f4",
-        "eyebrow_color": "#a86d45",
-        "heading_color": "#404040",
-        "card_bg_color": "",
-        "card_border_color": "#F4F4F4",
-        "star_color": "",
-        "name_color": "#292929",
-        "role_color": "#292929",
-        "quote_color": "#4e4e4e",
-        "arrow_color": "#ababab",
-        "cards_desktop": "1",
-        "cards_tablet": "2",
-        "cards_mobile": "1.2",
-        "card_gap_desktop": 20,
-        "card_gap_tablet": 20,
-        "card_gap_mobile": 12,
-        "card_border_width": 1.5,
-        "card_radius": 6,
-        "star_size": 14,
+        "avatar_size": 80,
+        "avatar_size_mobile": 80,
+        "avatar_radius": 50,
+        "avatar_fit": "contain",
+        "avatar_background": "",
         "swipe": true,
         "loop": true,
         "autoplay": true,
@@ -417,7 +358,6 @@
     "founder_quote",
     "how_it_wears",
     "reviews_eQDmr8",
-    "reviews_zwUV89",
     "logo_list_bKNQxz"
   ]
 }
