@@ -15,7 +15,7 @@
         "eyebrow": "About us",
         "width": "narrow",
         "padding_top_desktop": 0,
-        "padding_bottom_desktop": 88,
+        "padding_bottom_desktop": 12,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56
       }
@@ -43,6 +43,7 @@
         "column_2"
       ],
       "settings": {
+        "image": "shopify://shop_images/industry_secret.webp",
         "image_position": "left",
         "eyebrow": "Our story",
         "heading": "Once an industry secret, now available to everyone",
