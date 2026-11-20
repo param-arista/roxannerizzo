@@ -1,22 +1,33 @@
+/* Tablet and up: a wrapping flex row instead of a fixed grid, so a row
+   with fewer products than columns (e.g. only 2 recommendations) is centred
+   instead of hugging the left. */
 .featured-products__grid {
+  --fp-gap: clamp(1.5rem, 4vw, 3.5rem);
+  --per-row: var(--columns, 3);
   list-style: none;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(var(--columns, 3), minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--fp-gap);
   max-width: 74rem;
   margin-inline: auto;
 }
 
+.featured-products__grid > .featured-products__item {
+  flex: 0 0 calc((100% - (var(--per-row) - 1) * var(--fp-gap)) / var(--per-row));
+  min-width: 0;
+}
+
 .featured-products--full .featured-products__grid {
+  --fp-gap: 0.75rem;
   max-width: none;
-  gap: 0.75rem;
 }
 
 /* Tablet: two per row */
 @media (max-width: 989px) {
   .featured-products__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --per-row: 2;
   }
 }
 
@@ -25,6 +36,8 @@
   .featured-products__grid,
   .featured-products--full .featured-products__grid {
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 0.75rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -35,7 +48,7 @@
     scrollbar-width: thin;
   }
 
-  .featured-products__item {
+  .featured-products__grid > .featured-products__item {
     flex: 0 0 78%;
     scroll-snap-align: start;
   }
