@@ -17,7 +17,7 @@
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56
+        "padding_bottom_mobile": 12
       }
     },
     "story": {
@@ -52,9 +52,9 @@
         "button_link": "",
         "alt_background": false,
         "padding_top_desktop": 20,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
       }
     },
     "founder_quote": {
@@ -65,10 +65,10 @@
         "author": "Roxanne Rizzo, Founder",
         "text": "<p>It wears beautifully on bare skin, doubles as a setting spray over makeup, and layers to whatever depth of bronze the customer wants.</p>",
         "alt_background": true,
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "how_it_wears": {
@@ -115,10 +115,10 @@
         "divider_width": 1,
         "title_color": "",
         "text_color": "",
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 88,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 12
       }
     },
     "reviews_eQDmr8": {
