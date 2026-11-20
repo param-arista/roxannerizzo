@@ -425,3 +425,44 @@
   gap: 0.5rem 2rem;
   padding-block: 1rem;
 }
+
+/* Body text and links in a soft grey (#D6D2D2); links turn white on hover.
+   Opacity reset so the colour shows exactly. */
+.footer {
+  --footer-soft: #d6d2d2;
+}
+
+.footer .footer__newsletter-text,
+.footer .footer__block--contact p,
+.footer .footer__links a,
+.footer .footer__phone,
+.footer .footer__newsletter-input,
+.footer .footer__newsletter-submit {
+  opacity: 1;
+  color: var(--footer-soft);
+}
+
+.footer .footer__newsletter-input {
+  border-color: var(--footer-soft);
+}
+
+.footer .footer__newsletter-input::placeholder {
+  color: var(--footer-soft);
+  opacity: 1;
+}
+
+.footer .footer__links a:hover,
+.footer .footer__phone:hover,
+.footer .footer__newsletter-submit:hover {
+  color: #fff;
+}
+
+/* Bottom bar (copyright + credit) in the same soft grey; links white on hover */
+.footer .footer__bottom {
+  opacity: 1;
+  color: var(--footer-soft);
+}
+
+.footer .footer__bottom a:hover {
+  color: #fff;
+}
