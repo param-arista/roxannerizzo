@@ -38,6 +38,7 @@
         cartType: {{ settings.cart_type | json }},
         strings: {
           cartError: {{ 'cart.error' | t | json }},
+          quantityMin: {{ 'products.quantity_min' | t: min: '[min]' | json }},
           cartUpdated: {{ 'cart.updated' | t | json }},
           added: {{ 'cart.added' | t | json }},
           addToCart: {{ 'products.add_to_cart' | t | json }},

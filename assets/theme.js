@@ -43,6 +43,20 @@
     if (labelEl && label) labelEl.textContent = label;
   };
 
+  /** Text of a failed cart request: Shopify sends {description}, {message} or {errors: string | {field: [..]}}. */
+  const cartErrorMessage = (data) => {
+    if (!data) return theme.strings.cartError;
+    if (data.description && typeof data.description === 'string') return data.description;
+    const errors = data.errors;
+    if (typeof errors === 'string' && errors) return errors;
+    if (errors && typeof errors === 'object') {
+      const text = Object.values(errors).flat().filter((e) => typeof e === 'string').join(' ');
+      if (text) return text;
+    }
+    if (data.message && data.message !== 'Cart Error') return data.message;
+    return theme.strings.cartError;
+  };
+
   /* Opening/closing a modal <dialog> with a slide/fade class, returning focus. */
   const openDialog = (dialog, trigger) => {
     if (dialog.open) return;
@@ -102,8 +116,19 @@
             button.hidden = false;
             button.addEventListener('click', () => this.step(Number(button.dataset.quantityStep)));
           });
-          this.input.addEventListener('change', () => this.updateButtons());
+          this.input.addEventListener('change', () => {
+            this.clamp();
+            this.updateButtons();
+          });
           this.updateButtons();
+        }
+
+        /** A typed value above the maximum is pulled back to it. Below the minimum (0, blank)
+            is left alone: the product form says why and adds nothing, rather than quietly adding 1. */
+        clamp() {
+          if (!this.input.max) return;
+          const max = Number(this.input.max);
+          if (Number(this.input.value) > max) this.input.value = max;
         }
 
         step(direction) {
@@ -164,6 +189,14 @@
           if (panel && freshPanel) panel.replaceWith(freshPanel);
           this.dataset.cartCount = fresh.dataset.cartCount;
           updateCartIcon(Number(fresh.dataset.cartCount), fresh.dataset.cartCountLabel);
+        }
+
+        /** A message above the lines (e.g. "Only 50 items were added…"); cleared by the next render. */
+        setNotice(message) {
+          const region = this.querySelector('[data-cart-error]');
+          if (!region) return;
+          region.textContent = message;
+          region.hidden = !message;
         }
       }
     );
@@ -232,7 +265,7 @@
             });
             const data = await response.json();
             if (!response.ok || data.status) {
-              this.setError(data.description || data.message || theme.strings.cartError);
+              this.setError(cartErrorMessage(data));
               const input = line?.querySelector('.quantity__input');
               if (input) input.value = input.getAttribute('value');
               return;
@@ -294,13 +327,38 @@
           return this.form.querySelector('[name="add"]');
         }
 
+        /** The quantity input sits outside the form (form="…"), so find it by the form id.
+            (getAttribute: form.id would return the form's hidden input named "id".) */
+        get quantityInput() {
+          const formId = this.form.getAttribute('id');
+          return (formId && document.querySelector(`input[name="quantity"][form="${CSS.escape(formId)}"]`)) || this.form.querySelector('input[name="quantity"]');
+        }
+
+        /** Quantity must be a whole number ≥ its minimum. Returns false (and says why) otherwise. */
+        validQuantity() {
+          const input = this.quantityInput;
+          if (!input) return true;
+          const min = Number(input.min) || 1;
+          const value = Number(input.value);
+          if (input.value.trim() !== '' && Number.isInteger(value) && value >= min) return true;
+          this.setError((theme.strings.quantityMin || '').replace('[min]', min));
+          input.value = min;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          input.focus();
+          return false;
+        }
+
         async onSubmit(event) {
+          this.setError('');
+          if (!this.validQuantity()) {
+            event.preventDefault();
+            return;
+          }
           const drawer = document.querySelector('cart-drawer');
           if (theme.cartType !== 'drawer' || !drawer) return; // plain POST → cart page
           event.preventDefault();
           if (this.button.getAttribute('aria-busy') === 'true') return;
 
-          this.setError('');
           this.button.setAttribute('aria-busy', 'true');
           this.button.querySelector('.product__spinner')?.removeAttribute('hidden');
 
@@ -316,7 +374,22 @@
             });
             const data = await response.json();
             if (!response.ok || data.status) {
-              this.setError(data.description || data.message || theme.strings.cartError);
+              const message = cartErrorMessage(data);
+              this.setError(message);
+              // Shopify may still have added part of it ("Only 50 items were added…"): refresh the
+              // bag and, if it grew, open it with the message so the shopper sees what's in it.
+              const before = Number(drawer.dataset.cartCount) || 0;
+              const fresh = await fetch(`${theme.routes.cart}?sections=cart-drawer`, { headers: { Accept: 'application/json' } })
+                .then((r) => (r.ok ? r.json() : null))
+                .catch(() => null);
+              if (fresh?.['cart-drawer']) {
+                drawer.render(fresh['cart-drawer']);
+                if ((Number(drawer.dataset.cartCount) || 0) > before) {
+                  drawer.setNotice(message);
+                  drawer.open(this.button);
+                }
+              }
+              announce(message);
               return;
             }
             drawer.render(data.sections['cart-drawer']);

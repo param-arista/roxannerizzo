@@ -257,6 +257,19 @@ html:not(.js) .product-card__quick-view {
   }
 }
 
+/* Touch screens (tablets): always visible, so keep it a small pill in the
+   bottom-right corner instead of a bar across the middle of the image */
+@media (hover: none) and (min-width: 750px) {
+  .product-card__quick-view {
+    inset-inline: auto 0.5rem;
+    inset-block-end: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .product-card__quick-view {
     transition: none;

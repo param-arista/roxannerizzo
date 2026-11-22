@@ -1,6 +1,7 @@
 {% doc %}
   Home › (collection ›) current page. On a product reached from a
-  collection, the collection is the middle crumb.
+  collection, the collection is the middle crumb; reached any other way
+  (search, home page, a shared link) the middle crumb is Shop (all products).
 
   @param {string} current - Text of the current page
 
@@ -11,8 +12,12 @@
 <nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs' | t }}">
   <ol class="breadcrumbs__list" role="list">
     <li><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a></li>
-    {%- if template.name == 'product' and collection -%}
-      <li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+    {%- if template.name == 'product' -%}
+      {%- if collection -%}
+        <li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+      {%- else -%}
+        <li><a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a></li>
+      {%- endif -%}
     {%- endif -%}
     <li><span aria-current="page">{{ current | escape }}</span></li>
   </ol>

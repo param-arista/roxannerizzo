@@ -20,7 +20,11 @@
   assign sizes = sizes | default: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 80vw'
   if product != blank
     assign title = product.title
-    assign url = product.url
+    comment
+      On a collection page the link carries the collection (/collections/x/products/y),
+      so the product page's breadcrumb can link back to it. The canonical URL is unchanged.
+    endcomment
+    assign url = product.url | within: collection
     assign image_alt = product.featured_media.alt | default: product.title
     assign price_min = product.price_min | money
     assign rating = product.metafields.reviews.rating.value

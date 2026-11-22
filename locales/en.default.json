@@ -133,6 +133,7 @@
     "opens_in_new_window": "opens in a new window",
     "breadcrumbs": "Breadcrumbs",
     "home": "Home",
+    "shop": "Shop",
     "close": "Close",
     "loading": "Loading…",
     "pagination": {
@@ -168,6 +169,7 @@
   },
   "products": {
     "price_from": "From {{ price }}",
+    "quantity_min": "Please enter a quantity of {{ min }} or more.",
     "regular_price": "Regular price",
     "sold_out": "Sold out",
     "placeholder_title": "Product name",

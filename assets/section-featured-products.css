@@ -32,6 +32,13 @@
   }
 }
 
+/* …but exactly three products (e.g. recommendations) stay three across from 990px */
+@media (min-width: 990px) and (max-width: 1199px) {
+  .featured-products--many .featured-products__grid:has(> .featured-products__item:nth-child(3):last-child) {
+    --per-row: 3;
+  }
+}
+
 /* Tablet: two per row */
 @media (max-width: 989px) {
   .featured-products__grid {
