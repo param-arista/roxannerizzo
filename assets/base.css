@@ -230,6 +230,16 @@
   opacity: 0.35;
 }
 
+/* Sold out: the whole stepper is greyed out and can't be changed */
+.quantity--disabled {
+  background-color: color-mix(in srgb, var(--color-foreground) 4%, var(--color-background));
+}
+
+.quantity__input:disabled {
+  color: color-mix(in srgb, var(--color-foreground) 55%, transparent);
+  cursor: not-allowed;
+}
+
 .quantity__button svg {
   width: 1rem;
   height: 1rem;

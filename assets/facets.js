@@ -21,6 +21,9 @@ if (!customElements.get('facet-filters')) {
       desktop.addEventListener('change', this.syncDisclosure);
 
       this.onChange = this.debounce(() => this.submit(), 400);
+      this.form.addEventListener('submit', (event) => {
+        if (!this.validPrice()) event.preventDefault();
+      });
       this.addEventListener('change', (event) => {
         // Drawer sort select: copy the choice to the toolbar select, which the form submits
         if (event.target.matches('[data-facets-sort-mirror]')) {
@@ -117,7 +120,31 @@ if (!customElements.get('facet-filters')) {
       };
     }
 
+    /** Price From > To: say so under the fields and don't apply it. Returns false when invalid. */
+    validPrice() {
+      let valid = true;
+      this.querySelectorAll('.facet__price').forEach((group) => {
+        const [min, max] = group.querySelectorAll('input[data-facet-input]');
+        const error = group.querySelector('[data-price-error]');
+        if (!min || !max) return;
+        const bad = min.value !== '' && max.value !== '' && Number(min.value) > Number(max.value);
+        [min, max].forEach((input) => {
+          if (bad) {
+            input.setAttribute('aria-invalid', 'true');
+            if (error) input.setAttribute('aria-describedby', error.id);
+          } else {
+            input.removeAttribute('aria-invalid');
+            input.removeAttribute('aria-describedby');
+          }
+        });
+        if (error) error.hidden = !bad;
+        if (bad) valid = false;
+      });
+      return valid;
+    }
+
     submit() {
+      if (!this.validPrice()) return;
       const params = new URLSearchParams();
       for (const [key, value] of new FormData(this.form)) {
         if (value !== '') params.append(key, value);

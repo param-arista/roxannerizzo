@@ -143,6 +143,10 @@
         }
 
         updateButtons() {
+          if (this.input.disabled) {
+            this.buttons.forEach((button) => (button.disabled = true));
+            return;
+          }
           const value = Number(this.input.value) || 0;
           const min = Number(this.input.min) || 0;
           const max = this.input.max ? Number(this.input.max) : Infinity;

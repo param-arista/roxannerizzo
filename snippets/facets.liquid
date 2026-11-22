@@ -179,6 +179,9 @@
                     data-facet-input
                   >
                 </div>
+                <p class="facet__price-error" id="{{ group_id }}-error" role="alert" data-price-error hidden>
+                  {{- 'collections.price_range_error' | t -}}
+                </p>
               </fieldset>
           {%- endcase -%}
         </details>

@@ -257,6 +257,21 @@
   color: var(--color-foreground);
 }
 
+.facet__price-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #b3261e;
+}
+
+.facet__price-error[hidden] {
+  display: none;
+}
+
+.facet__price-field .field__input[aria-invalid='true'] {
+  border-color: #b3261e;
+}
+
 .facet__currency {
   position: absolute;
   inset-inline-start: 0.75rem;
@@ -376,9 +391,11 @@
   padding: 0;
 }
 
-@media (max-width: 989px) {
+/* Below 1200px two per row: beside the filters sidebar, three columns made
+   small cards on a 1024px iPad */
+@media (max-width: 1199px) {
   .product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(min(var(--columns, 3), 2), minmax(0, 1fr));
   }
 }
 

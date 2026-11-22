@@ -26,6 +26,10 @@
     if combination_missing
       assign can_buy = false
     endif
+    assign no_qty = true
+    if can_buy
+      assign no_qty = false
+    endif
     assign form_id = 'ProductForm-' | append: section.id
     assign media_count = product.media.size
     assign featured_media = current_variant.featured_media | default: product.featured_media
@@ -147,7 +151,8 @@
           </variant-picker>
         {%- endunless -%}
 
-        <div class="product__quantity">
+        {%- comment -%} Swapped on variant change (data-swap), so a sold-out variant gets a disabled stepper {%- endcomment -%}
+        <div class="product__quantity" id="QuantityBlock-{{ section.id }}" data-swap>
           <p class="option__legend" aria-hidden="true">{{ 'products.quantity' | t }}</p>
           {%- assign qty_label = 'products.quantity' | t -%}
           {%- assign qty_id = 'Quantity-' | append: section.id -%}
@@ -160,7 +165,8 @@
             max: current_variant.quantity_rule.max,
             step: current_variant.quantity_rule.increment,
             label: qty_label,
-            title: product.title
+            title: product.title,
+            disabled: no_qty
           -%}
         </div>
 

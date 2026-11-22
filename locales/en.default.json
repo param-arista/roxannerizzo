@@ -110,6 +110,7 @@
     "clear": "Clear",
     "remove_filter": "Remove filter: {{ label }}",
     "from": "From",
+    "price_range_error": "The From price can't be more than the To price.",
     "to": "To",
     "price_range": "Price",
     "show_results": "Show results",

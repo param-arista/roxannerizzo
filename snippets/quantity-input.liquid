@@ -13,6 +13,7 @@
   @param {string} [key] - Cart line key (cart items only)
   @param {string} [form] - id of the form the input belongs to, when outside it
   @param {boolean} [small] - Compact size for the mini cart
+  @param {boolean} [disabled] - Input and − / + disabled (e.g. the variant is sold out)
 
   @example
   {% render 'quantity-input', id: 'Quantity-1', name: 'quantity', value: 1, label: 'Quantity' %}
@@ -24,7 +25,7 @@
   assign title = title | default: ''
 -%}
 
-<quantity-input class="quantity{% if small %} quantity--small{% endif %}">
+<quantity-input class="quantity{% if small %} quantity--small{% endif %}{% if disabled %} quantity--disabled{% endif %}">
   <button class="quantity__button" type="button" name="minus" data-quantity-step="-1" hidden>
     <span class="visually-hidden">{{ 'cart.decrease' | t: title: title }}</span>
     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 12h12"/></svg>
@@ -47,6 +48,9 @@
     {% endif %}
     {% if key %}
       data-key="{{ key }}"
+    {% endif %}
+    {% if disabled %}
+      disabled
     {% endif %}
   >
   <button class="quantity__button" type="button" name="plus" data-quantity-step="1" hidden>
