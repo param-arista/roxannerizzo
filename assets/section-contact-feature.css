@@ -159,8 +159,12 @@
 @media (min-width: 990px) {
   .contact-feature--booking .contact-feature__frame {
     grid-template-columns: auto minmax(0, 1.25fr) minmax(0, 1fr);
-    align-items: center;
-    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+    align-items: start;
+    padding-block: clamp(2rem, 3.2vw, 2.75rem);
+  }
+
+  .contact-feature--booking .contact-feature__side-label {
+    align-self: center;
   }
 }
 

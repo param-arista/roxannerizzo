@@ -1,6 +1,6 @@
 .footer {
   margin-block-start: auto;
-  background-color: var(--footer-bg, #3e3333);
+  background-color: var(--footer-bg, #433030);
   color: var(--footer-text, #fff);
   font-size: 0.9375rem;
 }
@@ -375,6 +375,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.footer__phone span {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }

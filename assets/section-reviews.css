@@ -30,7 +30,8 @@
   touch-action: pan-y;
 }
 
-/* Cards per view (section settings): 4 desktop, 2 tablet, 1.2 phone by default */
+/* Cards per view (section settings): 4 desktop, 2 tablet, 1.2 phone by default.
+   "Tablet" runs up to 1199px so a 1024px iPad doesn't squeeze 4 tall, narrow cards. */
 .reviews__item {
   --per-view: var(--reviews-desktop, 4);
   flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--reviews-gap)) / var(--per-view));
@@ -38,7 +39,7 @@
   scroll-snap-align: start;
 }
 
-@media (max-width: 989px) {
+@media (max-width: 1199px) {
   .reviews__item {
     --per-view: var(--reviews-tablet, 2);
   }

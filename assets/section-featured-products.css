@@ -24,6 +24,14 @@
   max-width: none;
 }
 
+/* Four or more columns: two per row below 1200px, so a 1024px iPad gets
+   two larger cards per row instead of four small ones */
+@media (max-width: 1199px) {
+  .featured-products--many .featured-products__grid {
+    --per-row: 2;
+  }
+}
+
 /* Tablet: two per row */
 @media (max-width: 989px) {
   .featured-products__grid {

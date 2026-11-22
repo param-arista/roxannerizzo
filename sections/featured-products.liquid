@@ -22,15 +22,22 @@
       assign ratio = '5 / 4'
   endcase
   assign columns = section.settings.columns
+  comment
+    4+ columns drop to 2 per row below 1200px (see section-featured-products.css)
+  endcomment
+  assign columns_from = '990px'
+  if columns >= 4
+    assign columns_from = '1200px'
+  endif
   if section.settings.width == 'full'
-    assign sizes = '(min-width: 990px) calc(100vw / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
+    assign sizes = '(min-width: ' | append: columns_from | append: ') calc(100vw / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
   else
-    assign sizes = '(min-width: 990px) calc(1180px / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
+    assign sizes = '(min-width: ' | append: columns_from | append: ') calc(1180px / ' | append: columns | append: '), (min-width: 750px) 50vw, 80vw'
   endif
 -%}
 
 <section
-  class="section featured-products featured-products--{{ section.settings.width }} card-fit--{{ section.settings.image_fit | default: 'cover' }}"
+  class="section featured-products featured-products--{{ section.settings.width }}{% if columns >= 4 %} featured-products--many{% endif %} card-fit--{{ section.settings.image_fit | default: 'cover' }}"
   style="--columns: {{ columns }}; --card-ratio: {{ ratio }};{% if section.settings.background_color != blank %} background-color: {{ section.settings.background_color }};{% endif %}{% if section.settings.card_background != blank %} --card-bg: {{ section.settings.card_background }};{% endif %}{% if section.settings.card_image_background != blank %} --card-image-bg: {{ section.settings.card_image_background }};{% endif %}{% if section.settings.card_border_width > 0 %} --card-border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};{% endif %} --card-radius: {{ section.settings.card_radius | default: 4 }}px;"
   {% if section.settings.heading != blank %}
     aria-labelledby="{{ heading_id }}"

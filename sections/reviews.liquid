@@ -128,7 +128,20 @@
                 {%- endif -%}
               </figcaption>
               <blockquote class="review-card__quote">
-                <p>&ldquo;{{ block.settings.quote | escape }}&rdquo;</p>
+                {%- liquid
+                  assign quote = block.settings.quote | strip
+                  assign quote_marks = '"“”'
+                  assign first_char = quote | slice: 0
+                  if quote_marks contains first_char
+                    assign quote = quote | slice: 1, 10000 | strip
+                  endif
+                  assign last_char = quote | slice: -1
+                  if quote_marks contains last_char
+                    assign quote_size = quote.size | minus: 1
+                    assign quote = quote | slice: 0, quote_size | strip
+                  endif
+                -%}
+                <p>&ldquo;{{ quote | escape }}&rdquo;</p>
               </blockquote>
             </figure>
           </li>

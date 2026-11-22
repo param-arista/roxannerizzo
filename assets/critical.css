@@ -480,8 +480,9 @@ sticky-header {
   transition: background-size 0.25s ease;
 }
 
+/* Underline on hover / keyboard focus only (the design marks no current page) */
 .header__menu-link:hover,
-.header__menu-link[aria-current='page'] {
+.header__menu-link:focus-visible {
   background-size: 100% 1px;
 }
 
