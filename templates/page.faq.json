@@ -108,7 +108,7 @@
         "alt_background": false,
         "cta_text": "Still have questions? We'd love to help.",
         "cta_label": "Contact us",
-        "cta_link": "/pages/contact",
+        "cta_link": "shopify://pages/contact-us",
         "structured_data": true,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 88,
