@@ -57,6 +57,7 @@
 
 .cart-drawer__heading {
   font-size: 1.25rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -69,6 +70,7 @@
   margin-inline-start: 0.35rem;
   font-family: var(--font-body--family);
   font-size: 0.875rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--color-muted);
 }
@@ -130,6 +132,7 @@
   justify-content: space-between;
   gap: 1rem;
   font-size: 1.0625rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -144,6 +147,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .cart-drawer__empty {

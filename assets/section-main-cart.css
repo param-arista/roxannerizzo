@@ -25,6 +25,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  font-weight: 700;
   color: var(--color-muted);
 }
 
@@ -81,7 +82,7 @@
 
 .cart-summary__title {
   font-family: var(--font-body--family);
-  font-weight: var(--font-body--weight);
+  font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -95,10 +96,16 @@
   font-size: 0.9375rem;
 }
 
+/* Subtotal label (e.g. "Subtotal · 2 items") */
+.cart-summary__row > span:first-child {
+  font-weight: 700;
+}
+
 .cart-summary__total {
   padding-block-start: 1rem;
   border-block-start: 1px solid rgb(0 0 0 / 0.12);
   font-size: 1.25rem;
+  font-weight: 700;
 }
 
 .cart-summary__note {
@@ -125,6 +132,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.9375rem;
+  font-weight: 700;
 }
 
 .cart-summary__accelerated .shopify-cleanslate ul,
