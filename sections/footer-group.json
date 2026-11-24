@@ -17,7 +17,8 @@
         "brand": {
           "type": "brand",
           "settings": {
-            "logo_width": 300,
+            "logo": "shopify://shop_images/footer_logo.webp",
+            "logo_width": 350,
             "logo_text": "Roxanne Rizzo",
             "logo_tagline": "New York",
             "show_newsletter": true,
