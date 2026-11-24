@@ -13,7 +13,11 @@
       "type": "main-page",
       "settings": {
         "eyebrow": "Good to know",
-        "width": "narrow"
+        "width": "narrow",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       }
     },
     "faq": {
@@ -21,7 +25,9 @@
       "blocks": {
         "topic_using": {
           "type": "topic",
-          "settings": { "title": "Using Bronze Glow" }
+          "settings": {
+            "title": "Using Bronze Glow"
+          }
         },
         "q_apply": {
           "type": "question",
@@ -49,7 +55,9 @@
         },
         "topic_ingredients": {
           "type": "topic",
-          "settings": { "title": "Ingredients" }
+          "settings": {
+            "title": "Ingredients"
+          }
         },
         "q_clean": {
           "type": "question",
@@ -69,7 +77,9 @@
         },
         "topic_orders": {
           "type": "topic",
-          "settings": { "title": "Orders & shipping" }
+          "settings": {
+            "title": "Orders & shipping"
+          }
         },
         "q_shipping": {
           "type": "question",
