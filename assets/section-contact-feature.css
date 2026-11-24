@@ -120,6 +120,7 @@
 
 .contact-feature__label {
   font-size: 0.875rem;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--color-foreground) 75%, transparent);
@@ -168,8 +169,21 @@
   }
 }
 
+/* Show the whole photo at its own proportions (no cropping); only the
+   placeholder keeps a fixed 8:5 box */
 .contact-feature--booking .contact-feature__media {
+  aspect-ratio: auto;
+}
+
+.contact-feature--booking .contact-feature__media img {
+  display: block;
+  height: auto;
+  object-fit: initial;
+}
+
+.contact-feature--booking .contact-feature__media svg {
   aspect-ratio: 8 / 5;
+  height: auto;
 }
 
 .contact-feature--booking .contact-feature__app {

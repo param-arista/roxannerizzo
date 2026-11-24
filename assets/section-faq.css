@@ -7,14 +7,17 @@
   margin-inline: auto;
 }
 
+/* Topic heading: white bold text on a bronze bar */
 .faq__topic {
   margin-block: 2.5rem 0.5rem;
+  padding: 0.6rem 0.65rem;
   font-family: var(--font-body--family);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: #fff;
+  background-color: var(--color-accent);
 }
 
 .faq__topic:first-child {
@@ -25,7 +28,7 @@
   border-block-end: 1px solid rgb(0 0 0 / 0.1);
 }
 
-.faq__topic + .faq__item,
+/* No rule under a topic heading; keep it only when the list starts with a question */
 .faq__list > .faq__item:first-child {
   border-block-start: 1px solid rgb(0 0 0 / 0.1);
 }
