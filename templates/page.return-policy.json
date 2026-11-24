@@ -13,7 +13,11 @@
       "type": "main-page",
       "settings": {
         "eyebrow": "Roxanne Rizzo",
-        "width": "narrow"
+        "width": "wide",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 88,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       }
     }
   },
