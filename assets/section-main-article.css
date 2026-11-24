@@ -252,6 +252,17 @@
   justify-self: start;
 }
 
+/* Space under headings in the article body. Pasted content is often
+   wrapped in an extra <div>, so the spacing is set on headings and blocks
+   at any depth, not only on direct children of .rte. */
+.main-article__content :is(h1, h2, h3, h4, h5, h6) {
+  margin-block-end: 0.75em;
+}
+
+.main-article__content :is(p, ul, ol, blockquote, div) + :is(p, ul, ol, blockquote, h1, h2, h3, h4, h5, h6) {
+  margin-block-start: 0.85em;
+}
+
 /* Phones: article body text at 16px. Content pasted into the editor often
    carries its own inline font sizes (e.g. <span style="font-size: 14px">),
    so those are reset to follow the paragraph size. */
