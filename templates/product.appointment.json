@@ -32,6 +32,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {}
         },
         "variant_picker": {
@@ -40,6 +41,7 @@
         },
         "quantity": {
           "type": "quantity",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons": {
@@ -285,7 +287,13 @@
         "card_gap_mobile": 12,
         "card_border_width": 1.5,
         "card_radius": 6,
+        "show_stars": true,
         "star_size": 14,
+        "avatar_size": 80,
+        "avatar_size_mobile": 80,
+        "avatar_radius": 50,
+        "avatar_fit": "contain",
+        "avatar_background": "",
         "swipe": true,
         "loop": true,
         "autoplay": false,
