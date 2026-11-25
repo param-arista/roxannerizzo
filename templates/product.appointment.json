@@ -117,7 +117,7 @@
         "media_max_height": 620,
         "media_max_height_mobile": 420,
         "media_background": "#ffffff",
-        "show_sticky_bar": true,
+        "show_sticky_bar": false,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 0,
