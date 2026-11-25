@@ -67,6 +67,7 @@
         },
         "how_to_use": {
           "type": "collapsible",
+          "disabled": true,
           "settings": {
             "heading": "How to use",
             "open": false,
@@ -76,6 +77,7 @@
         },
         "ingredients": {
           "type": "collapsible",
+          "disabled": true,
           "settings": {
             "heading": "Ingredients",
             "open": false,
@@ -85,6 +87,7 @@
         },
         "shipping": {
           "type": "collapsible",
+          "disabled": true,
           "settings": {
             "heading": "Shipping & returns",
             "open": false,
