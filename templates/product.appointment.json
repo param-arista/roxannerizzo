@@ -115,7 +115,7 @@
         "media_ratio": "square",
         "media_fit": "contain",
         "media_max_height": 500,
-        "media_max_height_mobile": 420,
+        "media_max_height_mobile": 240,
         "media_background": "#ffffff",
         "show_sticky_bar": true,
         "padding_top_desktop": 0,
