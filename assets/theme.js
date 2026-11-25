@@ -123,12 +123,16 @@
           this.updateButtons();
         }
 
-        /** A typed value above the maximum is pulled back to it. Below the minimum (0, blank)
-            is left alone: the product form says why and adds nothing, rather than quietly adding 1. */
+        /** A typed value above the maximum is pulled back to it, and a bubbling `quantity:capped`
+            event lets the cart / product form say so. Below the minimum (0, blank) is left alone:
+            the product form says why and adds nothing; the cart asks before removing. */
         clamp() {
           if (!this.input.max) return;
           const max = Number(this.input.max);
-          if (Number(this.input.value) > max) this.input.value = max;
+          if (Number(this.input.value) > max) {
+            this.input.value = max;
+            this.input.dispatchEvent(new CustomEvent('quantity:capped', { bubbles: true, detail: { max } }));
+          }
         }
 
         step(direction) {
@@ -159,6 +163,15 @@
     );
   }
 
+  /** An empty bag keeps its order note on Shopify's side; clear it so an old note never
+      rides along with a later order. */
+  const clearCartNote = () =>
+    fetch(theme.routes.cartUpdate, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ note: '' }),
+    }).catch(() => {});
+
   /* ---------- <cart-drawer> ---------- */
   if (!customElements.get('cart-drawer')) {
     customElements.define(
@@ -168,6 +181,9 @@
           this.dialog = this.querySelector('[data-cart-dialog]');
           if (!this.dialog) return;
           wireDialog(this.dialog, '[data-cart-close]');
+          // The bag was emptied some other way but still carries an order note: drop it, so it
+          // isn't sent with the next order.
+          if (this.hasAttribute('data-stale-note')) clearCartNote();
           document.addEventListener('click', (event) => {
             const trigger = event.target.closest('[data-cart-open]');
             if (!trigger) return;
@@ -230,16 +246,94 @@
         connectedCallback() {
           this.querySelector('[data-no-js-update]')?.setAttribute('hidden', '');
           this.onQuantity = debounce((input) => this.update(input.dataset.key, Number(input.value), input), 350);
+          // Runs before the change below (the stepper clamps first): remember why, show it after the update.
+          this.addEventListener('quantity:capped', (event) => {
+            this.notice = (theme.strings.quantityMax || '').replaceAll('[max]', event.detail.max);
+          });
           this.addEventListener('change', (event) => {
             const input = event.target.closest('.quantity__input[data-key]');
-            if (input) this.onQuantity(input);
+            if (!input) return;
+            const raw = input.value.trim();
+            const value = Number(raw);
+            if (raw !== '' && !Number.isInteger(value)) {
+              this.notice = '';
+              this.setError(theme.strings.quantityWhole);
+              announce(theme.strings.quantityWhole);
+              input.value = input.getAttribute('value');
+              input.closest('quantity-input')?.updateButtons?.();
+              input.focus();
+              return;
+            }
+            if (raw === '' || value <= 0) {
+              this.confirmRemove(input);
+              return;
+            }
+            // Same as what's in the bag (e.g. 80 typed when 50 is already the most): nothing to
+            // send, just say why. Also keeps a late change event from closing the remove prompt.
+            if (value === Number(input.getAttribute('value'))) {
+              if (this.notice) {
+                this.setError(this.notice);
+                announce(this.notice);
+                this.notice = '';
+              }
+              return;
+            }
+            this.closeConfirm(input.closest('.cart-line'));
+            this.onQuantity(input);
           });
           this.addEventListener('click', (event) => {
+            const keep = event.target.closest('[data-cart-keep]');
+            if (keep) {
+              const line = keep.closest('.cart-line');
+              this.closeConfirm(line);
+              line?.querySelector('.quantity__input')?.focus();
+              return;
+            }
             const remove = event.target.closest('[data-cart-remove]');
             if (!remove) return;
             event.preventDefault();
             this.update(remove.dataset.cartRemove, 0, remove);
           });
+        }
+
+        /** Quantity cleared or set to 0: put the old quantity back and ask before removing the line. */
+        confirmRemove(input) {
+          const line = input.closest('.cart-line');
+          input.value = input.getAttribute('value');
+          input.closest('quantity-input')?.updateButtons?.();
+          this.setError('');
+          if (!line) return;
+          let box = line.querySelector('[data-cart-confirm]');
+          if (!box) {
+            const title = line.querySelector('.cart-line__title')?.textContent.trim() || '';
+            const question = (theme.strings.removeConfirm || '').replace('[title]', title);
+            box = document.createElement('div');
+            box.className = 'cart-line__confirm';
+            box.setAttribute('data-cart-confirm', '');
+            box.setAttribute('role', 'group');
+            box.setAttribute('aria-label', question);
+            const text = document.createElement('p');
+            text.className = 'cart-line__confirm-text';
+            text.textContent = question;
+            const yes = document.createElement('button');
+            yes.type = 'button';
+            yes.className = 'cart-line__confirm-button cart-line__confirm-button--remove';
+            yes.dataset.cartRemove = input.dataset.key;
+            yes.textContent = theme.strings.remove;
+            const no = document.createElement('button');
+            no.type = 'button';
+            no.className = 'cart-line__confirm-button';
+            no.setAttribute('data-cart-keep', '');
+            no.textContent = theme.strings.keep;
+            box.append(text, yes, no);
+            (line.querySelector('.cart-line__info') || line).append(box);
+          }
+          announce(box.getAttribute('aria-label'));
+          box.querySelector('[data-cart-keep]')?.focus();
+        }
+
+        closeConfirm(line) {
+          line?.querySelector('[data-cart-confirm]')?.remove();
         }
 
         sectionIds() {
@@ -252,6 +346,8 @@
         async update(key, quantity, source) {
           const focusedId = document.activeElement?.id;
           const line = source.closest('.cart-line');
+          const notice = this.notice || '';
+          this.notice = '';
           this.setError('');
           this.classList.add('is-loading');
           line?.classList.add('is-updating');
@@ -274,8 +370,15 @@
               if (input) input.value = input.getAttribute('value');
               return;
             }
+            if (data.item_count === 0 && data.note) clearCartNote();
             renderCartSections(data.sections);
-            announce(theme.strings.cartUpdated);
+            if (notice) {
+              // This element may have been swapped out by the render: show it in the fresh one(s).
+              document.querySelectorAll('cart-items').forEach((el) => el.setError?.(notice));
+              announce(notice);
+            } else {
+              announce(theme.strings.cartUpdated);
+            }
             const refocus = focusedId && document.getElementById(focusedId);
             if (refocus) refocus.focus();
             else {
@@ -324,6 +427,18 @@
           this.form.querySelectorAll('[data-js-enable]').forEach((input) => input.removeAttribute('disabled'));
           this.error = this.form.querySelector('[data-form-error]');
           this.form.addEventListener('submit', (event) => this.onSubmit(event));
+          // The quantity input may sit outside the form, so listen on the document.
+          this.onCapped = (event) => {
+            if (event.target !== this.quantityInput) return;
+            const message = (theme.strings.quantityMax || '').replaceAll('[max]', event.detail.max);
+            this.setError(message);
+            announce(message);
+          };
+          document.addEventListener('quantity:capped', this.onCapped);
+        }
+
+        disconnectedCallback() {
+          if (this.onCapped) document.removeEventListener('quantity:capped', this.onCapped);
         }
 
         /** Looked up each time: the variant picker swaps the button for a fresh render. */

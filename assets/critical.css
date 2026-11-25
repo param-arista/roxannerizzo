@@ -41,6 +41,9 @@ main:focus {
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
+  /* Keep the scrollbar's space while the page is locked, so the header and
+     content don't jump sideways when the mini cart / search opens. */
+  scrollbar-gutter: stable;
 }
 
 img,

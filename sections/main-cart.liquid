@@ -25,7 +25,7 @@
     >
       {%- if cart.item_count == 0 -%}
         <div class="main-cart__empty">
-          <p class="main-cart__empty-title">{{ 'cart.empty' | t }}</p>
+          <h2 class="main-cart__empty-title">{{ 'cart.empty' | t }}</h2>
           <p class="main-cart__empty-text">{{ 'cart.empty_text' | t }}</p>
           <a class="button" href="{{ empty_url }}">{{ 'cart.shop_now' | t }}</a>
         </div>

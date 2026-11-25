@@ -109,6 +109,40 @@
   color: var(--color-foreground);
 }
 
+.cart-line__confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-block-start: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-inline-start: 2px solid var(--color-foreground);
+  background-color: rgb(0 0 0 / 0.04);
+  font-size: 0.875rem;
+}
+
+.cart-line__confirm-text {
+  flex-basis: 100%;
+}
+
+.cart-line__confirm-button {
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--color-foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.cart-line__confirm-button--remove {
+  color: #8c1d18;
+}
+
 .cart-line__total {
   display: grid;
   justify-items: end;

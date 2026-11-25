@@ -13,6 +13,7 @@
   class="cart-drawer"
   data-cart-count="{{ cart.item_count }}"
   data-cart-count-label="{{ 'sections.header.cart_count' | t: count: cart.item_count }}"
+  {% if cart.item_count == 0 and cart.note != blank %}data-stale-note{% endif %}
 >
   <link rel="stylesheet" href="{{ 'component-cart-line.css' | asset_url }}" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -34,7 +35,7 @@
       {%- if cart.item_count == 0 -%}
         <div class="cart-drawer__empty">
           {%- render 'icon', name: 'bag', class: 'cart-drawer__empty-icon' -%}
-          <p class="cart-drawer__empty-title">{{ 'cart.empty' | t }}</p>
+          <h3 class="cart-drawer__empty-title">{{ 'cart.empty' | t }}</h3>
           <p class="cart-drawer__empty-text">{{ 'cart.empty_text' | t }}</p>
           <a class="button" href="{{ empty_url }}">{{ 'cart.shop_now' | t }}</a>
         </div>
