@@ -441,12 +441,54 @@ a.pagination__item:hover {
   user-select: none;
 }
 
-/** Shopify's "not a robot" (hCaptcha) page after a contact form post */
-.shopify-challenge__container {
-  margin-block: 60px;
+/** Shopify's "not a robot" (hCaptcha) page after a contact form post.
+    The markup is Shopify's, so match it by the captcha inside <main>. */
+#MainContent:has(.h-captcha) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 1rem;
   text-align: center;
 }
 
-.shopify-challenge__container .shopify-challenge__button {
-  margin-block-start: 1.5rem;
+#MainContent:has(.h-captcha) form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-block-start: 1rem;
+}
+
+#MainContent:has(.h-captcha) p {
+  font-size: 1.0625rem;
+  color: var(--color-foreground);
+}
+
+/* Submit: same look as the theme's .button */
+#MainContent:has(.h-captcha) [type='submit'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+  min-height: 3rem;
+  padding: 0.875rem 2.5rem;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--style-border-radius-buttons);
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+  font-family: var(--font-body--family);
+  font-size: 1.0625rem;
+  font-weight: var(--font-body--weight);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#MainContent:has(.h-captcha) [type='submit']:hover {
+  border-color: #000;
+  background-color: #000;
+  color: #fff;
 }
