@@ -440,3 +440,13 @@ a.pagination__item:hover {
   scroll-behavior: auto;
   user-select: none;
 }
+
+/** Shopify's "not a robot" (hCaptcha) page after a contact form post */
+.shopify-challenge__container {
+  margin-block: 60px;
+  text-align: center;
+}
+
+.shopify-challenge__container .shopify-challenge__button {
+  margin-block-start: 1.5rem;
+}
