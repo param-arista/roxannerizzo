@@ -6,6 +6,7 @@
 {% endcomment %}
 
 {{ 'section-contact-feature.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'contact-form.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign heading_id = 'ContactHeading-' | append: section.id
@@ -51,16 +52,32 @@
           <div class="contact-feature__text">{{ section.settings.text }}</div>
         {%- endif -%}
 
-        {%- form 'contact', id: form_id, class: 'contact-feature__form' -%}
+        {%- form 'contact', id: form_id, class: 'contact-feature__form', novalidate: 'novalidate' -%}
+          <script type="application/json" data-contact-messages>
+            {
+              "nameRequired": {{ 'sections.contact.errors.name_required' | t | json }},
+              "nameInvalid": {{ 'sections.contact.errors.name_invalid' | t | json }},
+              "emailRequired": {{ 'sections.contact.errors.email_required' | t | json }},
+              "emailInvalid": {{ 'sections.contact.errors.email_invalid' | t | json }},
+              "phoneInvalid": {{ 'sections.contact.errors.phone_invalid' | t | json }},
+              "messageTooLong": {{ 'sections.contact.errors.message_too_long' | t | json }},
+              "summary": {{ 'sections.contact.errors.summary' | t | json }},
+              "sending": {{ 'sections.contact.sending' | t | json }}
+            }
+          </script>
+
           {%- if form.posted_successfully? -%}
             <p class="contact-feature__status contact-feature__status--success" role="status" tabindex="-1" autofocus>
               {{ 'sections.contact.success' | t }}
             </p>
           {%- elsif form.errors -%}
             <div class="contact-feature__status contact-feature__status--error" role="alert" tabindex="-1" autofocus>
+              <span>{{ 'sections.contact.errors.server' | t }}</span>
               {{ form.errors | default_errors }}
             </div>
           {%- endif -%}
+
+          <div class="contact-feature__status contact-feature__status--error" role="alert" data-error-summary hidden></div>
 
           {%- if section.settings.subject != blank -%}
             <input type="hidden" name="contact[subject]" value="{{ section.settings.subject | escape }}">
@@ -75,9 +92,12 @@
               name="contact[name]"
               autocomplete="name"
               required
+              maxlength="60"
+              aria-describedby="{{ form_id }}-name-error"
               placeholder="{{ 'sections.contact.name_placeholder' | t }}"
               value="{{ form.name }}"
             >
+            <p class="contact-feature__error" id="{{ form_id }}-name-error" data-error-for="name" hidden></p>
           </div>
 
           <div class="contact-feature__field">
@@ -91,12 +111,15 @@
               spellcheck="false"
               autocapitalize="off"
               required
+              maxlength="100"
+              aria-describedby="{{ form_id }}-email-error"
               placeholder="{{ 'sections.contact.email_placeholder' | t }}"
               value="{{ form.email }}"
               {% if form.errors contains 'email' %}
                 aria-invalid="true"
               {% endif %}
             >
+            <p class="contact-feature__error" id="{{ form_id }}-email-error" data-error-for="email" hidden></p>
           </div>
 
           <div class="contact-feature__field">
@@ -107,9 +130,13 @@
               id="{{ form_id }}-phone"
               name="contact[phone]"
               autocomplete="tel"
+              inputmode="tel"
+              maxlength="20"
+              aria-describedby="{{ form_id }}-phone-error"
               placeholder="{{ section.settings.phone_placeholder | escape }}"
               value="{{ form.phone }}"
             >
+            <p class="contact-feature__error" id="{{ form_id }}-phone-error" data-error-for="phone" hidden></p>
           </div>
 
           <div class="contact-feature__field">
@@ -119,10 +146,13 @@
               id="{{ form_id }}-message"
               name="contact[body]"
               rows="1"
+              maxlength="1000"
+              aria-describedby="{{ form_id }}-message-error"
               placeholder="{{ 'sections.contact.message_placeholder' | t }}"
             >
               {{- form.body -}}
             </textarea>
+            <p class="contact-feature__error" id="{{ form_id }}-message-error" data-error-for="body" hidden></p>
           </div>
 
           <button type="submit" class="button contact-feature__submit">

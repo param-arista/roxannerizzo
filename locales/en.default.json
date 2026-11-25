@@ -287,7 +287,18 @@
       "phone": "Phone number",
       "message": "Message",
       "message_placeholder": "Your message",
-      "success": "Thanks for reaching out. Roxanne's team will get back to you soon."
+      "success": "Thanks for reaching out. Roxanne's team will get back to you soon.",
+      "sending": "Sending…",
+      "errors": {
+        "name_required": "Please enter your name.",
+        "name_invalid": "Please enter a valid name (letters only, at least 2 characters).",
+        "email_required": "Please enter your email address.",
+        "email_invalid": "Please enter a valid email address, e.g. name@example.com.",
+        "phone_invalid": "Please enter a valid phone number (10–15 digits).",
+        "message_too_long": "Your message can be up to 1000 characters.",
+        "summary": "Please fix the highlighted fields and try again.",
+        "server": "Sorry, your message could not be sent:"
+      }
     }
   }
 }
