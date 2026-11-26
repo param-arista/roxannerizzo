@@ -20,7 +20,8 @@
 
   .product__info {
     position: sticky;
-    inset-block-start: 1.5rem;
+    /* Stick below the sticky header with a gap, not under it */
+    inset-block-start: calc(var(--header-height, 5.25rem) + 2rem);
   }
 }
 
