@@ -506,6 +506,16 @@
     "travel_collection": {
       "type": "featured-products",
       "blocks": {
+        "product_bbpQGU": {
+          "type": "product",
+          "settings": {
+            "product": "makeup-pouch",
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
+          }
+        },
         "product_Da8mpY": {
           "type": "product",
           "settings": {
@@ -518,6 +528,7 @@
         }
       },
       "block_order": [
+        "product_bbpQGU",
         "product_Da8mpY"
       ],
       "settings": {
