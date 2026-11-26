@@ -18,7 +18,7 @@
         "show_breadcrumbs": true,
         "enable_filtering": true,
         "enable_sorting": true,
-        "products_per_page": 12,
+        "products_per_page": 48,
         "columns": 3,
         "image_ratio": "wide",
         "image_fit": "contain",
