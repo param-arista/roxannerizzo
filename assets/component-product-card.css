@@ -134,15 +134,45 @@
   font-size: 0.75rem;
 }
 
-/* Sold out: solid pill over the image, and the image faded */
+/* Sold out: black circle over the image ("SOLD / OUT" on two lines),
+   and the image faded */
 .product-card__badge.product-card__soldout {
-  padding: 0.3rem 0.9rem;
-  border-color: var(--color-foreground);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  --soldout-size: 2.5rem; /* 40px circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--soldout-size);
+  aspect-ratio: 1;
+  padding: 0.25rem;
+  border: 0;
+  border-radius: 50%;
+  background-color: #000;
+  color: #fff;
+  font-size: 0.6rem; /* ~10px */
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  text-align: center;
+  word-spacing: 100vw; /* one word per line */
+}
+
+.product-card__corner:has(.product-card__soldout) {
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
+}
+
+/* Phones: a touch bigger so the text stays readable on small cards */
+@media (max-width: 749px) {
+  .product-card__badge.product-card__soldout {
+    --soldout-size: 2.75rem; /* 44px */
+    font-size: 0.625rem; /* 10px */
+    letter-spacing: 0.5px;
+  }
+
+  .product-card__corner:has(.product-card__soldout) {
+    inset-block-start: 0.375rem;
+    inset-inline-end: 0.375rem;
+  }
 }
 
 .product-card--sold-out .product-card__media img {

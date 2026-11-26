@@ -43,7 +43,9 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  border-radius: 4px;
+  /* Border + radius: section settings "Image border thickness / color / corner radius" */
+  border: var(--media-border, 0);
+  border-radius: var(--media-radius, 4px);
   background-color: var(--media-bg, var(--color-card));
 }
 
@@ -204,18 +206,8 @@
 }
 
 @media (max-width: 749px) {
-  /* Edge-to-edge gallery on phones */
-  .product__media {
-    margin-inline: calc(-1 * var(--page-margin));
-  }
-
-  .product__slides {
-    border-radius: 0;
-  }
-
-  .product__thumbs {
-    padding-inline: var(--page-margin);
-  }
+  /* Phones: the gallery stays inside the page margins, aligned with the
+     breadcrumb and product text (not edge to edge) */
 
   .product__thumb {
     width: 4.25rem;

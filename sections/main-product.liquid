@@ -52,7 +52,7 @@
   class="section product product--fit-{{ section.settings.media_fit | default: 'contain' }}"
   data-section-id="{{ section.id }}"
   data-product-url="{{ product.url }}"
-  style="--media-ratio: {{ media_ratio }}; --media-max-h: {{ section.settings.media_max_height | default: 620 }}px; --media-max-h-mobile: {{ section.settings.media_max_height_mobile | default: 420 }}px;{% if section.settings.media_background != blank %} --media-bg: {{ section.settings.media_background }};{% endif %}"
+  style="--media-ratio: {{ media_ratio }}; --media-max-h: {{ section.settings.media_max_height | default: 620 }}px; --media-max-h-mobile: {{ section.settings.media_max_height_mobile | default: 420 }}px;{% if section.settings.media_background != blank %} --media-bg: {{ section.settings.media_background }};{% endif %}{% if section.settings.media_border_width > 0 %} --media-border: {{ section.settings.media_border_width }}px solid {{ section.settings.media_border_color | default: '#E1DCD6' }};{% endif %} --media-radius: {{ section.settings.media_radius | default: 4 }}px;"
   aria-label="{{ product.title | escape }}"
 >
   <div class="page-width">
@@ -486,6 +486,33 @@
       "label": "Image background",
       "info": "Behind the product images. Leave empty to use the theme's card color.",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "media_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Image border thickness",
+      "info": "Around the main image. 0 = no border.",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "media_border_color",
+      "label": "Image border color",
+      "default": "#E1DCD6"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 4
     },
     {
       "type": "checkbox",
