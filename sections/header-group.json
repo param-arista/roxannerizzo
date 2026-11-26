@@ -68,7 +68,7 @@
         "search_menu": "",
         "search_collection": "",
         "search_products_limit": 12,
-        "search_image_ratio": "square",
+        "search_image_ratio": "wide",
         "search_image_fit": "contain",
         "search_columns": 4,
         "search_card_image_background": "#FFFFFF",
