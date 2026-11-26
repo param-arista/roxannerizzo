@@ -149,6 +149,7 @@
         "column_2",
         "column_3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "How it wears",
         "heading": "Instant. Flawless. Safe.",
@@ -263,6 +264,7 @@
         "review_PbwAMC",
         "review_RKVnXp"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Loved by",
         "heading": "Reviews",
@@ -285,7 +287,13 @@
         "card_gap_mobile": 12,
         "card_border_width": 1.5,
         "card_radius": 6,
+        "show_stars": true,
         "star_size": 14,
+        "avatar_size": 80,
+        "avatar_size_mobile": 80,
+        "avatar_radius": 50,
+        "avatar_fit": "contain",
+        "avatar_background": "",
         "swipe": true,
         "loop": true,
         "autoplay": false,
