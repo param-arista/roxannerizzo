@@ -23,7 +23,7 @@
     "contact": {
       "type": "contact-feature",
       "settings": {
-        "image": "shopify://shop_images/email_signup.avif",
+        "image": "shopify://shop_images/hero.avif",
         "side_label": "The personal beauty experience",
         "eyebrow": "Let's connect",
         "heading": "A conversation with Roxanne",
