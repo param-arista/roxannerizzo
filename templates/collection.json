@@ -31,7 +31,7 @@
         "show_sale_badge": true,
         "card_button_label": "",
         "padding_top_desktop": 0,
-        "padding_bottom_desktop": 40,
+        "padding_bottom_desktop": 60,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 32
       }
@@ -66,6 +66,7 @@
         "column_2",
         "column_3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Why Bronze Glow",
         "heading": "Instant. Flawless. Safe.",
