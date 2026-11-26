@@ -34,9 +34,13 @@
     assign url = null
   endif
   assign heading_id = 'CardTitle-' | append: card_id
+  assign sold_out = false
+  if product != blank and product.available == false
+    assign sold_out = true
+  endif
 -%}
 
-<article class="product-card" aria-labelledby="{{ heading_id }}">
+<article class="product-card{% if sold_out %} product-card--sold-out{% endif %}" aria-labelledby="{{ heading_id }}">
   <div class="product-card__media">
     {%- if product.featured_media -%}
       {{
@@ -51,8 +55,16 @@
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
     {%- endif -%}
-    {%- if badge != blank -%}
-      <span class="product-card__badge">{{ badge | escape }}</span>
+    {%- if badge != blank or sold_out -%}
+      {%- comment -%} Top-right pills: "Sold out" first, then the card's badge {%- endcomment -%}
+      <div class="product-card__corner">
+        {%- if sold_out -%}
+          <span class="product-card__badge product-card__soldout">{{ 'products.sold_out' | t }}</span>
+        {%- endif -%}
+        {%- if badge != blank -%}
+          <span class="product-card__badge">{{ badge | escape }}</span>
+        {%- endif -%}
+      </div>
     {%- endif -%}
     {%- if product != blank -%}
       {%- render 'product-badges', product: product, class: 'product-card__badges' -%}
@@ -105,10 +117,6 @@
           <span class="visually-hidden">{{ 'products.review_count' | t: count: rating_count }}</span>
         {%- endif -%}
       </p>
-    {%- endif -%}
-
-    {%- if product != blank and product.available == false -%}
-      <p class="product-card__soldout">{{ 'products.sold_out' | t }}</p>
     {%- endif -%}
 
     {%- if button_label != blank -%}
