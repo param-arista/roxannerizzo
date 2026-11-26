@@ -61,7 +61,21 @@
         "logo_text": "Roxanne Rizzo",
         "logo_tagline": "New York",
         "menu": "main-menu",
-        "wishlist_url": "#"
+        "wishlist_url": "#",
+        "search_cancel_label": "Cancel",
+        "search_tags_heading": "Popular Tags",
+        "search_products_heading": "Popular Products",
+        "search_menu": "",
+        "search_collection": "",
+        "search_products_limit": 12,
+        "search_image_ratio": "square",
+        "search_image_fit": "contain",
+        "search_columns": 4,
+        "search_card_image_background": "#FFFFFF",
+        "search_card_background": "",
+        "search_card_border_width": 1,
+        "search_card_border_color": "#F4F4F4",
+        "search_card_radius": 0
       }
     }
   },
