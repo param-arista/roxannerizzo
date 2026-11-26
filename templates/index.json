@@ -506,20 +506,10 @@
     "travel_collection": {
       "type": "featured-products",
       "blocks": {
-        "product_pjw3hh": {
+        "product_Da8mpY": {
           "type": "product",
           "settings": {
-            "product": "makeup-bag",
-            "badge": "",
-            "badge_background": "",
-            "badge_border": "",
-            "badge_text": ""
-          }
-        },
-        "product_PeKttH": {
-          "type": "product",
-          "settings": {
-            "product": "brush-wallet",
+            "product": "clutch-bag",
             "badge": "",
             "badge_background": "",
             "badge_border": "",
@@ -536,10 +526,20 @@
             "badge_text": ""
           }
         },
-        "product_Da8mpY": {
+        "product_PeKttH": {
           "type": "product",
           "settings": {
-            "product": "clutch-bag",
+            "product": "brush-wallet",
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
+          }
+        },
+        "product_pjw3hh": {
+          "type": "product",
+          "settings": {
+            "product": "makeup-bag",
             "badge": "",
             "badge_background": "",
             "badge_border": "",
@@ -548,10 +548,10 @@
         }
       },
       "block_order": [
-        "product_pjw3hh",
-        "product_PeKttH",
+        "product_Da8mpY",
         "product_bbpQGU",
-        "product_Da8mpY"
+        "product_PeKttH",
+        "product_pjw3hh"
       ],
       "settings": {
         "eyebrow": "The accessories",
