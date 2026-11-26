@@ -5,9 +5,17 @@
 
   @param {string} [logo_markup] - The header logo (image or text wordmark), shown left of the field
   @param {number} [logo_width] - Logo image width in px (header setting)
-  @param {link_list} [popular_menu] - "Popular tags" links shown while the field is empty
+  @param {object} [popular_menu] - "Popular tags" links shown while the field is empty
   @param {collection} [popular_collection] - "Popular products" (falls back to all products)
   @param {number} [popular_limit] - How many popular products to show (0 hides them)
+  @param {string} [image_ratio] - Popular products image shape: wide | standard | square | portrait (default square)
+  @param {string} [image_fit] - contain (whole image) | cover (fill, may cut) (default contain)
+  @param {number} [columns] - Popular products visible at once on desktop (default 5)
+  @param {string} [card_image_bg] - Color behind the card image (blank = default)
+  @param {string} [card_bg] - Card background color (blank = theme card color)
+  @param {number} [card_border_width] - Card border in px (0 = none)
+  @param {string} [card_border_color] - Card border color
+  @param {number} [card_radius] - Card corner radius in px (default 4)
   @param {string} [cancel_label] - Text of the close button (default "Cancel")
   @param {string} [tags_heading] - Heading over the tags (default "Popular Tags")
   @param {string} [products_heading] - Heading over the products (default "Popular Products")
@@ -92,17 +100,36 @@
             {%- if show_products -%}
               <link rel="stylesheet" href="{{ 'component-product-card.css' | asset_url }}" media="print" onload="this.media='all'">
               <script src="{{ 'carousel.js' | asset_url }}" defer></script>
-              <scroll-carousel class="search-popular__products">
+              {%- liquid
+                case image_ratio
+                  when 'wide'
+                    assign card_ratio = '10 / 7'
+                  when 'standard'
+                    assign card_ratio = '5 / 4'
+                  when 'portrait'
+                    assign card_ratio = '4 / 5'
+                  else
+                    assign card_ratio = '1 / 1'
+                endcase
+                assign card_fit = image_fit | default: 'contain'
+                assign search_columns = columns | default: 5
+                assign card_image_bg = card_image_bg | append: ''
+                assign card_bg = card_bg | append: ''
+              -%}
+              <scroll-carousel
+                class="search-popular__products card-fit--{{ card_fit }}"
+                style="--card-ratio: {{ card_ratio }}; --search-columns: {{ search_columns }};{% if card_image_bg != blank and card_image_bg != 'rgba(0,0,0,0)' %} --card-image-bg: {{ card_image_bg }};{% endif %}{% if card_bg != blank and card_bg != 'rgba(0,0,0,0)' %} --card-bg: {{ card_bg }};{% endif %}{% if card_border_width > 0 %} --card-border: {{ card_border_width }}px solid {{ card_border_color | default: '#E1DCD6' }};{% endif %} --card-radius: {{ card_radius | default: 4 }}px;"
+              >
                 <div class="search-popular__head">
                   <p class="search-popular__title" id="SearchPopularProducts">{{ products_heading | default: 'Popular Products' | escape }}</p>
                   <div class="search-popular__arrows">
                     <button type="button" class="search-popular__arrow" data-carousel-prev hidden>
                       {%- render 'icon', name: 'chevron-left' -%}
-                      <span class="visually-hidden">{{ 'search.previous' | t }}</span>
+                      <span class="visually-hidden">Previous products</span>
                     </button>
                     <button type="button" class="search-popular__arrow" data-carousel-next hidden>
                       {%- render 'icon', name: 'chevron-right' -%}
-                      <span class="visually-hidden">{{ 'search.next' | t }}</span>
+                      <span class="visually-hidden">Next products</span>
                     </button>
                   </div>
                 </div>

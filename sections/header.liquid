@@ -135,6 +135,14 @@
   popular_menu: section.settings.search_menu,
   popular_collection: section.settings.search_collection,
   popular_limit: section.settings.search_products_limit,
+  image_ratio: section.settings.search_image_ratio,
+  image_fit: section.settings.search_image_fit,
+  columns: section.settings.search_columns,
+  card_image_bg: section.settings.search_card_image_background,
+  card_bg: section.settings.search_card_background,
+  card_border_width: section.settings.search_card_border_width,
+  card_border_color: section.settings.search_card_border_color,
+  card_radius: section.settings.search_card_radius,
   cancel_label: section.settings.search_cancel_label,
   tags_heading: section.settings.search_tags_heading,
   products_heading: section.settings.search_products_heading
@@ -255,6 +263,77 @@
       "label": "Popular products to show",
       "info": "0 hides the products.",
       "default": 8
+    },
+    {
+      "type": "select",
+      "id": "search_image_ratio",
+      "label": "Popular products image shape",
+      "options": [
+        { "value": "wide", "label": "Landscape (10:7)" },
+        { "value": "standard", "label": "Slightly landscape (5:4)" },
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait (4:5)" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "search_image_fit",
+      "label": "Popular products image fit",
+      "options": [
+        { "value": "contain", "label": "Show the whole image (no cut)" },
+        { "value": "cover", "label": "Fill the frame (edges may be cut)" }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "range",
+      "id": "search_columns",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Popular products visible on desktop",
+      "info": "Cards in view at once; the rest scroll with the arrows. Laptop shows up to 4, tablet 2.5, phone 1.6.",
+      "default": 5
+    },
+    {
+      "type": "color",
+      "id": "search_card_image_background",
+      "label": "Popular products card image background",
+      "info": "Only the image area of the card. Leave empty to use the default."
+    },
+    {
+      "type": "color",
+      "id": "search_card_background",
+      "label": "Popular products card background",
+      "info": "The whole card (under the title and price). Leave empty to use the theme's product card color."
+    },
+    {
+      "type": "range",
+      "id": "search_card_border_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Popular products card border thickness",
+      "info": "0 = no border.",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "search_card_border_color",
+      "label": "Popular products card border color",
+      "default": "#E1DCD6"
+    },
+    {
+      "type": "range",
+      "id": "search_card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Popular products card corner radius",
+      "default": 4
     }
   ],
   "enabled_on": {

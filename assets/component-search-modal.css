@@ -427,7 +427,8 @@
 .search-popular__track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 0.75rem * 4) / 5);
+  /* --search-columns: header setting "Popular products visible on desktop" */
+  grid-auto-columns: calc((100% - 0.75rem * (var(--search-columns, 5) - 1)) / var(--search-columns, 5));
   gap: 0.75rem;
   margin: 0;
   padding: 0;
@@ -448,7 +449,8 @@
 
 @media (max-width: 1199px) {
   .search-popular__track {
-    grid-auto-columns: calc((100% - 0.75rem * 3) / 4);
+    /* laptop: the setting, but at most 4 */
+    grid-auto-columns: calc((100% - 0.75rem * (min(var(--search-columns, 5), 4) - 1)) / min(var(--search-columns, 5), 4));
   }
 }
 
