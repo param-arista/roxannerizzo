@@ -44,7 +44,7 @@
       </details>
     {%- endif -%}
 
-    <a class="header__logo" href="{{ routes.root_url }}">
+    {%- capture logo_markup -%}
         {%- if logo != blank -%}
           {{
             logo
@@ -64,6 +64,10 @@
             <span class="header__logo-tagline">{{ section.settings.logo_tagline | escape }}</span>
           {%- endif -%}
         {%- endif -%}
+    {%- endcapture -%}
+
+    <a class="header__logo" href="{{ routes.root_url }}">
+      {{- logo_markup -}}
     </a>
 
     {%- if menu != blank -%}
@@ -125,7 +129,16 @@
 </header>
 </sticky-header>
 
-{%- render 'search-modal' -%}
+{%- render 'search-modal',
+  logo_markup: logo_markup,
+  logo_width: section.settings.logo_width,
+  popular_menu: section.settings.search_menu,
+  popular_collection: section.settings.search_collection,
+  popular_limit: section.settings.search_products_limit,
+  cancel_label: section.settings.search_cancel_label,
+  tags_heading: section.settings.search_tags_heading,
+  products_heading: section.settings.search_products_heading
+-%}
 
 {% schema %}
 {
@@ -198,6 +211,50 @@
       "id": "wishlist_url",
       "label": "Wishlist link",
       "info": "The heart icon shows only when this is set (e.g. your wishlist app's page)."
+    },
+    {
+      "type": "header",
+      "content": "Search popup"
+    },
+    {
+      "type": "text",
+      "id": "search_cancel_label",
+      "label": "Close button label",
+      "default": "Cancel"
+    },
+    {
+      "type": "text",
+      "id": "search_tags_heading",
+      "label": "Popular tags heading",
+      "default": "Popular Tags"
+    },
+    {
+      "type": "text",
+      "id": "search_products_heading",
+      "label": "Popular products heading",
+      "default": "Popular Products"
+    },
+    {
+      "type": "link_list",
+      "id": "search_menu",
+      "label": "Popular tags menu",
+      "info": "Links listed on the left when the search field is empty. Empty = hidden."
+    },
+    {
+      "type": "collection",
+      "id": "search_collection",
+      "label": "Popular products collection",
+      "info": "Products shown in a slider when the search field is empty. Empty = all products."
+    },
+    {
+      "type": "range",
+      "id": "search_products_limit",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "label": "Popular products to show",
+      "info": "0 hides the products.",
+      "default": 8
     }
   ],
   "enabled_on": {

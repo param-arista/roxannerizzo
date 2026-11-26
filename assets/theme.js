@@ -646,6 +646,33 @@
           this.dialog = this.querySelector('[data-search-dialog]');
           if (!this.dialog) return;
           wireDialog(this.dialog, '[data-search-close]');
+
+          // Clear (×) inside the field: empties it, resets the results, keeps focus
+          const input = this.dialog.querySelector('input[type="search"]');
+          const clear = this.dialog.querySelector('[data-search-clear]');
+          if (input && clear) {
+            const sync = () => (clear.hidden = !input.value);
+            input.addEventListener('input', sync);
+            clear.addEventListener('click', () => {
+              input.value = '';
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+              input.focus();
+            });
+            sync();
+
+            // Closed (Cancel, Esc or a click outside): start fresh next time.
+            // 'close' fires after the closing animation, so the reset is not seen.
+            this.dialog.addEventListener('close', () => {
+              if (!input.value) return;
+              input.value = '';
+              const results = this.dialog.querySelector('[data-predictive-results]');
+              if (results) results.innerHTML = '';
+              input.setAttribute('aria-expanded', 'false');
+              input.removeAttribute('aria-activedescendant');
+              // Let predictive search cancel any pending request; also hides the ×
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+          }
           document.addEventListener('click', (event) => {
             const trigger = event.target.closest('[data-search-open]');
             if (!trigger) return;

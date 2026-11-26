@@ -221,6 +221,11 @@
     "label": "Search the store",
     "clear": "Clear search",
     "close": "Close search",
+    "cancel": "Cancel",
+    "popular_tags": "Popular tags",
+    "popular_products": "Popular products",
+    "previous": "Previous products",
+    "next": "Next products",
     "no_results": "No results for “{{ terms }}”",
     "no_results_text": "Check the spelling or try a broader word.",
     "results_for": {

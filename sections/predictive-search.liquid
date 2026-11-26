@@ -51,7 +51,7 @@
                 <a class="predictive__product" href="{{ product.url }}" tabindex="-1">
                   <span class="predictive__thumb">
                     {%- if product.featured_media -%}
-                      {{ product.featured_media | image_url: width: 240 | image_tag: widths: '120, 240', sizes: '120px', alt: '', loading: 'lazy' }}
+                      {{ product.featured_media | image_url: width: 800 | image_tag: widths: '240, 360, 480, 600, 800', sizes: '(min-width: 990px) 20vw, (min-width: 750px) 25vw, 50vw', alt: '', loading: 'lazy' }}
                     {%- endif -%}
                   </span>
                   <span class="predictive__product-title">{{ product.title | escape }}</span>

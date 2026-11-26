@@ -3,40 +3,126 @@
   (predictive-search section). The header icon still links to /search, so
   search works without JavaScript; theme.js opens this dialog instead.
 
+  @param {string} [logo_markup] - The header logo (image or text wordmark), shown left of the field
+  @param {number} [logo_width] - Logo image width in px (header setting)
+  @param {link_list} [popular_menu] - "Popular tags" links shown while the field is empty
+  @param {collection} [popular_collection] - "Popular products" (falls back to all products)
+  @param {number} [popular_limit] - How many popular products to show (0 hides them)
+  @param {string} [cancel_label] - Text of the close button (default "Cancel")
+  @param {string} [tags_heading] - Heading over the tags (default "Popular Tags")
+  @param {string} [products_heading] - Heading over the products (default "Popular Products")
+
   @example
-  {% render 'search-modal' %}
+  {% render 'search-modal', logo_markup: logo_markup %}
 {% enddoc %}
 
-<search-modal class="search-modal">
+<search-modal class="search-modal"{% if logo_width %} style="--logo-width: {{ logo_width }}px;"{% endif %}>
   <link rel="stylesheet" href="{{ 'component-search-modal.css' | asset_url }}" media="print" onload="this.media='all'">
   <dialog class="search-modal__dialog" aria-label="{{ 'search.label' | t }}" scroll-lock data-search-dialog>
     <div class="search-modal__panel">
       <predictive-search class="search-modal__inner" data-url="{{ routes.predictive_search_url }}">
-        <form class="search-modal__form" action="{{ routes.search_url }}" method="get" role="search">
-          {%- render 'icon', name: 'search', class: 'search-modal__icon' -%}
-          <label class="visually-hidden" for="SearchModalInput">{{ 'search.label' | t }}</label>
-          <input
-            class="search-modal__input"
-            id="SearchModalInput"
-            type="search"
-            name="q"
-            placeholder="{{ 'search.placeholder' | t }}"
-            autocomplete="off"
-            autocapitalize="off"
-            spellcheck="false"
-            role="combobox"
-            aria-expanded="false"
-            aria-controls="PredictiveResultsWrap"
-            aria-autocomplete="list"
-          >
-          <input type="hidden" name="options[prefix]" value="last">
-          <button type="button" class="search-modal__close" data-search-close>
-            {%- render 'icon', name: 'close' -%}
-            <span class="visually-hidden">{{ 'search.close' | t }}</span>
+        <div class="search-modal__bar">
+          {%- if logo_markup != blank -%}
+            <a class="header__logo search-modal__logo" href="{{ routes.root_url }}">
+              {{- logo_markup -}}
+            </a>
+          {%- endif -%}
+
+          <form class="search-modal__form" action="{{ routes.search_url }}" method="get" role="search">
+            {%- render 'icon', name: 'search', class: 'search-modal__icon' -%}
+            <label class="visually-hidden" for="SearchModalInput">{{ 'search.label' | t }}</label>
+            <input
+              class="search-modal__input"
+              id="SearchModalInput"
+              type="search"
+              name="q"
+              placeholder="{{ 'search.title' | t }}"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="PredictiveResultsWrap"
+              aria-autocomplete="list"
+            >
+            <input type="hidden" name="options[prefix]" value="last">
+            <button type="button" class="search-modal__clear" data-search-clear hidden>
+              {%- render 'icon', name: 'close' -%}
+              <span class="visually-hidden">{{ 'search.clear' | t }}</span>
+            </button>
+          </form>
+
+          <button type="button" class="search-modal__cancel" data-search-close>
+            {{- cancel_label | default: 'Cancel' | escape -}}
           </button>
-        </form>
+        </div>
         <div id="PredictiveResultsWrap" class="search-modal__results" data-predictive-results aria-live="polite"></div>
         <p class="visually-hidden" role="status" data-predictive-status></p>
+
+        {%- liquid
+          assign popular_limit = popular_limit | default: 0
+          if popular_collection != blank
+            assign popular_products = popular_collection.products
+          else
+            assign popular_products = collections.all.products
+          endif
+          assign show_tags = false
+          if popular_menu != blank and popular_menu.links.size > 0
+            assign show_tags = true
+          endif
+          assign show_products = false
+          if popular_limit > 0 and popular_products.size > 0
+            assign show_products = true
+          endif
+        -%}
+
+        {%- if show_tags or show_products -%}
+          <div class="search-popular{% unless show_tags %} search-popular--no-tags{% endunless %}" data-search-popular>
+            {%- if show_tags -%}
+              <nav class="search-popular__tags" aria-labelledby="SearchPopularTags">
+                <p class="search-popular__title" id="SearchPopularTags">{{ tags_heading | default: 'Popular Tags' | escape }}</p>
+                <ul class="search-popular__tag-list" role="list">
+                  {%- for link in popular_menu.links -%}
+                    <li><a class="search-popular__tag" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </nav>
+            {%- endif -%}
+
+            {%- if show_products -%}
+              <link rel="stylesheet" href="{{ 'component-product-card.css' | asset_url }}" media="print" onload="this.media='all'">
+              <script src="{{ 'carousel.js' | asset_url }}" defer></script>
+              <scroll-carousel class="search-popular__products">
+                <div class="search-popular__head">
+                  <p class="search-popular__title" id="SearchPopularProducts">{{ products_heading | default: 'Popular Products' | escape }}</p>
+                  <div class="search-popular__arrows">
+                    <button type="button" class="search-popular__arrow" data-carousel-prev hidden>
+                      {%- render 'icon', name: 'chevron-left' -%}
+                      <span class="visually-hidden">{{ 'search.previous' | t }}</span>
+                    </button>
+                    <button type="button" class="search-popular__arrow" data-carousel-next hidden>
+                      {%- render 'icon', name: 'chevron-right' -%}
+                      <span class="visually-hidden">{{ 'search.next' | t }}</span>
+                    </button>
+                  </div>
+                </div>
+                <ul class="search-popular__track" role="list" data-carousel-track tabindex="0" aria-labelledby="SearchPopularProducts">
+                  {%- for product in popular_products limit: popular_limit -%}
+                    <li class="search-popular__item">
+                      {%- assign card_id = 'search-popular-' | append: forloop.index -%}
+                      {%- render 'product-card',
+                        card_id: card_id,
+                        product: product,
+                        show_rating: true,
+                        sizes: '(min-width: 990px) 16vw, (min-width: 750px) 30vw, 60vw'
+                      -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </scroll-carousel>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </predictive-search>
     </div>
   </dialog>
