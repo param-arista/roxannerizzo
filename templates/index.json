@@ -540,7 +540,7 @@
         "heading": "A conversation with Roxanne",
         "text": "<p>Roxanne would love to connect with you personally and show you in real time how BronZe Glow works instantly, just how easy it is to use, and all the wonderful benefits it has to offer!Whether you’re curious about BronZe Glow or already love it and want to discover more ways to use it, Roxanne would love to share her favorite tips, beauty secrets, and simple techniques to help you get the most out of your BronZe Glow.&nbsp;</p><p>Choose a time that works for you on the calendar below. Roxanne looks forward to meeting you, answering your questions, and showing you all that BronZe Glow can do!</p>",
         "button_label": "Book Your Personal Tutorial",
-        "button_link": "",
+        "button_link": "shopify://products/appointment",
         "new_tab": false,
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
