@@ -505,6 +505,21 @@
     },
     "travel_collection": {
       "type": "featured-products",
+      "blocks": {
+        "product_Da8mpY": {
+          "type": "product",
+          "settings": {
+            "product": "clutch-bag",
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_Da8mpY"
+      ],
       "settings": {
         "eyebrow": "The accessories",
         "heading": "The travel collection",
@@ -514,7 +529,7 @@
         "columns": 4,
         "width": "full",
         "image_ratio": "wide",
-        "image_fit": "contain",
+        "image_fit": "cover",
         "background_color": "",
         "card_background": "#eaeaeb",
         "card_image_background": "#ffffff",
