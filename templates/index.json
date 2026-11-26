@@ -506,6 +506,16 @@
     "travel_collection": {
       "type": "featured-products",
       "blocks": {
+        "product_PeKttH": {
+          "type": "product",
+          "settings": {
+            "product": "brush-wallet",
+            "badge": "",
+            "badge_background": "",
+            "badge_border": "",
+            "badge_text": ""
+          }
+        },
         "product_bbpQGU": {
           "type": "product",
           "settings": {
@@ -528,6 +538,7 @@
         }
       },
       "block_order": [
+        "product_PeKttH",
         "product_bbpQGU",
         "product_Da8mpY"
       ],
