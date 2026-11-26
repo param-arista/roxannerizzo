@@ -65,7 +65,7 @@
         "search_cancel_label": "Cancel",
         "search_tags_heading": "Popular Tags",
         "search_products_heading": "Popular Products",
-        "search_menu": "",
+        "search_menu": "products-menu",
         "search_collection": "",
         "search_products_limit": 12,
         "search_image_ratio": "wide",
