@@ -442,8 +442,9 @@ a.pagination__item:hover {
 }
 
 /** Shopify's "not a robot" (hCaptcha) page after a contact form post.
-    The markup is Shopify's, so match it by the captcha inside <main>. */
-#MainContent:has(.h-captcha) {
+    The markup is Shopify's: match a <main> with the captcha but no theme
+    sections (normal pages, like Contact, also carry an hCaptcha). */
+#MainContent:not(:has(.shopify-section)):has(.h-captcha) {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -451,7 +452,7 @@ a.pagination__item:hover {
   text-align: center;
 }
 
-#MainContent:has(.h-captcha) form {
+#MainContent:not(:has(.shopify-section)):has(.h-captcha) form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -459,13 +460,13 @@ a.pagination__item:hover {
   margin-block-start: 1rem;
 }
 
-#MainContent:has(.h-captcha) p {
+#MainContent:not(:has(.shopify-section)):has(.h-captcha) p {
   font-size: 1.0625rem;
   color: var(--color-foreground);
 }
 
 /* Submit: same look as the theme's .button */
-#MainContent:has(.h-captcha) [type='submit'] {
+#MainContent:not(:has(.shopify-section)):has(.h-captcha) [type='submit'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -487,7 +488,7 @@ a.pagination__item:hover {
   appearance: none;
 }
 
-#MainContent:has(.h-captcha) [type='submit']:hover {
+#MainContent:not(:has(.shopify-section)):has(.h-captcha) [type='submit']:hover {
   border-color: #000;
   background-color: #000;
   color: #fff;
