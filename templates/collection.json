@@ -15,6 +15,7 @@
         "eyebrow": "Shop",
         "show_description": true,
         "show_image": true,
+        "placeholder_image": "shopify://shop_images/Sunlit_Bronze_Glow_Beauty_Display.webp",
         "show_breadcrumbs": true,
         "enable_filtering": true,
         "enable_sorting": true,
